@@ -2,37 +2,36 @@
   (:require [quil.core :as q]
             [quil.middleware :as m]))
 
-
+(def angle-speed 0.05)
+(def color-speed 0.07)
 
 (defn setup []
   (q/frame-rate 30)
   (q/color-mode :hsb)
   (q/text-font (q/create-font "Helvetica" 32))
-  #_(q/load-image "logo.png")
 
-  {:color 0
+  {:logo (q/load-image "logo.png")
+   :color 0
    :angle 0})
 
 (defn update-state [state]
-  ; Update sketch state by changing circle color and position.
-  {:color (mod (+ (:color state) 0.7) 255)
-   :angle (+ (:angle state) 0.1)})
+  (-> state
+      (update-in [:color] #(mod (+ % color-speed) 255))
+      (update-in [:angle] + angle-speed)))
 
 (defn draw-state [state]
-  (q/background 250)
+  (q/background 255)
 
   (let [angle (:angle state)
         x (* 150 (q/cos angle))
         y (* 150 (q/sin angle))]
-    (q/fill 180 255 255)
+    (q/fill (:color state) 255 255)
     (q/text "Welcome to"     140 (min 180 (+ 190 y)))
-    (q/text "ClojureBridge!" 130 (max 330 (+ 330 y)))
+    (q/text "You are ready to code!" 80 (max 330 (+ 330 y)))
 
     (q/with-translation [(/ (q/width) 2)
                          (/ (q/height) 2)]
-      (q/fill (:color state) 255 255)
-
-      (q/ellipse x y 100 100))))
+      (q/image (:logo state) (- x 50) (- y 50) 100 100))))
 
 (q/defsketch welcometoclojurebridge
   :title "Welcome To ClojureBridge!"
@@ -41,4 +40,5 @@
   :update update-state
   :draw draw-state
   :middleware [m/fun-mode])
+
 
