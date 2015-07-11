@@ -24,15 +24,15 @@
   (q/background-image (:background state))
 
   (let [angle (:angle state)
-        x (* 150 (q/cos angle))
-        y (* 150 (q/sin angle))]
+        x (* 180 (q/cos angle))
+        y (* 110 (q/sin angle))]
     (q/fill (mod (:color state) 80) (mod (:color state) 180) (mod (:color state) 150))
     (q/text "Welcome to"     190 (min 180 (+ 190 y)))
     (q/text "You are ready to code!" 80 (max 330 (+ 330 y)))
 
     (q/with-translation [(/ (q/width) 2)
                          (/ (q/height) 2)]
-      (q/image (:logo state) (- x 50) (- y 50) 110 110))))
+      (q/image (:logo state) (- x 60) (- y 60) 120 120))))
 
 (q/defsketch welcometoclojurebridge
   :title "Welcome To ClojureBridge!"
