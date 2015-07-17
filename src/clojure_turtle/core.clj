@@ -17,51 +17,74 @@
   (:require [quil.core :as q])
   (:use clojure.pprint))
 
-(defn new-turtle
-  []
-  (atom {:x 0
-         :y 0
-         :angle 90
-         :pen true}))
+;; turtles map
+;; {:name {:x x :y y :angle a :pen truthy}
+;; at the beginning, only :trinity is there
+(def turtles (atom {:trinity {:x 0
+                              :y 0
+                              :angle 90
+                              :pen true}}))
 
-(def turtle (new-turtle))
+;; lines map
+;; {:name [[[xs0 ys0] [xe0 ye0]] [[xs1 ys1] [xe1 ye1]]]}
+;; at the beginning, only :trinity is there
+(def lines (atom {:trinity []}))
 
-(def lines (atom []))
+(def turtle :trinity)
 
-(defn alter-turtle
-  [turt f]
-  (swap! turt f)
-  turt)
+;; counter is used to name a new turtle
+(def counter (agent 0))
+
+(defn add-turtle
+  "creates a new turtle with a name and adds to turtls map.
+   if the name is not given, it will be :neo1, neo2, etc."
+  ([]
+     (send counter inc)
+     (new-turtle (str "neo" @counter)))
+  ([name]
+     (let [n (keywrd name)]
+       (swap! turtles assoc n {:x 0
+                               :y 0
+                               :angle 90
+                               :pen true})
+       (swap! lines assoc n []))))
+
+(defn- update-thing
+  [thing n f]
+  (swap! thing update-in [n] f))
+
+(defn- update-turtle
+  "updates internal state of one of turtles
+   n - name in key, :trinity, :neo1, :neo2, etc
+   f - function which is applied to map"
+  [n f]
+  (update-thing turtles n f))
+
+(defn- update-line
+  "updates internal state of one of lines
+   n - name in key, :trinity, :neo1, :neo2, etc
+   f - function which is applied to vector"
+  [n f]
+  (update-thing lines n f))
 
 (defn right
-  ([ang]
-     (right turtle ang))
-  ([turt ang]
+  "turns the specified turtle's head by given degrees in clockwise.
+   if no name is given, only :trinity's head will be changed"
+  ([a]
+     (right turtle a))
+  ([n a]
      (letfn [(add-angle
                [{:keys [angle] :as t}]
-               (let [new-angle (-> angle
-                                   (- ang)
-                                   (mod 360))]
-                 (assoc t :angle new-angle)))]
-       (alter-turtle turt add-angle))))
+               (merge t {:angle (-> angle (- a) (mod 360))}))]
+       (update-turtle n add-angle))))
 
 (defn left
-  ([ang]
-     (right (* -1 ang)))
-  ([turt ang]
-     (right turt (* -1 ang))))
-
-(defn translate
-  [{:keys [x y pen] :as t} dx dy]
-  (let [new-x (+ x dx)
-        new-y (+ y dy)
-        line [[x y] [new-x new-y]]]
-    (when (and pen
-               (not= [x y] [new-x new-y]))
-      (swap! lines conj line))
-    (assoc t
-      :x new-x
-      :y new-y)))
+  "turns the specified turtle's head by given degrees in counterclockwise.
+   if no name is given, only :trinity's head will be changed"
+  ([a]
+     (right (* -1 a)))
+  ([n a]
+     (right n (* -1 a))))
 
 (def deg->radians q/radians)
 
@@ -70,36 +93,80 @@
 (def atan q/atan)
 
 (defn forward
+  "moves the specified turtle forward by a given length.
+   if no name is given, :trinity will go forward."
   ([len]
      (forward turtle len))
-  ([turt len]
-     (let [rads (deg->radians (get @turt :angle))
-           dx (* len (Math/cos rads))
-           dy (* len (Math/sin rads))
-           alter-fn #(translate % dx dy)]
-       (alter-turtle turt alter-fn))))
+  ([n len]
+     (let [rads      (fn [{:keys [angle]}]
+                       (deg->radians angle))
+           diffs     (fn [m]
+                       (let [r (rads m)]
+                         [(* len (Math/cos r)) (* len (Math/sin r))]))
+           translate (fn [m]
+                       (let [[dx dy] (diffs m)]
+                         (if (or (not= 0 dx) (not= 0 dy))
+                           (let [{:keys [x y]} m
+                                 line          [[x y] [(+ x dx) (+ y dy)]]]
+                             (update-line n (fn [v] (conj v line)))
+                             (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
+       (update-turtle n translate))))
 
-(defn back
+(defn backward
+  "moves the specified turtle backward by a given length.
+   if no name is given, :trinity will go backward."
   ([len]
      (forward (* -1 len)))
-  ([turt len]
-     (forward turt (* -1 len))))
+  ([n len]
+     (forward n (* -1 len))))
 
 (defn penup
+  "changes the specified turtle's pen state to false.
+   while the pen stays false, the turtle doesn't draw lines.
+   if no name is given, :trinity's state will be changed."
   ([]
      (penup turtle))
-  ([turt]
-     (letfn [(alter-fn [t] (assoc t :pen false))]
-       (alter-turtle turt alter-fn))))
+  ([n]
+     (update-turtle n (fn [m] (assoc m :pen false)))))
 
 (defn pendown
+  "changes the specified turtle's pen state to true.
+   while the pen stays true, the turtle draws lines.
+   if no name is given, :trinity's state will be changed."
   ([]
      (pendown turtle))
-  ([turt]
-     (letfn [(alter-fn [t] (assoc t :pen true))]
-       (alter-turtle turt alter-fn))))
+  ([n]
+     (update-turtle n (fn [m] (assoc m :pen true)))))
 
-(defn draw-turtle
+(defn clean
+  "cleans up all lines of the specified turtle.
+   if no name is given, :trinity's lines will be cleaned up."
+  ([]
+     (clean turtle))
+  ([n]
+     (update-line n (constantly []))))
+
+(defn clean-all
+  "cleans up all lines of all turtles."
+  ([]
+     (swap! lines (fn [lm] (reduce-kv (fn [m k v] (assoc m k [])) {} lm)))))
+
+(defn home
+  "moves the specified turtle back to the home position.
+   if no name is given, :trinity will be back home."
+  ([]
+     (home turtle))
+  ([n]
+     (update-turtle n (constantly {:x 0 :y 0 :angle 90 :pen true}))))
+
+(defn home-all
+  "moves all turtles back to the home position."
+  ([]
+     (swap! turtles (fn [tm]
+                      (reduce-kv
+                       (fn [m k v] (assoc m k {:x 0 :y 0 :angle 90 :pen true})) {} tm)))))
+
+#_(defn- draw-turtle
   ([]
      (draw-turtle turtle))
   ([turt]
@@ -154,43 +221,6 @@
       states#)
      (last states#)))
 
-(defn clean
-  ([]
-     (clean lines))
-  ([lines]
-     (letfn [(alter-fn [ls] [])]
-       (swap! lines alter-fn))))
-
-(defn setxy
-  ([x y]
-     (setxy turtle x y))
-  ([turt x y]
-     (let [pen-down? (get @turt :pen)]
-       (letfn [(alter-fn [t]
-                 (-> t
-                     (assoc :x x)
-                     (assoc :y y)))]
-         (penup turt)
-         (alter-turtle turt alter-fn)
-         (when pen-down?
-           (pendown turt))
-         turt))))
-
-(defn setheading
-  ([ang]
-     (setheading turtle ang))
-  ([turt ang]
-     (letfn [(alter-fn [t] (-> t
-                               (assoc :angle ang)))]
-       (alter-turtle turt alter-fn))))
-
-(defn home
-  ([]
-     (home turtle))
-  ([turt]
-     (setxy turt 0 0)
-     (setheading turt 90)))
-
 (defn reset-rendering
   []
   (.clear (q/current-graphics))
@@ -232,3 +262,13 @@
   :features [:keep-on-top]            ;; Keep the window on top
   :size [485 300])                    ;; You struggle to beat the golden ratio
 
+
+
+(comment
+(def turtles (atom {:trinity {:x 0
+                              :y 0
+                              :angle 90
+                              :pen true}}))
+(new-turtle)  
+
+  )
