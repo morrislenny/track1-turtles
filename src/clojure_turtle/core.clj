@@ -37,17 +37,22 @@
 
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
-   if the name is not given, it will be :neo1, neo2, etc."
+   if the name is not given, it will be :smith0, smith1, etc."
   ([]
-     (send counter inc)
-     (new-turtle (str "neo" @counter)))
+     (add-turtle (str "smith" @counter))
+     (send counter inc))
   ([name]
-     (let [n (keywrd name)]
+     (let [n (keyword name)]
+       (swap! lines assoc n [])
        (swap! turtles assoc n {:x 0
                                :y 0
                                :angle 90
-                               :pen true})
-       (swap! lines assoc n []))))
+                               :pen true}))))
+
+(defn turtle-names
+  "returns turtle names"
+  []
+  (keys @turtles))
 
 (defn- update-thing
   [thing n f]
@@ -55,14 +60,14 @@
 
 (defn- update-turtle
   "updates internal state of one of turtles
-   n - name in key, :trinity, :neo1, :neo2, etc
+   n - name in key, :trinity, :smith1, smith2, etc.
    f - function which is applied to map"
   [n f]
   (update-thing turtles n f))
 
 (defn- update-line
   "updates internal state of one of lines
-   n - name in key, :trinity, :neo1, :neo2, etc
+   n - name in key, :trinity, :smith1, smith2, etc.
    f - function which is applied to vector"
   [n f]
   (update-thing lines n f))
@@ -90,8 +95,6 @@
 
 (def radians->deg q/degrees)
 
-(def atan q/atan)
-
 (defn forward
   "moves the specified turtle forward by a given length.
    if no name is given, :trinity will go forward."
@@ -106,9 +109,9 @@
            translate (fn [m]
                        (let [[dx dy] (diffs m)]
                          (if (or (not= 0 dx) (not= 0 dy))
-                           (let [{:keys [x y]} m
-                                 line          [[x y] [(+ x dx) (+ y dy)]]]
-                             (update-line n (fn [v] (conj v line)))
+                           (let [{:keys [x y pen]} m
+                                 line              [[x y] [(+ x dx) (+ y dy)]]]
+                             (if pen (update-line n (fn [v] (conj v line))))
                              (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
        (update-turtle n translate))))
 
@@ -127,7 +130,7 @@
   ([]
      (penup turtle))
   ([n]
-     (update-turtle n (fn [m] (assoc m :pen false)))))
+     (update-turtle n (fn [m] (merge m {:pen false})))))
 
 (defn pendown
   "changes the specified turtle's pen state to true.
@@ -136,7 +139,7 @@
   ([]
      (pendown turtle))
   ([n]
-     (update-turtle n (fn [m] (assoc m :pen true)))))
+     (update-turtle n (fn [m] (merge m {:pen true})))))
 
 (defn clean
   "cleans up all lines of the specified turtle.
@@ -166,47 +169,78 @@
                       (reduce-kv
                        (fn [m k v] (assoc m k {:x 0 :y 0 :angle 90 :pen true})) {} tm)))))
 
-#_(defn- draw-turtle
-  ([]
-     (draw-turtle turtle))
-  ([turt]
-     (let [short-leg 5
-           long-leg 12
-           hypoteneuse (Math/sqrt (+ (* short-leg short-leg)
-                                     (* long-leg long-leg)))
-           large-angle  (-> (/ long-leg short-leg)
-                            atan
-                            radians->deg)
-           small-angle (- 90 large-angle)
-           pen-down? (get-in @turt [:pen])
-           turt-copy (atom (assoc @turt :pen false))
-           turt-copy-points (atom [])]
-       (letfn [(record-turt-point
-                 [t]
-                 (let [new-x (get @t :x)
-                       new-y (get @t :y)
-                       new-point [new-x new-y]]
-                   (swap! turt-copy-points conj new-point))
-                 t)]
-         (do
-           (-> turt-copy
-               record-turt-point
-               (right 90)
-               (forward short-leg)
-               record-turt-point
-               (left (- 180 large-angle))
-               (forward hypoteneuse)
-               record-turt-point
-               (left (- 180 (* 2 small-angle)))
-               (forward hypoteneuse)
-               record-turt-point
-               (left (- 180 large-angle))
-               (forward short-leg)
-               record-turt-point
-               (left 90)))
-         (let [lines (partition 2 1 @turt-copy-points)]
-           (dorun
-            (map (fn [line] (apply q/line (flatten line))) lines)))))))
+;;
+;; head
+;; x = r1 * cos(theta) + x0
+;; y = r1 * sin(theta) + y0
+;; where (x0, y0): turtle's :x, :y
+;;       theta: turtle's :angle
+;;       r1: lr (long radius)
+;;
+;; bottom left
+;; x = r2 * cos(theta + 90) + x0
+;; y = r2 * sin(theta + 90) + y0
+;; where (x0, y0): turtle's :x, :y
+;;       theta: turtle's :angle
+;;       r2: sr (short radius)
+;;
+;; bottom right
+;; x = r2 * cos(theta - 90) + x0
+;; y = r2 * sin(theta - 90) + y0
+;; where (x0, y0): turtle's :x, :y
+;;       theta: turtle's :angle
+;;       r2: sr (short radius)
+;;
+
+(def lr 12)
+(def sr 5)
+
+(defn- three-coords
+  "returns a vector of three coordinates which form a turtle,
+   [head bottom-left bottom-right]"
+  [{:keys [x y angle]}]
+  (let [ah  (deg->radians angle)
+        abl (deg->radians (mod (+ angle 90) 360))
+        abr (deg->radians (mod (- angle 90) 360))]
+    [[(+ x (* lr (q/cos ah)))  (+ y (* lr (q/sin ah)))]
+     [(+ x (* sr (q/cos abl))) (+ y (* sr (q/sin abl)))]
+     [(+ x (* sr (q/cos abr))) (+ y (* sr (q/sin abr)))]]))
+
+(defn- draw-turtle
+  "draws a single turtle"
+  [m]
+  (let [[h bl br] (three-coords m)
+        es     [[h bl] [bl br] [br h]]
+        three   (map flatten es)]
+    (q/stroke 50 50 50)
+    (doseq [line three] (apply q/line line))))
+
+(defn- draw-all-turtles
+  "draws all turtles"
+  []
+  (let [ms (vals @turtles)]
+    (doseq [m ms] (draw-turtle m))))
+
+(defn- cursor-color [x y]
+  "calculates a color based on x and y values"
+  (let [x-col (* 255 (/ (+ x (/ (q/width) 2)) (q/width)))
+        y-col (* 255 (/ (+ y (/ (q/height) 2)) (q/height)))
+        z-col (mod (+ x y) 255)]
+    [x-col y-col z-col]))
+
+(defn- draw-lines
+  "draws lines of a single turtle"
+  [v]
+  (doseq [l v]
+    (let [[[x1 y1] [x2 y2]] l]
+      (apply q/stroke (cursor-color x2 y2))
+      (q/line x1 y1 x2 y2))))
+
+(defn- draw-all-lines
+  "draws all lines of all turtles"
+  []
+  (let [vs (vals @lines)]
+    (doseq [v vs] (draw-lines v))))
 
 (defmacro all
   [& body]
@@ -226,20 +260,12 @@
   (.clear (q/current-graphics))
   (q/background 240)                 ;; Set the background colour to
                                      ;; a nice shade of grey.
-  (q/stroke-weight 1)
-  (q/stroke 222 79 79))
+  (q/stroke-weight 1))
 
 (defn setup []
   (q/smooth)                          ;; Turn on anti-aliasing
   ;; (q/frame-rate 1)                    ;; Set framerate to 1 FPS
   (reset-rendering))
-
-(defn cursor-color [x y]
-  "Calculate a color based on x and y values"
-  (let [x-col (* 255 (/ (+ x (/ (q/width) 2)) (q/width)))
-        y-col (* 255 (/ (+ y (/ (q/height) 2)) (q/height)))
-        z-col (mod (+ x y) 255)]
-    [x-col y-col z-col]))
 
 (defn draw []
   (q/with-translation [(/ (q/width) 2) (/ (q/height) 2)]
@@ -248,11 +274,8 @@
     (q/push-matrix)
     (q/apply-matrix 1  0 0
                     0 -1 0)
-    (doseq [l @lines]
-      (let [[[x1 y1] [x2 y2]] l]
-        (apply q/stroke (cursor-color x2 y2))
-        (q/line x1 y1 x2 y2)))
-    (draw-turtle)
+    (draw-all-lines)
+    (draw-all-turtles)
     (q/pop-matrix)))
 
 (q/defsketch example                  ;; Define a new sketch named example
@@ -262,13 +285,3 @@
   :features [:keep-on-top]            ;; Keep the window on top
   :size [485 300])                    ;; You struggle to beat the golden ratio
 
-
-
-(comment
-(def turtles (atom {:trinity {:x 0
-                              :y 0
-                              :angle 90
-                              :pen true}}))
-(new-turtle)  
-
-  )
