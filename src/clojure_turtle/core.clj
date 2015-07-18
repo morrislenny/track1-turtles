@@ -129,9 +129,12 @@
   ([]
      (undo turtle))
   ([n]
-     (update-line n (fn [v] (-> v butlast vec)))
-     (let [[x y] (-> (n @lines) last last)]
-       (update-turtle n (fn [m] (merge m {:x x :y y}))))))
+     (if (< 0 (-> @lines n count))
+       (do
+         (update-line n (fn [v] (-> v butlast vec)))
+         (if-let [[x y] (-> @lines n last last)]
+           (update-turtle n (fn [m] (merge m {:x x :y y})))
+           (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))))
 
 (defn penup
   "changes the specified turtle's pen state to false.
