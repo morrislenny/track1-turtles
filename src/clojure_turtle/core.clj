@@ -123,6 +123,16 @@
   ([n len]
      (forward n (* -1 len))))
 
+(defn undo
+  "undos the specified turtle's last move.
+   if no name is given, :trinity's move will be undoed."
+  ([]
+     (undo turtle))
+  ([n]
+     (update-line n (fn [v] (-> v butlast vec)))
+     (let [[x y] (-> (n @lines) last last)]
+       (update-turtle n (fn [m] (merge m {:x x :y y}))))))
+
 (defn penup
   "changes the specified turtle's pen state to false.
    while the pen stays false, the turtle doesn't draw lines.
@@ -140,6 +150,14 @@
      (pendown turtle))
   ([n]
      (update-turtle n (fn [m] (merge m {:pen true})))))
+
+(defn pendown?
+  "returns true or false whether the specified turtle's pen is down or not.
+   if not name is given, :trinity's state will be returned."
+  ([]
+     (pendown? turtle))
+  ([n]
+     (-> @turtles n :pen)))
 
 (defn clean
   "cleans up all lines of the specified turtle.
