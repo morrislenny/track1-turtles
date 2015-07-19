@@ -23,7 +23,8 @@
 (def turtles (atom {:trinity {:x 0
                               :y 0
                               :angle 90
-                              :pen true}}))
+                              :pen true
+                              :color [30 30 30]}}))
 
 ;; lines map
 ;; {:name [[[xs0 ys0] [xe0 ye0]] [[xs1 ys1] [xe1 ye1]]]}
@@ -37,17 +38,22 @@
 
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
-   if the name is not given, it will be :smith0, smith1, etc."
+   if the name is not given, it will be :smith0, smith1, etc.
+   additionally, allows to choose color, which is a vector of [r g b]"
   ([]
-     (add-turtle (str "smith" @counter))
-     (send counter inc))
+     (send counter inc)
+     (add-turtle (str "smith" @counter) [10 107 30]))
   ([name]
+     (add-turtle (keyword name) [75 0 130]))
+  ([name color]
      (let [n (keyword name)]
        (swap! lines assoc n [])
        (swap! turtles assoc n {:x 0
                                :y 0
                                :angle 90
-                               :pen true}))))
+                               :pen true
+                               :color color})
+       [n (n @turtles)])))
 
 (defn turtle-names
   "returns turtle names"
@@ -81,7 +87,8 @@
      (letfn [(add-angle
                [{:keys [angle] :as t}]
                (merge t {:angle (-> angle (- a) (mod 360))}))]
-       (update-turtle n add-angle))))
+       (update-turtle n add-angle))
+     [n a]))
 
 (defn left
   "turns the specified turtle's head by given degrees in counterclockwise.
@@ -113,7 +120,8 @@
                                  line              [[x y] [(+ x dx) (+ y dy)]]]
                              (if pen (update-line n (fn [v] (conj v line))))
                              (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
-       (update-turtle n translate))))
+       (update-turtle n translate)
+       [n len])))
 
 (defn backward
   "moves the specified turtle backward by a given length.
@@ -134,7 +142,8 @@
          (update-line n (fn [v] (-> v butlast vec)))
          (if-let [[x y] (-> @lines n last last)]
            (update-turtle n (fn [m] (merge m {:x x :y y})))
-           (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))))
+           (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
+     n))
 
 (defn penup
   "changes the specified turtle's pen state to false.
@@ -143,7 +152,8 @@
   ([]
      (penup turtle))
   ([n]
-     (update-turtle n (fn [m] (merge m {:pen false})))))
+     (update-turtle n (fn [m] (merge m {:pen false})))
+     n))
 
 (defn pendown
   "changes the specified turtle's pen state to true.
@@ -152,15 +162,16 @@
   ([]
      (pendown turtle))
   ([n]
-     (update-turtle n (fn [m] (merge m {:pen true})))))
+     (update-turtle n (fn [m] (merge m {:pen true})))
+     n))
 
-(defn pendown?
-  "returns true or false whether the specified turtle's pen is down or not.
-   if not name is given, :trinity's state will be returned."
+(defn state?
+  "returns a current state of the specified turtle.
+   if no name is given, :trinity's state will be returned."
   ([]
-     (pendown? turtle))
+     (state? turtle))
   ([n]
-     (-> @turtles n :pen)))
+     [n (n @turtles)]))
 
 (defn clean
   "cleans up all lines of the specified turtle.
@@ -168,12 +179,14 @@
   ([]
      (clean turtle))
   ([n]
-     (update-line n (constantly []))))
+     (update-line n (constantly []))
+     n))
 
 (defn clean-all
   "cleans up all lines of all turtles."
   ([]
-     (swap! lines (fn [lm] (reduce-kv (fn [m k v] (assoc m k [])) {} lm)))))
+     (swap! lines (fn [lm] (reduce-kv (fn [m k v] (assoc m k [])) {} lm)))
+     (turtle-names)))
 
 (defn home
   "moves the specified turtle back to the home position.
@@ -181,14 +194,29 @@
   ([]
      (home turtle))
   ([n]
-     (update-turtle n (constantly {:x 0 :y 0 :angle 90 :pen true}))))
+     (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90 :pen true})))
+     n))
 
 (defn home-all
   "moves all turtles back to the home position."
   ([]
      (swap! turtles (fn [tm]
                       (reduce-kv
-                       (fn [m k v] (assoc m k {:x 0 :y 0 :angle 90 :pen true})) {} tm)))))
+                       (fn [m k v] (assoc m k (merge v {:x 0 :y 0 :angle 90 :pen true}))) {} tm)))
+     (turtle-names)))
+
+(defmacro all
+  [& body]
+  `(fn []
+     (do
+       ~@ body)))
+
+(defmacro repeat
+  [n & body]
+  `(let [states# (repeatedly ~n ~@body)]
+     (dorun
+      states#)
+     (last states#)))
 
 ;;
 ;; head
@@ -233,7 +261,7 @@
   (let [[h bl br] (three-coords m)
         es     [[h bl] [bl br] [br h]]
         three   (map flatten es)]
-    (q/stroke 50 50 50)
+    (apply q/stroke (:color m))
     (doseq [line three] (apply q/line line))))
 
 (defn- draw-all-turtles
@@ -246,7 +274,7 @@
   "calculates a color based on x and y values"
   (let [x-col (* 255 (/ (+ x (/ (q/width) 2)) (q/width)))
         y-col (* 255 (/ (+ y (/ (q/height) 2)) (q/height)))
-        z-col (mod (+ x y) 255)]
+        z-col (mod (/ (+ x-col y-col) 2) 255)]
     [x-col y-col z-col]))
 
 (defn- draw-lines
@@ -262,19 +290,6 @@
   []
   (let [vs (vals @lines)]
     (doseq [v vs] (draw-lines v))))
-
-(defmacro all
-  [& body]
-  `(fn []
-     (do
-       ~@ body)))
-
-(defmacro repeat
-  [n & body]
-  `(let [states# (repeatedly ~n ~@body)]
-     (dorun
-      states#)
-     (last states#)))
 
 (defn reset-rendering
   []
