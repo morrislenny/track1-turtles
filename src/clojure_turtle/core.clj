@@ -132,7 +132,7 @@
      (forward n (* -1 len))))
 
 (defn undo
-  "undos the specified turtle's last move.
+  "undos the specified turtle's last line and moves the turtle back.
    if no name is given, :trinity's move will be undoed."
   ([]
      (undo turtle))
@@ -218,6 +218,7 @@
       states#)
      (last states#)))
 
+;; triangle (by polar equations)
 ;;
 ;; head
 ;; x = r1 * cos(theta) + x0
@@ -259,8 +260,8 @@
   "draws a single turtle"
   [m]
   (let [[h bl br] (three-coords m)
-        es     [[h bl] [bl br] [br h]]
-        three   (map flatten es)]
+        p2p       [[h bl] [bl br] [br h]]
+        three     (map flatten p2p)]
     (apply q/stroke (:color m))
     (doseq [line three] (apply q/line line))))
 
