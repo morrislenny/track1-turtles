@@ -145,22 +145,22 @@
            (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
      n))
 
-(defn penup
+(defn pen-up
   "changes the specified turtle's pen state to false.
    while the pen stays false, the turtle doesn't draw lines.
    if no name is given, :trinity's state will be changed."
   ([]
-     (penup turtle))
+     (pen-up turtle))
   ([n]
      (update-turtle n (fn [m] (merge m {:pen false})))
      n))
 
-(defn pendown
+(defn pen-down
   "changes the specified turtle's pen state to true.
    while the pen stays true, the turtle draws lines.
    if no name is given, :trinity's state will be changed."
   ([]
-     (pendown turtle))
+     (pen-down turtle))
   ([n]
      (update-turtle n (fn [m] (merge m {:pen true})))
      n))
