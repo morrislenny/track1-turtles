@@ -27,25 +27,68 @@ If no name is given, :trinity is the turtle to receive a command.
 |`(home) (home n)`| moves the turtle back to the home position.|
 |`(home-all)`| moves all turtles back to the home position.|
 
+### usage examples
+
+```clojure
+(forward 30)             ;; :trinity moves
+(forward :smith0 40)     ;; :smith0 moves
+
+(backward 35)            ;; :trinity moves
+(backward :smith0 100)   ;; :smith0 moves
+
+(right 45)               ;; :trinity tilts her head 45 degrees clockwise
+(right :smith0 90)       ;; :smith0 tilts his head 90 degrees clockwise
+
+(left 30)                ;; :trinity tilts her head 30 degrees counterclockwise
+(left :smith0 135)       ;; :smith0 tilts his head 135 degrees counterclockwise
+
+(undo)                   ;; :trinity's last line will be removed
+(undo :smith0)           ;; :smith0's last line will be removed
+
+(home)                   ;; moves :trinity back to the home position, center
+(home :smith0)           ;; moves :smith0 back to the home position, center
+
+(home-all)               ;; moves all turtles back to the home position
+```
 
 ## Pen
 
 | command | description |
 | ------- | ----------- |
-|`(pen-up) (pen-up n)`| changes the pen state false. combination with
-`forward` gives a jumping effect.|
-|`(pen-down) (pen-down n)`| changes the pen state true and draws a
-line afterwards.|
+|`(pen-up) (pen-up n)`| changes the pen state false. combination with `forward` gives a jumping effect.|
+|`(pen-down) (pen-down n)`| changes the pen state true and draws a line afterwards.|
 
+
+### usage examples
+
+```clojure
+(pen-up)                 ;; :trinity's pen will go up
+(pen-up :smith0)         ;; :smith0's pen will go up
+
+(pen-down)               ;; :trinity's pen will go down
+(pen-down :smith0)       ;; :smith0's pen will go down
+```
 
 ## Turtle
 
 | command | description |
 | ------- | ----------- |
-|`(add-turtle) (add-turtle n)`| adds a turtle. if no name, the turtle
-will be named, :smith0, :smith1, ...|
+|`(add-turtle) (add-turtle n)`| adds a turtle. if no name given, the turtle will be named, :smith0, :smith1, ...|
 |`(turtle-names)`| returns all turtle names.|
 |`(state?) (state? n)`| returns a current state of the turtle.|
+
+
+### usage examples
+
+```clojure
+(add-turtle)             ;; adds a turtle whose name is :smith0, then :smith1, ...
+(add-turtle :neo)        ;; adds a turtle whose name is :neo
+
+(turtle-names)           ;; returns all turtle names
+
+(state?)                 ;; returns :trinity's current state
+(state? :smith0)         ;; returns :smith0's current state
+```
 
 
 ## Clean up
@@ -54,6 +97,16 @@ will be named, :smith0, :smith1, ...|
 | ------- | ----------- |
 |`(clean) (clean n)`| cleans all lines belong to the turtle. |
 |`(clean-all)`| cleans all lines of all turtles. |
+
+### usage examples
+
+```clojure
+(clean)                  ;; cleans all of :trinity's lines
+(clean :smith0)          ;; cleans all of :smith0's lines
+
+(clean-all)              ;; cleans all turtles all lines
+```
+
 
 
 License
