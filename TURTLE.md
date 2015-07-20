@@ -187,7 +187,9 @@ user=> (forward :neo 50)
 ![commands to four turtles](images/commands-to-four-turtles.png)
 
 
-#### 5. put three `doseq` in one
+#### 5. put three `doseq`s in one
+
+This has the same effect as "4. put the same commands to four turtles together".
 
 ```clojure
 (doseq [n (turtle-names)]
@@ -213,6 +215,9 @@ Assuming there are already four turtles added:
 
 (four-turtles)
 ```
+
+Once `four-turtles` function gets run, the turtles will be in the same
+position as "3. add turtles".
 
 
 License
