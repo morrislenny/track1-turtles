@@ -110,7 +110,7 @@ If no name is given, :trinity is the turtle to receive a command.
 
 ## Samples
 
-1. start up
+#### 1. start up
 
 ```clojure
 user=> (use 'clojure-turtle.core)
@@ -123,7 +123,7 @@ user=> (state?)
 [:trinity {:x 0, :y 0, :angle 90, :pen true, :color [30 30 30]}]
 ```
 
-2. move turtle
+#### 2. move turtle
 
 ```clojure
 user=> (forward 50)
@@ -140,7 +140,7 @@ user=> (state?)
 [:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :pen true, :color [30 30 30]}]
 ```
 
-3. add turtles
+#### 3. add turtles
 
 ```clojure
 user=> (add-turtle)
@@ -167,7 +167,7 @@ user=> (forward :neo 50)
 [:neo 50]
 ```
 
-4. put the same commands to four turtles together
+#### 4. put the same commands to four turtles together
 
 ```clojure
 (doseq [n (turtle-names)] (forward n 50))
@@ -175,7 +175,7 @@ user=> (forward :neo 50)
 (doseq [n (turtle-names)] (forward n 50))
 ```
 
-5. put three `doseq` in one
+#### 5. put three `doseq` in one
 
 ```clojure
 (doseq [n (turtle-names)]
@@ -184,7 +184,7 @@ user=> (forward :neo 50)
   (forward n 50))
 ```
 
-6. start over by a function
+#### 6. start over by a function
 
 Assuming there are already four turtles added:
 
