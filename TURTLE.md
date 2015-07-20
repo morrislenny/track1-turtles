@@ -108,6 +108,100 @@ If no name is given, :trinity is the turtle to receive a command.
 ```
 
 
+## Samples
+
+1. start up
+
+```clojure
+user=> (use 'clojure-turtle.core)
+WARNING: repeat already refers to: #'clojure.core/repeat in namespace: \
+user, being replaced by: #'clojure-turtle.core/repeat
+nil
+user=> (turtle-names)
+(:trinity)
+user=> (state?)
+[:trinity {:x 0, :y 0, :angle 90, :pen true, :color [30 30 30]}]
+```
+
+2. move turtle
+
+```clojure
+user=> (forward 50)
+[:trinity 50]
+user=> (right 45)
+[:trinity 45]
+user=> (backward 100)
+[:trinity -100]
+user=> (left 45)
+[:trinity -45]
+user=> (forward 50)
+[:trinity 50]
+user=> (state?)
+[:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :pen true, :color [30 30 30]}]
+```
+
+3. add turtles
+
+```clojure
+user=> (add-turtle)
+[:smith0 {:x 0, :y 0, :angle 90, :pen true, :color [10 107 30]}]
+user=> (add-turtle)
+[:smith1 {:x 0, :y 0, :angle 90, :pen true, :color [10 107 30]}]
+user=> (add-turtle :neo)
+[:neo {:x 0, :y 0, :angle 90, :pen true, :color [75 0 130]}]
+user=> (turtle-names)
+(:trinity :smith0 :smith1 :neo)
+user=> (left :smith0 45)
+[:smith0 -45]
+user=> (right :smith1 45)
+[:smith1 45]
+user=> (right :neo 90)
+[:neo 90]
+user=> (forward 50)
+[:trinity 50]
+user=> (forward :smith0 50)
+[:smith0 50]
+user=> (forward :smith1 50)
+[:smith1 50]
+user=> (forward :neo 50)
+[:neo 50]
+```
+
+4. put the same commands to four turtles together
+
+```clojure
+(doseq [n (turtle-names)] (forward n 50))
+(doseq [n (turtle-names)] (right 90))
+(doseq [n (turtle-names)] (forward n 50))
+```
+
+5. put three `doseq` in one
+
+```clojure
+(doseq [n (turtle-names)]
+  (forward n 50)
+  (right 90)
+  (forward n 50))
+```
+
+6. start over by a function
+
+Assuming there are already four turtles added:
+
+```clojure
+(defn four-turtles
+  []
+  (clean-all)
+  (home-all)
+  (left :smith0 45)
+  (right :smith1 45)
+  (right :neo 90)
+  (doseq [n (turtle-names)]
+    (forward n 50)))
+
+(four-turtles)
+```
+
 
 License
 -------
