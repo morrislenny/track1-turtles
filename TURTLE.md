@@ -123,6 +123,9 @@ user=> (state?)
 [:trinity {:x 0, :y 0, :angle 90, :pen true, :color [30 30 30]}]
 ```
 
+![initial state](images/initial-state.png)
+
+
 #### 2. move turtle
 
 ```clojure
@@ -139,6 +142,9 @@ user=> (forward 50)
 user=> (state?)
 [:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :pen true, :color [30 30 30]}]
 ```
+
+![movement sample](images/movement-sample.png)
+
 
 #### 3. add turtles
 
@@ -167,6 +173,9 @@ user=> (forward :neo 50)
 [:neo 50]
 ```
 
+![four turtles](images/four-turtles.png)
+
+
 #### 4. put the same commands to four turtles together
 
 ```clojure
@@ -174,6 +183,9 @@ user=> (forward :neo 50)
 (doseq [n (turtle-names)] (right 90))
 (doseq [n (turtle-names)] (forward n 50))
 ```
+
+![commands to four turtles](images/commands-to-four-turtles.png)
+
 
 #### 5. put three `doseq` in one
 
