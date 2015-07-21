@@ -75,7 +75,7 @@ If no name is given, :trinity is the turtle to receive a command.
 | ------- | ----------- |
 |`(add-turtle) (add-turtle n)`| adds a turtle. if no name given, the turtle will be named, :smith0, :smith1, ...|
 |`(turtle-names)`| returns all turtle names.|
-|`(state?) (state? n)`| returns a current state of the turtle.|
+|`(state) (state n)`| returns a current state of the turtle.|
 
 
 ### usage examples
@@ -86,8 +86,8 @@ If no name is given, :trinity is the turtle to receive a command.
 
 (turtle-names)           ;; returns all turtle names
 
-(state?)                 ;; returns :trinity's current state
-(state? :smith0)         ;; returns :smith0's current state
+(state)                  ;; returns :trinity's current state
+(state :smith0)          ;; returns :smith0's current state
 ```
 
 
@@ -128,7 +128,7 @@ user=> (use 'clojurebridge-turtle.core)
 nil
 user=> (turtle-names)
 (:trinity)
-user=> (state?)
+user=> (state)
 [:trinity {:x 0, :y 0, :angle 90, :pen true, :color [30 30 30]}]
 ```
 
@@ -148,7 +148,7 @@ user=> (left 45)
 [:trinity -45]
 user=> (forward 50)
 [:trinity 50]
-user=> (state?)
+user=> (state)
 [:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :pen true, :color [30 30 30]}]
 ```
 

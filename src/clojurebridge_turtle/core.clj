@@ -147,11 +147,11 @@
      (update-turtle n (fn [m] (merge m {:pen true})))
      n))
 
-(defn state?
+(defn state
   "returns a current state of the specified turtle.
    if no name is given, :trinity's state will be returned."
   ([]
-     (state? turtle))
+     (state turtle))
   ([n]
      [n (n @turtles)]))
 
