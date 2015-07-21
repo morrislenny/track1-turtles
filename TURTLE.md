@@ -125,8 +125,6 @@ If no name is given, :trinity is the turtle to receive a command.
 
 ```clojure
 user=> (use 'clojurebridge-turtle.core)
-WARNING: repeat already refers to: #'clojure.core/repeat in namespace: \
-user, being replaced by: #'clojure-turtle.core/repeat
 nil
 user=> (turtle-names)
 (:trinity)
