@@ -107,13 +107,24 @@ If no name is given, :trinity is the turtle to receive a command.
 (clean-all)              ;; cleans all turtles all lines
 ```
 
+## Initialize
+
+| command | description |
+| ------- | ----------- |
+|`(init)`| makes back to the staring state. |
+
+### usage examples
+
+```clojure
+(init)                   ;; makes back to the starting state, only :trinity is in home position
+```
 
 ## Samples
 
 #### 1. start up
 
 ```clojure
-user=> (use 'clojure-turtle.core)
+user=> (use 'clojurebridge-turtle.core)
 WARNING: repeat already refers to: #'clojure.core/repeat in namespace: \
 user, being replaced by: #'clojure-turtle.core/repeat
 nil
@@ -146,7 +157,7 @@ user=> (state?)
 ![movement sample](images/movement-sample.png)
 
 
-#### 3. add turtles
+#### 3. add turtles and give them commands
 
 ```clojure
 user=> (add-turtle)
@@ -179,6 +190,22 @@ user=> (forward :neo 50)
 #### 4. put the same commands to four turtles together
 
 ```clojure
+;; (forward :trinity 50)
+;; (forward :smith0 50)
+;; (forward :smith1 50)
+;; (forward :neo 50)
+;; these four lines are equivalent to this one line
+(doseq [n (turtle-names)] (forward n 50))
+```
+
+Or, using Clojure's higher-order function and anonymous function:
+```clojure
+(map #(forward % 50) (turtle-names))
+```
+
+### 5. give more commands to four turtles
+
+```clojure
 (doseq [n (turtle-names)] (forward n 50))
 (doseq [n (turtle-names)] (right 90))
 (doseq [n (turtle-names)] (forward n 50))
@@ -187,9 +214,9 @@ user=> (forward :neo 50)
 ![commands to four turtles](images/commands-to-four-turtles.png)
 
 
-#### 5. put three `doseq`s in one
+#### 6. put three `doseq`s in one
 
-This has the same effect as "4. put the same commands to four turtles together".
+This has the same effect as "5. give more commands to four turtles".
 
 ```clojure
 (doseq [n (turtle-names)]
@@ -200,9 +227,12 @@ This has the same effect as "4. put the same commands to four turtles together".
 
 #### 6. start over by a function
 
-Assuming there are already four turtles added:
+Assuming there are already four turtles added,
+writing own function will make starting over handy.
 
 ```clojure
+;; definition of four-turtles functions
+
 (defn four-turtles
   []
   (clean-all)
@@ -213,11 +243,12 @@ Assuming there are already four turtles added:
   (doseq [n (turtle-names)]
     (forward n 50)))
 
+;; usage of four-turtles function above
 (four-turtles)
 ```
 
 Once `four-turtles` function gets run, the turtles will be in the same
-position as "3. add turtles".
+position as "3. add turtles and give them commands".
 
 
 License

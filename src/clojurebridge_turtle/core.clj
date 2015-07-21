@@ -1,21 +1,7 @@
-;; Copyright 2014 Google Inc. All Rights Reserved.
+;; Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-;; Licensed under the Apache License, Version 2.0 (the "License");
-;; you may not use this file except in compliance with the License.
-;; You may obtain a copy of the License at
-
-;;     http://www.apache.org/licenses/LICENSE-2.0
-
-;; Unless required by applicable law or agreed to in writing, software
-;; distributed under the License is distributed on an "AS IS" BASIS,
-;; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-;; See the License for the specific language governing permissions and
-;; limitations under the License.
-
-(ns clojure-turtle.core
-  (:refer-clojure :exclude [repeat])
-  (:require [quil.core :as q])
-  (:use clojure.pprint))
+(ns clojurebridge-turtle.core
+  (:require [quil.core :as q]))
 
 ;; turtles map
 ;; {:name {:x x :y y :angle a :pen truthy}
@@ -98,10 +84,6 @@
   ([n a]
      (right n (* -1 a))))
 
-(def deg->radians q/radians)
-
-(def radians->deg q/degrees)
-
 (defn forward
   "moves the specified turtle forward by a given length.
    if no name is given, :trinity will go forward."
@@ -109,7 +91,7 @@
      (forward turtle len))
   ([n len]
      (let [rads      (fn [{:keys [angle]}]
-                       (deg->radians angle))
+                       (q/radians angle))
            diffs     (fn [m]
                        (let [r (rads m)]
                          [(* len (Math/cos r)) (* len (Math/sin r))]))
@@ -205,18 +187,17 @@
                        (fn [m k v] (assoc m k (merge v {:x 0 :y 0 :angle 90 :pen true}))) {} tm)))
      (turtle-names)))
 
-(defmacro all
-  [& body]
-  `(fn []
-     (do
-       ~@ body)))
-
-(defmacro repeat
-  [n & body]
-  `(let [states# (repeatedly ~n ~@body)]
-     (dorun
-      states#)
-     (last states#)))
+(defn init
+  "makes back to the starting state.
+   only :trinity is in the home position."
+  []
+  (swap! lines (constantly {:trinity []}))
+  (swap! turtles (constantly {:trinity {:x 0
+                                        :y 0
+                                        :angle 90
+                                        :pen true
+                                        :color [30 30 30]}}))
+  :trinity)
 
 ;; triangle (by polar equations)
 ;;
@@ -249,9 +230,9 @@
   "returns a vector of three coordinates which form a turtle,
    [head bottom-left bottom-right]"
   [{:keys [x y angle]}]
-  (let [ah  (deg->radians angle)
-        abl (deg->radians (mod (+ angle 90) 360))
-        abr (deg->radians (mod (- angle 90) 360))]
+  (let [ah  (q/radians angle)
+        abl (q/radians (mod (+ angle 90) 360))
+        abr (q/radians (mod (- angle 90) 360))]
     [[(+ x (* lr (q/cos ah)))  (+ y (* lr (q/sin ah)))]
      [(+ x (* sr (q/cos abl))) (+ y (* sr (q/sin abl)))]
      [(+ x (* sr (q/cos abr))) (+ y (* sr (q/sin abr)))]]))

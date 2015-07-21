@@ -1,5 +1,5 @@
-(ns clojure-turtle.walk
-  (:use clojure-turtle.core))
+(ns clojurebridge-turtle.walk
+  (:use clojurebridge-turtle.core))
 (clean)
 (home)
 
