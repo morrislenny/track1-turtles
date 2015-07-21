@@ -1,15 +1,18 @@
 ;; Creative Commons Attribution 4.0 International (CC BY 4.0)
-
+;;
+;; This turtle app is a ClojureBridge dialect of
+;; clojure-turtle  https://github.com/google/clojure-turtle by @echeran
+;; ClojureBridge version is focusing on more Clojure-ish style.
+;;
 (ns clojurebridge-turtle.core
   (:require [quil.core :as q]))
 
 ;; turtles map
-;; {:name {:x x :y y :angle a :pen truthy}
+;; {:name {:x x :y y :angle a :color [r g b]}
 ;; at the beginning, only :trinity is there
 (def turtles (atom {:trinity {:x 0
                               :y 0
                               :angle 90
-                              :pen true
                               :color [30 30 30]}}))
 
 ;; lines map
@@ -37,7 +40,6 @@
        (swap! turtles assoc n {:x 0
                                :y 0
                                :angle 90
-                               :pen true
                                :color color})
        [n (n @turtles)])))
 
@@ -98,9 +100,9 @@
            translate (fn [m]
                        (let [[dx dy] (diffs m)]
                          (if (or (not= 0 dx) (not= 0 dy))
-                           (let [{:keys [x y pen]} m
+                           (let [{:keys [x y]} m
                                  line              [[x y] [(+ x dx) (+ y dy)]]]
-                             (if pen (update-line n (fn [v] (conj v line))))
+                             (update-line n (fn [v] (conj v line)))
                              (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
        (update-turtle n translate)
        [n len])))
@@ -125,26 +127,6 @@
          (if-let [[x y] (-> @lines n last last)]
            (update-turtle n (fn [m] (merge m {:x x :y y})))
            (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
-     n))
-
-(defn pen-up
-  "changes the specified turtle's pen state to false.
-   while the pen stays false, the turtle doesn't draw lines.
-   if no name is given, :trinity's state will be changed."
-  ([]
-     (pen-up turtle))
-  ([n]
-     (update-turtle n (fn [m] (merge m {:pen false})))
-     n))
-
-(defn pen-down
-  "changes the specified turtle's pen state to true.
-   while the pen stays true, the turtle draws lines.
-   if no name is given, :trinity's state will be changed."
-  ([]
-     (pen-down turtle))
-  ([n]
-     (update-turtle n (fn [m] (merge m {:pen true})))
      n))
 
 (defn state
@@ -176,7 +158,7 @@
   ([]
      (home turtle))
   ([n]
-     (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90 :pen true})))
+     (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90})))
      n))
 
 (defn home-all
@@ -184,7 +166,7 @@
   ([]
      (swap! turtles (fn [tm]
                       (reduce-kv
-                       (fn [m k v] (assoc m k (merge v {:x 0 :y 0 :angle 90 :pen true}))) {} tm)))
+                       (fn [m k v] (assoc m k (merge v {:x 0 :y 0 :angle 90}))) {} tm)))
      (turtle-names)))
 
 (defn init
@@ -195,7 +177,6 @@
   (swap! turtles (constantly {:trinity {:x 0
                                         :y 0
                                         :angle 90
-                                        :pen true
                                         :color [30 30 30]}}))
   :trinity)
 
@@ -277,7 +258,7 @@
   []
   (.clear (q/current-graphics))
   (q/background 240)                 ;; Set the background colour to
-                                     ;; a nice shade of grey.
+                                     ;; a nice shade of light grey.
   (q/stroke-weight 1))
 
 (defn setup []

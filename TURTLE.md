@@ -51,23 +51,6 @@ If no name is given, :trinity is the turtle to receive a command.
 (home-all)               ;; moves all turtles back to the home position
 ```
 
-## Pen
-
-| command | description |
-| ------- | ----------- |
-|`(pen-up) (pen-up n)`| changes the pen state false. combination with `forward` gives a jumping effect.|
-|`(pen-down) (pen-down n)`| changes the pen state true and draws a line afterwards.|
-
-
-### usage examples
-
-```clojure
-(pen-up)                 ;; :trinity's pen will go up
-(pen-up :smith0)         ;; :smith0's pen will go up
-
-(pen-down)               ;; :trinity's pen will go down
-(pen-down :smith0)       ;; :smith0's pen will go down
-```
 
 ## Turtle
 
@@ -123,13 +106,23 @@ If no name is given, :trinity is the turtle to receive a command.
 
 #### 1. start up
 
+To start up on LightTable, open file
+`welcomeclojurebridge/src/clojurebridge_turtle/walk.clj`.
+Then,
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
+
+On repl, run `require` and `ns`.
+
 ```clojure
-user=> (use 'clojurebridge-turtle.core)
+user=> (require 'clojurebridge-turtle.walk)
 nil
-user=> (turtle-names)
+user=> (ns clojurebridge-turtle.walk)  ;; no need to run this on LightTable
+nil
+clojurebridge-turtle.walk=> (turtle-names)
 (:trinity)
-user=> (state)
-[:trinity {:x 0, :y 0, :angle 90, :pen true, :color [30 30 30]}]
+clojurebridge-turtle.walk=> (state)
+[:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]
 ```
 
 ![initial state](images/initial-state.png)
@@ -138,18 +131,18 @@ user=> (state)
 #### 2. move turtle
 
 ```clojure
-user=> (forward 50)
+clojurebridge-turtle.walk=> (forward 50)
 [:trinity 50]
-user=> (right 45)
+clojurebridge-turtle.walk=> (right 45)
 [:trinity 45]
-user=> (backward 100)
+clojurebridge-turtle.walk=> (backward 100)
 [:trinity -100]
-user=> (left 45)
+clojurebridge-turtle.walk=> (left 45)
 [:trinity -45]
-user=> (forward 50)
+clojurebridge-turtle.walk=> (forward 50)
 [:trinity 50]
-user=> (state)
-[:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :pen true, :color [30 30 30]}]
+clojurebridge-turtle.walk=> (state)
+[:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [30 30 30]}]
 ```
 
 ![movement sample](images/movement-sample.png)
@@ -158,27 +151,29 @@ user=> (state)
 #### 3. add turtles and give them commands
 
 ```clojure
-user=> (add-turtle)
-[:smith0 {:x 0, :y 0, :angle 90, :pen true, :color [10 107 30]}]
-user=> (add-turtle)
-[:smith1 {:x 0, :y 0, :angle 90, :pen true, :color [10 107 30]}]
-user=> (add-turtle :neo)
-[:neo {:x 0, :y 0, :angle 90, :pen true, :color [75 0 130]}]
-user=> (turtle-names)
+clojurebridge-turtle.walk=> (init)
+:trinity
+clojurebridge-turtle.walk=> (add-turtle)
+[:smith0 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+clojurebridge-turtle.walk=> (add-turtle)
+[:smith1 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+clojurebridge-turtle.walk=> (add-turtle :neo)
+[:neo {:x 0, :y 0, :angle 90, :color [75 0 130]}]
+clojurebridge-turtle.walk=> (turtle-names)
 (:trinity :smith0 :smith1 :neo)
-user=> (left :smith0 45)
+clojurebridge-turtle.walk=> (left :smith0 45)
 [:smith0 -45]
-user=> (right :smith1 45)
+clojurebridge-turtle.walk=> (right :smith1 45)
 [:smith1 45]
-user=> (right :neo 90)
+clojurebridge-turtle.walk=> (right :neo 90)
 [:neo 90]
-user=> (forward 50)
+clojurebridge-turtle.walk=> (forward 50)
 [:trinity 50]
-user=> (forward :smith0 50)
+clojurebridge-turtle.walk=> (forward :smith0 50)
 [:smith0 50]
-user=> (forward :smith1 50)
+clojurebridge-turtle.walk=> (forward :smith1 50)
 [:smith1 50]
-user=> (forward :neo 50)
+clojurebridge-turtle.walk=> (forward :neo 50)
 [:neo 50]
 ```
 
