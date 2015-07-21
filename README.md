@@ -7,7 +7,9 @@ This repository has two apps.
 
 ## Usage 1 - test your installation
 
-LightTable - open `core.clj` and press `Ctrl+Shift+Enter` to evaluate the file.
+LightTable - open `core.clj` and press
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
 
 Emacs - run cider, open `core.clj` and press `C-c C-k` to evaluate the file.
 
@@ -16,11 +18,14 @@ REPL - run `(require 'welcometoclojurebridge.core)`.
 
 ## Usage 2 - try simple functions to walk a turtle
 
-LightTable - open `walk.clj` and press `Ctrl+Shift+Enter` to evaluate the file.
+LightTable - open `walk.clj` and press
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
 
-Emacs - run cider, open `walk.clj` and press `C-c C-k` to evaluate the file.
+Emacs - run cider, open `walk.clj` and press `C-c C-k` to evaluate the
+file. On repl, type `(ns clojurebridge-turtle.walk)`.
 
-REPL - run `(require 'clojurebridge-turtle.walk)`.
+REPL - run `(require 'clojurebridge-turtle.walk)`, `(ns clojurebridge-turtle.walk)`.
 
 
 Original Works
