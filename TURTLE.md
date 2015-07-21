@@ -192,7 +192,7 @@ user=> (forward :neo 50)
 ;; (forward :smith0 50)
 ;; (forward :smith1 50)
 ;; (forward :neo 50)
-;; these four lines are equivalent to this one line
+;; these four lines above are equivalent to this one line below
 (doseq [n (turtle-names)] (forward n 50))
 ```
 
@@ -205,7 +205,7 @@ Or, using Clojure's higher-order function and anonymous function:
 
 ```clojure
 (doseq [n (turtle-names)] (forward n 50))
-(doseq [n (turtle-names)] (right 90))
+(doseq [n (turtle-names)] (right n 90))
 (doseq [n (turtle-names)] (forward n 50))
 ```
 
@@ -219,7 +219,7 @@ This has the same effect as "5. give more commands to four turtles".
 ```clojure
 (doseq [n (turtle-names)]
   (forward n 50)
-  (right 90)
+  (right n 90)
   (forward n 50))
 ```
 
