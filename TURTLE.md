@@ -203,7 +203,7 @@ Or, using Clojure's higher-order function and anonymous function:
 (map #(forward % 50) (turtle-names))
 ```
 
-### 5. give more commands to four turtles
+#### 5. give more commands to four turtles
 
 ```clojure
 (doseq [n (turtle-names)] (forward n 50))
@@ -225,10 +225,32 @@ This has the same effect as "5. give more commands to four turtles".
   (forward n 50))
 ```
 
-#### 6. start over by a function
+#### 7. change forward lengths and right angle in `doseq`s
+
+Writing a function makes this easy.
+
+```clojure
+;; function definition
+(defn doseq-with-params
+  [len1 len2 angle]
+  (doseq [n (turtle-names)]
+    (forward n len1)
+    (right n angle)
+    (forward n len2)))
+
+;; usage example
+(doseq-with-params 80 40 120)
+```
+
+![function with params](images/function-with-params.png)
+
+
+#### 8. start over by a function
+
+Writing own function will make it easy to setup some state.
 
 Assuming there are already four turtles added,
-writing own function will make starting over handy.
+the function `four-turtles` brings the state back to "3. add turtles and give them commands".
 
 ```clojure
 ;; definition of four-turtles functions
@@ -247,8 +269,18 @@ writing own function will make starting over handy.
 (four-turtles)
 ```
 
-Once `four-turtles` function gets run, the turtles will be in the same
-position as "3. add turtles and give them commands".
+#### 9. repeat the same command multiple times
+
+To repeat the same commands multiple times,
+Clojure's `for` function is one of choices.
+
+```clojure
+(init)
+(right 90)
+(for [i (range 1 5)] (forward (* i 20)))
+```
+
+![repeat the same command](images/repeat-the-same-command.png)
 
 
 License
