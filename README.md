@@ -36,6 +36,9 @@ programming language.
 The original repository is <https://github.com/google/clojure-turtle>.
 
 
+Many thanks to original authors!
+
+
 License
 -------
 <a rel="license"

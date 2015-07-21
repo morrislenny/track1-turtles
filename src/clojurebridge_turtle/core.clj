@@ -296,7 +296,7 @@
     (draw-all-turtles)
     (q/pop-matrix)))
 
-(q/defsketch example                  ;; Define a new sketch named example
+(q/defsketch clojurebridge-turtle
   :title "Watch the turtle go!"       ;; Set the title of the sketch
   :setup setup                        ;; Specify the setup fn
   :draw draw                          ;; Specify the draw fn
