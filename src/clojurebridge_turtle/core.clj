@@ -101,7 +101,7 @@
                        (let [[dx dy] (diffs m)]
                          (if (or (not= 0 dx) (not= 0 dy))
                            (let [{:keys [x y]} m
-                                 line              [[x y] [(+ x dx) (+ y dy)]]]
+                                 line          [[x y] [(+ x dx) (+ y dy)]]]
                              (update-line n (fn [v] (conj v line)))
                              (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
        (update-turtle n translate)
@@ -173,12 +173,12 @@
   "makes back to the starting state.
    only :trinity is in the home position."
   []
-  (swap! lines (constantly {:trinity []}))
-  (swap! turtles (constantly {:trinity {:x 0
-                                        :y 0
-                                        :angle 90
-                                        :color [30 30 30]}}))
-  :trinity)
+  (swap! lines (constantly {turtle []}))
+  (swap! turtles (constantly {turtle {:x 0
+                                      :y 0
+                                      :angle 90
+                                      :color [30 30 30]}}))
+  turtle)
 
 ;; triangle (by polar equations)
 ;;
