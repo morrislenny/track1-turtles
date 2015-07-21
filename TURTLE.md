@@ -1,4 +1,4 @@
-# Turtles application commands
+# Turtles app
 
 ## Basics
 
@@ -223,7 +223,7 @@ This has the same effect as "5. give more commands to four turtles".
   (forward n 50))
 ```
 
-#### 7. change forward lengths and right angle in `doseq`s
+#### 7. change `forward` lengths and `right` angle in `doseq`s
 
 Writing a function makes this easy.
 
