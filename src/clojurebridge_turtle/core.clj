@@ -16,7 +16,7 @@
                               :color [30 30 30]}}))
 
 ;; lines map
-;; {:name [[[xs0 ys0] [xe0 ye0]] [[xs1 ys1] [xe1 ye1]]]}
+;; {:name [[xs0 ys0 xe0 ye0] [xs1 ys1 xe1 ye1]]}
 ;; at the beginning, only :trinity is there
 (def lines (atom {:trinity []}))
 
@@ -72,10 +72,7 @@
   ([a]
      (right turtle a))
   ([n a]
-     (letfn [(add-angle
-               [{:keys [angle] :as t}]
-               (merge t {:angle (-> angle (- a) (mod 360))}))]
-       (update-turtle n add-angle))
+     (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
      [n a]))
 
 (defn left
@@ -101,7 +98,7 @@
                        (let [[dx dy] (diffs m)]
                          (if (or (not= 0 dx) (not= 0 dy))
                            (let [{:keys [x y]} m
-                                 line          [[x y] [(+ x dx) (+ y dy)]]]
+                                 line          [x y (+ x dx) (+ y dy)]]
                              (update-line n (fn [v] (conj v line)))
                              (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
        (update-turtle n translate)
@@ -124,7 +121,7 @@
      (if (< 0 (-> @lines n count))
        (do
          (update-line n (fn [v] (-> v butlast vec)))
-         (if-let [[x y] (-> @lines n last last)]
+         (if-let [[_ _ x y] (-> @lines n last)]
            (update-turtle n (fn [m] (merge m {:x x :y y})))
            (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
      n))
@@ -244,7 +241,7 @@
   "draws lines of a single turtle"
   [v]
   (doseq [l v]
-    (let [[[x1 y1] [x2 y2]] l]
+    (let [[x1 y1 x2 y2] l]
       (apply q/stroke (cursor-color x2 y2))
       (q/line x1 y1 x2 y2))))
 
