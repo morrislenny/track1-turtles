@@ -85,11 +85,11 @@ used in `forward`, `backward`, `right` and `left`.
 ##### angle in absolute degrees
 
 | position | angle |
-| ----- | -- |
-|right  | 0 |
-|top    | 90 |
-|left   | 180 |
-|bottom | 270 |
+| -------- | ----- |
+| right    | 0 |
+| top      | 90 |
+| left     | 180 |
+| bottom   | 270 |
 
 ![angles](img/angles.png)
 
