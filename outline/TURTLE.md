@@ -5,7 +5,10 @@
 - At the beginning, only one turtle whose name is :trinity (don't omit ':'
 (colon), it is a Clojure keyword) will show up at the home position (center).
 This turtle, :trinity, can move forward/backward,
-change head angle clockwise/counterclockwise, or jump.
+change head angle clockwise/counterclockwise.
+
+![initial state](img/initial-state.png)
+
 
 - Turtles can be added with/without a name.
 If no name is given, a new turtle's name will be :smith0, :smith1,
@@ -25,8 +28,8 @@ are relative to the current position or angle.
 | ------- | ----------- | ----------|
 |`(forward len) (forward n len)`| moves the turtle forward by len.| ![go forward](img/go-forward.png) |
 |`(backward len) (backward n len)`| moves the turtle backward by len.| ![go backward](img/go-backward.png) |
-|`(right a) (right n a)`| changes the turtle head by a degrees clockwise.|![tilt right](img/right.png) |
-|`(left a) (left n a)`| changes the turtle head by a degrees counterclockwise.|![tilt left](img/left.png) |
+|`(right a) (right n a)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
+|`(left a) (left n a)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
 |`(undo) (undo n)`| undos the last line and back the turtle.||
 |`(home) (home n)`| moves the turtle back to the home position.||
 |`(home-all)`| moves all turtles back to the home position.||
@@ -66,6 +69,20 @@ are relative to the current position or angle.
 |`(turtle-names)`| returns all turtle names.|
 |`(state) (state n)`| returns a current state of the turtle.|
 
+
+
+### usage examples
+
+```clojure
+(add-turtle)             ;; adds a turtle whose name is :smith0, then :smith1, ...
+(add-turtle :neo)        ;; adds a turtle whose name is :neo
+
+(turtle-names)           ;; returns all turtle names
+
+(state)                  ;; returns :trinity's current state
+(state :smith0)          ;; returns :smith0's current state
+```
+
 The `state` command shows the *absolute* values not like relative values
 used in `forward`, `backward`, `right` and `left`.
 For example, `[:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]`.
@@ -96,19 +113,6 @@ Absolute dimensions and angles are setup as in below:
 | down     | 270 |
 
 ![angles](img/angles.png)
-
-
-### usage examples
-
-```clojure
-(add-turtle)             ;; adds a turtle whose name is :smith0, then :smith1, ...
-(add-turtle :neo)        ;; adds a turtle whose name is :neo
-
-(turtle-names)           ;; returns all turtle names
-
-(state)                  ;; returns :trinity's current state
-(state :smith0)          ;; returns :smith0's current state
-```
 
 
 ## Clean up
