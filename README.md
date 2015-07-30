@@ -32,7 +32,7 @@ REPL - run `(require 'clojurebridge-turtle.walk)`, `(ns clojurebridge-turtle.wal
 A turtle can move forward/backward and tilt its head right/left.
 Combinations of these will make interesting lines.
 
-See <outline/TURTLE.md> for more details.
+See [outline/TURTLE.md](outline/TURTLE.md) for more details.
 
 
 Original Works
