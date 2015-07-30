@@ -69,24 +69,25 @@ are relative to the current position or angle.
 The `state` command shows the *absolute* values not like relative values
 used in `forward`, `backward`, `right` and `left`.
 
-#### x and y in absolute values
+##### x and y in absolute values
 
-  ![axises](img/axises.png)
+|home      | both x and y are zero. `(x, y) = (0, 0)` |
+|rightmost | x is 240, y is any. `(x, y) = (240, y)` |
+|leftmost  | x is -240, y is any. `(x, y) = (-240, y)` |
+|top       | x is any, y is 150. `(x, y) = (x, 150)` |
+|bottom    | x is any, y is -150. `(x, y) = (x, -150)` |
 
-  - home:      both x and y are zero. `(x, y) = (0, 0)`
-  - rightmost: x is 240, y is any. `(x, y) = (240, y)`
-  - leftmost:  x is -240, y is any. `(x, y) = (-240, y)`
-  - top:       x is any, y is 150. `(x, y) = (x, 150)`
-  - bottom:    x is any, y is -150. `(x, y) = (x, -150)`
+![axises](img/axes.png)
 
-#### angle in absolute degrees
 
-  ![angles](img/angles.png)
+##### angle in absolute degrees
 
-  - right: 0
-  - top: 90
-  - left: 180
-  - bottom: 270
+|right  | 0 |
+|top    | 90 |
+|left   | 180 |
+|bottom | 270 |
+
+![angles](img/angles.png)
 
 
 ### usage examples
