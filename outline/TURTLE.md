@@ -68,6 +68,10 @@ are relative to the current position or angle.
 
 The `state` command shows the *absolute* values not like relative values
 used in `forward`, `backward`, `right` and `left`.
+For example, `[:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]`.
+
+Absolute dimensions and angles are setup as in below:
+
 
 ##### x and y in absolute values
 
@@ -84,12 +88,12 @@ used in `forward`, `backward`, `right` and `left`.
 
 ##### angle in absolute degrees
 
-| position | angle |
+| head     | angle |
 | -------- | ----- |
 | right    | 0 |
-| top      | 90 |
+| up       | 90 |
 | left     | 180 |
-| bottom   | 270 |
+| down     | 270 |
 
 ![angles](img/angles.png)
 
