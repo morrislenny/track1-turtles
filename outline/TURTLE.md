@@ -71,7 +71,8 @@ used in `forward`, `backward`, `right` and `left`.
 
 ##### x and y in absolute values
 
-|--------- | ---------------------------------------- |
+| position | x and y values |
+| -------- | ---------------------------------------- |
 |home      | both x and y are zero. `(x, y) = (0, 0)` |
 |rightmost | x is 240, y is any. `(x, y) = (240, y)` |
 |leftmost  | x is -240, y is any. `(x, y) = (-240, y)` |
@@ -83,7 +84,8 @@ used in `forward`, `backward`, `right` and `left`.
 
 ##### angle in absolute degrees
 
-|-------|---|
+| position | angle |
+| ----- | -- |
 |right  | 0 |
 |top    | 90 |
 |left   | 180 |
