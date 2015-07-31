@@ -193,7 +193,7 @@ nil
 ![five turtles move](img/five-turtles-move.png)
 
 
-- bonus: using `map` function and higher order function
+- [bonus] using `map` function (higher order function)
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
@@ -213,7 +213,7 @@ nil
 ![more moves](img/five-turtles-more-move.png)
 
 
-- bonus: put two `doseq`s in one
+- [bonus] put two `doseq`s in one
 ```clojure
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
                        #_=> (right n 60)
@@ -241,6 +241,47 @@ nil
 (turtle-names)
 ```
 
+
+#### side note: forward 480 and 48 times of forward 10
+
+To see the difference, let define utility function, `leftmost`.
+This function moves turtle head to the leftmost position.
+
+```clojure
+;; function definition
+
+(defn leftmost
+  [n]
+  (home n)
+  (clean n)
+  (left n 90)
+  (forward n 240)
+  (clean n)
+  (right n 180))
+```
+
+Then, try two forwards.
+
+```clojure
+clojurebridge-turtle.walk=> (leftmost :trinity)
+[:trinity 180]
+
+;; forward 480
+clojurebridge-turtle.walk=> (forward 480)
+[:trinity 480]
+```
+
+![forward 480](img/forward480.png)
+
+```clojure
+clojurebridge-turtle.walk=> (leftmost :trinity)
+[:trinity 180]
+
+;; 48 times of forward 10
+clojurebridge-turtle.walk=> (dotimes [i 48] (forward 10))
+nil
+```
+![forward 48*10](img/forward48times10.png)
 
 
 
