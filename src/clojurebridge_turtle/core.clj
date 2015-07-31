@@ -23,14 +23,14 @@
 (def turtle :trinity)
 
 ;; counter is used to name a new turtle
-(def counter (agent 0))
+(def counter (atom -1))
 
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
    if the name is not given, it will be :smith0, smith1, etc.
    additionally, allows to choose color, which is a vector of [r g b]"
   ([]
-     (send counter inc)
+     (swap! counter inc)
      (add-turtle (str "smith" @counter) [10 107 30]))
   ([name]
      (add-turtle (keyword name) [75 0 130]))
@@ -275,7 +275,7 @@
     (q/pop-matrix)))
 
 (q/defsketch clojurebridge-turtle
-  :title "Watch the turtle go!"       ;; Set the title of the sketch
+  :title "Walk your turtles!"         ;; Set the title of the sketch
   :setup setup                        ;; Specify the setup fn
   :draw draw                          ;; Specify the draw fn
   :features [:keep-on-top]            ;; Keep the window on top

@@ -1,108 +1,8 @@
-# Turtles app
+# Turtles App Samples
 
-## Basics
+Here are some samples from very basic to a little bit high level ones.
 
-- At the beginning, only one turtle whose name is :trinity (don't omit ':'
-(colon), it is a Clojure keyword) will show up at the home position (center).
-This turtle, :trinity, can move forward/backward,
-change head angle clockwise/counterclockwise, or jump.
-
-- Turtles can be added with/without a name.
-If no name is given, a new turtle's name will be :smith0, :smith1,
-etc.
-
-- Each turtle can move independently giving a command with the name.
-If no name is given, :trinity is the turtle to receive a command.
-
-
-## Movement
-
-| command | description |
-| ------- | ----------- |
-|`(forward len) (forward n len)`| moves the turtle forward by len.|
-|`(backward len) (backward n len)`| moves the turtle backward by len.|
-|`(right a) (right n a)`| changes the turtle head by a degrees clockwise.|
-|`(left a) (left n a)`| changes the turtle head by a degrees counterclockwise.|
-|`(undo) (undo n)`| undos the last line and back the turtle.|
-|`(home) (home n)`| moves the turtle back to the home position.|
-|`(home-all)`| moves all turtles back to the home position.|
-
-### usage examples
-
-```clojure
-(forward 30)             ;; :trinity moves
-(forward :smith0 40)     ;; :smith0 moves
-
-(backward 35)            ;; :trinity moves
-(backward :smith0 100)   ;; :smith0 moves
-
-(right 45)               ;; :trinity tilts her head 45 degrees clockwise
-(right :smith0 90)       ;; :smith0 tilts his head 90 degrees clockwise
-
-(left 30)                ;; :trinity tilts her head 30 degrees counterclockwise
-(left :smith0 135)       ;; :smith0 tilts his head 135 degrees counterclockwise
-
-(undo)                   ;; :trinity's last line will be removed
-(undo :smith0)           ;; :smith0's last line will be removed
-
-(home)                   ;; moves :trinity back to the home position, center
-(home :smith0)           ;; moves :smith0 back to the home position, center
-
-(home-all)               ;; moves all turtles back to the home position
-```
-
-
-## Turtle
-
-| command | description |
-| ------- | ----------- |
-|`(add-turtle) (add-turtle n)`| adds a turtle. if no name given, the turtle will be named, :smith0, :smith1, ...|
-|`(turtle-names)`| returns all turtle names.|
-|`(state) (state n)`| returns a current state of the turtle.|
-
-
-### usage examples
-
-```clojure
-(add-turtle)             ;; adds a turtle whose name is :smith0, then :smith1, ...
-(add-turtle :neo)        ;; adds a turtle whose name is :neo
-
-(turtle-names)           ;; returns all turtle names
-
-(state)                  ;; returns :trinity's current state
-(state :smith0)          ;; returns :smith0's current state
-```
-
-
-## Clean up
-
-| command | description |
-| ------- | ----------- |
-|`(clean) (clean n)`| cleans all lines belong to the turtle. |
-|`(clean-all)`| cleans all lines of all turtles. |
-
-### usage examples
-
-```clojure
-(clean)                  ;; cleans all of :trinity's lines
-(clean :smith0)          ;; cleans all of :smith0's lines
-
-(clean-all)              ;; cleans all turtles all lines
-```
-
-## Initialize
-
-| command | description |
-| ------- | ----------- |
-|`(init)`| makes back to the staring state. |
-
-### usage examples
-
-```clojure
-(init)                   ;; makes back to the starting state, only :trinity is in home position
-```
-
-## Samples
+Draw lines by your imagination!
 
 #### 1. start up
 
@@ -125,12 +25,62 @@ clojurebridge-turtle.walk=> (state)
 [:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]
 ```
 
-![initial state](images/initial-state.png)
+![initial state](img/initial-state.png)
 
 
-#### 2. move turtle
+
+#### 2. Basic movement - forward, backward, right and left
+
+- forward
 
 ```clojure
+clojurebridge-turtle.walk=> (forward 40)
+[:trinity 40]
+```
+
+![forward 40](img/forward40.png)
+
+
+- right
+
+```clojure
+clojurebridge-turtle.walk=> (right 90)
+[:trinity 90]
+```
+
+![right 90](img/right90.png)
+
+- combinations of forward and right
+
+```clojure
+clojurebridge-turtle.walk=> (forward 40)
+[:trinity 40]
+clojurebridge-turtle.walk=> (right 90)
+[:trinity 90]
+clojurebridge-turtle.walk=> (forward 50)
+[:trinity 50]
+clojurebridge-turtle.walk=> (right 90)
+[:trinity 90]
+clojurebridge-turtle.walk=> (forward 60)
+[:trinity 60]
+clojurebridge-turtle.walk=> (right 90)
+[:trinity 90]
+clojurebridge-turtle.walk=> (forward 70)
+[:trinity 70]
+clojurebridge-turtle.walk=> (right 90)
+[:trinity 90]
+clojurebridge-turtle.walk=> (forward 80)
+[:trinity 80]
+```
+
+![combination](img/forwardsandrights.png)
+
+
+- combination of various commands
+
+```clojure
+clojurebridge-turtle.walk=> (init)
+:trinity
 clojurebridge-turtle.walk=> (forward 50)
 [:trinity 50]
 clojurebridge-turtle.walk=> (right 45)
@@ -145,10 +95,13 @@ clojurebridge-turtle.walk=> (state)
 [:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [30 30 30]}]
 ```
 
-![movement sample](images/movement-sample.png)
+![movement sample](img/various-combination.png)
 
 
-#### 3. add turtles and give them commands
+
+#### 3. Using multiple turtles
+
+- add turtles
 
 ```clojure
 clojurebridge-turtle.walk=> (init)
@@ -157,68 +110,129 @@ clojurebridge-turtle.walk=> (add-turtle)
 [:smith0 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
 clojurebridge-turtle.walk=> (add-turtle)
 [:smith1 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+clojurebridge-turtle.walk=> (add-turtle)
+[:smith2 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+clojurebridge-turtle.walk=> (turtle-names)
+(:trinity :smith0 :smith1 :smith2)
+```
+
+![four turtles](img/four-turtles.png)
+
+- make smiths tilt different angles
+
+```clojure
+clojurebridge-turtle.walk=> (right :smith0 (* 1 45))
+[:smith0 45]
+clojurebridge-turtle.walk=> (right :smith1 (* 2 45))
+[:smith1 90]
+clojurebridge-turtle.walk=> (right :smith2 (* 3 45))
+[:smith2 135]
+```
+
+![four directions](img/four-directions.png)
+
+- walk four turtles forward
+
+```clojure
+clojurebridge-turtle.walk=> (forward :trinity 40)
+[:trinity 40]
+clojurebridge-turtle.walk=> (forward :smith0 40)
+[:smith0 40]
+clojurebridge-turtle.walk=> (forward :smith1 40)
+[:smith1 40]
+clojurebridge-turtle.walk=> (forward :smith2 40)
+[:smith2 40]
+```
+
+![four moves](img/four-forwards.png)
+
+
+#### 4. add more turtles and give them commands
+
+- add another turtle named :neo
+
+```clojure
 clojurebridge-turtle.walk=> (add-turtle :neo)
 [:neo {:x 0, :y 0, :angle 90, :color [75 0 130]}]
+```
+
+![fifth turtle](img/fifth-turtle.png)
+
+
+- tilt and go forward :neo
+
+```clojure
+clojurebridge-turtle.walk=> (left :neo 45)
+[:neo -45]
+clojurebridge-turtle.walk=> (forward :neo 40)
+[:neo 40]
 clojurebridge-turtle.walk=> (turtle-names)
-(:trinity :smith0 :smith1 :neo)
-clojurebridge-turtle.walk=> (left :smith0 45)
-[:smith0 -45]
-clojurebridge-turtle.walk=> (right :smith1 45)
-[:smith1 45]
-clojurebridge-turtle.walk=> (right :neo 90)
-[:neo 90]
-clojurebridge-turtle.walk=> (forward 50)
-[:trinity 50]
-clojurebridge-turtle.walk=> (forward :smith0 50)
-[:smith0 50]
-clojurebridge-turtle.walk=> (forward :smith1 50)
-[:smith1 50]
-clojurebridge-turtle.walk=> (forward :neo 50)
-[:neo 50]
+(:trinity :smith0 :smith1 :smith2 :neo)
 ```
 
-![four turtles](images/four-turtles.png)
+![fifth's move](img/fifth-turtle-move.png)
 
 
-#### 4. put the same commands to four turtles together
+#### 5. move all five turtles - introduction to function
+
+How can we make all five turtles go forward by 40?
+The simplest way would be to type `(forward :name 40)` five times.
+
+But wait and think.
+Is there any handy way of doing this?
+Yes, there is.
+Clojure has many functions to accomplish this purpose.
+
+- move 5 turtles forward using `doseq` function
 
 ```clojure
-;; (forward :trinity 50)
-;; (forward :smith0 50)
-;; (forward :smith1 50)
-;; (forward :neo 50)
-;; these four lines above are equivalent to this one line below
-(doseq [n (turtle-names)] (forward n 50))
+clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (forward n 40))
+nil
 ```
 
-Or, using Clojure's higher-order function and anonymous function:
-```clojure
-(map #(forward % 50) (turtle-names))
-```
+![five turtles move](img/five-turtles-move.png)
 
-#### 5. give more commands to four turtles
+
+- bonus: using `map` function and higher order function
 
 ```clojure
-(doseq [n (turtle-names)] (forward n 50))
-(doseq [n (turtle-names)] (right n 90))
-(doseq [n (turtle-names)] (forward n 50))
+clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
+([:trinity 40] [:smith0 40] [:smith1 40] [:smith2 40] [:neo 40])
 ```
 
-![commands to four turtles](images/commands-to-four-turtles.png)
 
-
-#### 6. put three `doseq`s in one
-
-This has the same effect as "5. give more commands to four turtles".
+- tilt and forward them by `doseq`s
 
 ```clojure
-(doseq [n (turtle-names)]
-  (forward n 50)
-  (right n 90)
-  (forward n 50))
+clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (right n 60))
+nil
+clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (forward n 30))
+nil
 ```
 
-#### 7. change `forward` lengths and `right` angle in `doseq`s
+![more moves](img/five-turtles-more-move.png)
+
+
+- bonus: put two `doseq`s in one
+```clojure
+clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
+                       #_=> (right n 60)
+                       #_=> (forward n 30))
+nil
+```
+
+
+#### 6. write your own functions
+
+- rewrite adding three turtles and turtle the :neo
+
+```clojure
+
+```
+
+
+
+
 
 Writing a function makes this easy.
 
