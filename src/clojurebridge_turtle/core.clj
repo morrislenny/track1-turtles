@@ -36,11 +36,12 @@
      (add-turtle (keyword name) [75 0 130]))
   ([name color]
      (let [n (keyword name)]
-       (swap! lines assoc n [])
-       (swap! turtles assoc n {:x 0
-                               :y 0
-                               :angle 90
-                               :color color})
+       (dosync
+        (swap! lines assoc n [])
+        (swap! turtles assoc n {:x 0
+                                :y 0
+                                :angle 90
+                                :color color}))
        [n (n @turtles)])))
 
 (defn turtle-names

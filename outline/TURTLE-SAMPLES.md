@@ -227,12 +227,24 @@ nil
 - rewrite adding three turtles and turtle the :neo
 
 ```clojure
+;; function definition
+(defn five-turtles
+  []
+  (init)
+  (dotimes [n 3] (add-turtle))
+  (add-turtle :neo))
 
+;; usage of the five-turtles function
+(five-turtles)
+
+;; check turtle names
+(turtle-names)
 ```
 
 
 
 
+####
 
 Writing a function makes this easy.
 
@@ -252,7 +264,7 @@ Writing a function makes this easy.
 ![function with params](images/function-with-params.png)
 
 
-#### 8. start over by a function
+#### 
 
 Writing own function will make it easy to setup some state.
 
@@ -276,18 +288,6 @@ the function `four-turtles` brings the state back to "3. add turtles and give th
 (four-turtles)
 ```
 
-#### 9. repeat the same command multiple times
-
-To repeat the same commands multiple times,
-Clojure's `for` function is one of choices.
-
-```clojure
-(init)
-(right 90)
-(for [i (range 1 5)] (forward (* i 20)))
-```
-
-![repeat the same command](images/repeat-the-same-command.png)
 
 
 License
