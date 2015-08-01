@@ -171,11 +171,13 @@
   "makes back to the starting state.
    only :trinity is in the home position."
   []
-  (swap! lines (constantly {turtle []}))
-  (swap! turtles (constantly {turtle {:x 0
-                                      :y 0
-                                      :angle 90
-                                      :color [30 30 30]}}))
+  (dosync
+   (swap! counter (constantly -1))
+   (swap! lines (constantly {turtle []}))
+   (swap! turtles (constantly {turtle {:x 0
+                                       :y 0
+                                       :angle 90
+                                       :color [30 30 30]}})))
   turtle)
 
 ;; triangle (by polar equations)
