@@ -175,12 +175,12 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 #### 5. move all five turtles - introduction to function
 
-How can we make all five turtles go forward by 40?
+We've had five turtles and want to move those five.
+Let's think how we can make all five turtles go forward by 40?
 The simplest way would be to type `(forward :name 40)` five times.
 
-But wait and think.
-Is there any handy way of doing this?
-Yes, there is.
+But wait. We are almost exhausted to type quite similar commands many times.
+Is there any handy way of doing this? Yes, there is.
 Clojure has many functions to accomplish this purpose.
 
 - move 5 turtles forward using `doseq` function
@@ -224,28 +224,234 @@ nil
 
 #### 6. write your own functions
 
-- rewrite adding three turtles and turtle the :neo
+While playing around with turtles, we may mess up their movements.
+The `(init)` command makes everything clean up and back to the
+starting state.
+It is a good command, but again, we need to repeat `(add-turtle)`
+command many times to get five turtles.
+
+We want something. Yes, we can define our own function for that.
+Once the function is defined, we can add five turtles by a single
+function anytime.
+
+
+- 6.1 rewrite adding three turtles and a turtle with the name :neo
+
+Since we already have :trinity, we are going to add a couple of smiths
+and :neo in the end. Then, we will have five turtles.
 
 ```clojure
 ;; function definition
-(defn five-turtles
+(defn add-four-turtles
   []
   (init)
-  (dotimes [n 3] (add-turtle))
+  (dotimes [i 3] (add-turtle))
   (add-turtle :neo))
 
 ;; usage of the five-turtles function
-(five-turtles)
+(add-four-turtles)
 
 ;; check turtle names
 (turtle-names)
 ```
 
+![add four turtles](img/add-four-turtles.png)
 
-#### side note: forward 480 and 48 times of forward 10
+- 6.2 [bonus] add parameter to `add-four-turtles` function so that the last turtle can
+take any name
 
-To see the difference, let define utility function, `leftmost`.
-This function moves turtle head to the leftmost position.
+Our `add-four-turtles` function only add :neo in the end.
+Instead, let's give a freedom to choose any name for the last turtle.
+
+```clojure
+;; function definition
+(defn add-four-turtles
+  ([] (add-four-turtles :neo))
+  ([n]
+    (init)
+    (dotimes [i 3] (add-turtle))
+    (add-turtle n)))
+
+;; usage example
+(add-four-turtles :oracle)
+
+;; check turtle names
+(turtle-names)
+```
+
+- 6.3 write a function to tilt five turtles
+
+We want to tilt five turtles' heads in different angles so that we can
+see their move well.
+For example, :trinity 0, :smith0 45, :smith1 90, :smith2 135,
+:neo 180.
+To write this function is no more straightforward since we need two
+kinds of parameters at the same time, name and angle.
+
+- 6.3.1 The first attempt - put two parameters in one
+
+If we put two parameters in one, we can use `doseq`.
+
+```clojure
+;; put turtle names and digits together
+clojurebridge-turtle.walk=> (def m (zipmap (turtle-names) (range 0 (count (turtle-names)))))
+#'clojurebridge-turtle.walk/m
+clojurebridge-turtle.walk=> m
+{:trinity 0, :smith0 1, :smith1 2, :smith2 3, :neo 4}
+
+;; see each part is doing what
+clojurebridge-turtle.walk=> (count (turtle-names))
+5
+clojurebridge-turtle.walk=> (range 0 5)
+(0 1 2 3 4)
+clojurebridge-turtle.walk=> (zipmap [:a :b] [0 1])
+{:a 0, :b 1}
+```
+
+Now, we can use `doseq`.
+
+```clojure
+;; using m which is created by zipmap
+(doseq [t m] (right (first t) (* (second t) 45)))
+
+;; again, see each part is doing what
+
+;; see how doseq uses m
+clojurebridge-turtle.walk=> (doseq [t m] (prn t))
+[:trinity 0]
+[:smith0 1]
+[:smith1 2]
+[:smith2 3]
+[:neo 4]
+nil
+
+;; see first and second function do
+clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (second t)))
+:trinity 0
+:smith0 1
+:smith1 2
+:smith2 3
+:neo 4
+nil
+
+;; see what (* (second t) 45) does
+clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (* (second t) 45)))
+:trinity 0
+:smith0 45
+:smith1 90
+:smith2 135
+:neo 180
+nil
+```
+
+Finally, put zipmap and doseq in a function.
+
+```clojure
+;; function definition
+(defn tilt-turtles
+  []
+  (let [m (zipmap (turtle-names) (range 0 (count (turtle-names))))]
+    (doseq [t m] (right (first t) (* (second t) 45)))))
+
+;; usage
+(tilt-turtles)
+```
+
+![tilt turtles](img/tilt-turtles.png)
+
+
+- 6.4 [bonus] map function (higher order function) is another way to do
+
+Using `map` function, tilt-turtles function can be written a single
+line as in below.
+
+```clojure
+clojurebridge-turtle.walk=> (map #(right % (* %2 45)) (turtle-names) (range 0 (count (turtle-names))))
+([:trinity 0] [:smith0 45] [:smith1 90] [:smith2 135] [:neo 180])
+```
+
+- 6.5 [bonus] recursion is another way to do
+
+```clojure
+;; function definition
+(defn tilt-turtles-loop
+  []
+  (loop [t nil
+         n (turtle-names)
+         s 0]
+    (if (empty? n) :completed
+        (recur (right (first n) (* s 45)) (rest n) (inc s)))))
+
+;; usage
+(tilt-turtles-loop)
+```
+
+
+- 6.6 move five turtles forward, right and forward
+
+We got five turtles, made their heads tilted in different directions.
+It's time to move all those five turtles, forward, right and forward.
+
+```clojure
+(doseq [n (turtle-names)]
+  (forward n 60)
+  (right n 90)
+  (forward n 50))
+```
+
+![move turtles](img/move-turtles.png)
+
+
+#### 7. 
+
+Writing a function makes this easy.
+
+```clojure
+;; function definition
+(defn doseq-with-params
+  [len1 len2 angle]
+  (doseq [n (turtle-names)]
+    (forward n len1)
+    (right n angle)
+    (forward n len2)))
+
+;; usage example
+(doseq-with-params 80 40 120)
+```
+
+![function with params](images/function-with-params.png)
+
+
+#### 8.
+
+Writing own function will make it easy to setup some state.
+
+Assuming there are already four turtles added,
+the function `four-turtles` brings the state back to "3. add turtles and give them commands".
+
+```clojure
+;; definition of four-turtles functions
+
+(defn four-turtles
+  []
+  (clean-all)
+  (home-all)
+  (left :smith0 45)
+  (right :smith1 45)
+  (right :neo 90)
+  (doseq [n (turtle-names)]
+    (forward n 50)))
+
+;; usage of four-turtles function above
+(four-turtles)
+```
+
+#### #. side note: forward 480 and 48 times of forward 10
+
+Going forward 480 and repeating 48 times of forward 10 are not the
+same for the turtles.
+To see the difference, let define utility function, `leftmost` first.
+This function moves a turtle to the leftmost position.
 
 ```clojure
 ;; function definition
@@ -284,50 +490,13 @@ nil
 ![forward 48*10](img/forward48times10.png)
 
 
+Both forward the turtle from the leftmost to rightmost position, but
+look at the color difference.
+The stroke's RGB (Red/Green/Blue) values are calculated based on the
+x, y values of the endpoint.
+Forwarding 480 has only one endpoint, while forwarding 48 times has 48
+endpoints. This means the turtle changed the color 48 times.
 
-####
-
-Writing a function makes this easy.
-
-```clojure
-;; function definition
-(defn doseq-with-params
-  [len1 len2 angle]
-  (doseq [n (turtle-names)]
-    (forward n len1)
-    (right n angle)
-    (forward n len2)))
-
-;; usage example
-(doseq-with-params 80 40 120)
-```
-
-![function with params](images/function-with-params.png)
-
-
-#### 
-
-Writing own function will make it easy to setup some state.
-
-Assuming there are already four turtles added,
-the function `four-turtles` brings the state back to "3. add turtles and give them commands".
-
-```clojure
-;; definition of four-turtles functions
-
-(defn four-turtles
-  []
-  (clean-all)
-  (home-all)
-  (left :smith0 45)
-  (right :smith1 45)
-  (right :neo 90)
-  (doseq [n (turtle-names)]
-    (forward n 50)))
-
-;; usage of four-turtles function above
-(four-turtles)
-```
 
 
 
