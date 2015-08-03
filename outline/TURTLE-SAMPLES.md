@@ -6,13 +6,26 @@ Draw lines by your imagination!
 
 #### 1. start up
 
-To start up on LightTable, open file
+- preparation
+
+If you haven't cloned out the repository, try this on the terminal:
+
+```bash
+git clone https://github.com/ClojureBridge/welcometoclojurebridge
+cd welcometoclojurebridge
+```
+
+- load walk.clj on LightTable
+
+open the file
 `welcomeclojurebridge/src/clojurebridge_turtle/walk.clj`.
 Then,
 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
 <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
 
-On repl, run `require` and `ns`.
+- load walk.clj on lein repl
+
+startup repl, then run `require` and `ns`.
 
 ```clojure
 user=> (require 'clojurebridge-turtle.walk)
@@ -25,11 +38,15 @@ clojurebridge-turtle.walk=> (state)
 [:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]
 ```
 
+- an initial state
+
 ![initial state](img/initial-state.png)
 
 
+See [TURTLE.md](TURTLE.md) for commands that turtles understand.
 
-#### 2. Basic movement - forward, backward, right and left
+
+#### 2. [Easy] basic movement - forward, backward, right and left
 
 - forward
 
@@ -99,7 +116,7 @@ clojurebridge-turtle.walk=> (state)
 
 
 
-#### 3. Using multiple turtles
+#### 3. [Easy] Using multiple turtles
 
 - add turtles
 
@@ -147,7 +164,7 @@ clojurebridge-turtle.walk=> (forward :smith2 40)
 ![four moves](img/four-forwards.png)
 
 
-#### 4. add more turtles and give them commands
+#### 4. [Easy] add more turtles and give them commands
 
 - add another turtle named :neo
 
@@ -191,7 +208,7 @@ clojurebridge-turtle.walk=> (forward :neo 20)
 ![forward 20 more](img/forward20plus.png)
 
 
-#### 5. move all five turtles - introduction to function
+#### 5. [Easy - Intermediate] move all five turtles - introduction to function
 
 We've had five turtles and want to move or tilt those five.
 Let's think how we can make all five turtles go forward by 40?
@@ -202,7 +219,7 @@ Is there any handy way of doing this? Yes, there is.
 Clojure has many functions to accomplish this purpose.
 `doseq` function is one of them.
 
-- move 5 turtles forward using `doseq` function
+- 5.1 move 5 turtles forward using `doseq` function
 
 ```clojure
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (forward n 40))
@@ -212,7 +229,7 @@ nil
 ![five turtles move](img/five-turtles-move.png)
 
 
-- [bonus] using `map` function (higher order function)
+- 5.2 [bonus] using `map` function (higher order function)
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
@@ -220,7 +237,7 @@ clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
 ```
 
 
-- tilt and forward them by `doseq`s
+- 5.3 tilt and forward them by `doseq`s
 
 ```clojure
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (right n 60))
@@ -232,7 +249,7 @@ nil
 ![more moves](img/five-turtles-more-move.png)
 
 
-- [bonus] put two `doseq`s in one
+- 5.4 [bonus] put two `doseq`s in one
 
 ```clojure
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
@@ -241,18 +258,17 @@ clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
 nil
 ```
 
-- [bonus] using `map` (higher order function) and `juxt` functions
+- 5.5 [bonus] using `map` (higher order function) and `juxt` functions
 
 ```clojure
-clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30))
-(turtle-names))
+clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-names))
 ([[:trinity 60] [:trinity 30]] [[:smith0 60] [:smith0 30]]
 [[:smith1 60] [:smith1 30]] [[:smith2 60] [:smith2 30]] [[:neo 60]
 [:neo 30]])
 ```
 
 
-#### 6. write your own functions
+#### 6. [Easy - Intermediate] write adding turtles' function
 
 While playing around with turtles, we may mess up their movements.
 The `(init)` command makes everything clean up and back to the
@@ -309,18 +325,20 @@ Instead, let's give a freedom to choose any name for the last turtle.
 (turtle-names)
 ```
 
-- 6.3 write a function to tilt five turtles
+#### 7. [Intermediate - difficult] write tilting five turtles' function
 
-We want to tilt five turtles' heads in different angles so that we can
+Next, we want to tilt five turtles' heads in different angles so that we can
 see their move well.
 For example, :trinity 0, :smith0 45, :smith1 90, :smith2 135,
 :neo 180.
 To write this function is no more straightforward since we need two
 kinds of parameters at the same time, name and angle.
 
-- 6.3.1 The first attempt - put two parameters in one
+- 7.1 using `doseq` with a little tweak
 
-If we put two parameters in one, we can use `doseq`.
+- 7.1.1 put two parameters in one hash map
+
+If we put two parameters in one, we can use `doseq` like previous examples.
 
 ```clojure
 ;; put turtle names and digits together
@@ -338,7 +356,7 @@ clojurebridge-turtle.walk=> (zipmap [:a :b] [0 1])
 {:a 0, :b 1}
 ```
 
-Now, we can use `doseq`.
+- 7.1.2 use `doseq` to iterate map
 
 ```clojure
 ;; using m which is created by zipmap
@@ -374,7 +392,7 @@ clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (* (second t) 45)))
 nil
 ```
 
-Finally, put zipmap and doseq in a function.
+- 7.1.3 put hash map creation and `doseq` in one function
 
 ```clojure
 ;; function definition
@@ -390,7 +408,7 @@ Finally, put zipmap and doseq in a function.
 ![tilt turtles](img/tilt-turtles.png)
 
 
-- 6.4 [bonus] map function (higher order function) is another way to do
+- 7.2 [bonus] map function (higher order function) is another way to do
 
 Using `map` function, tilt-turtles function can be written a single
 line as in below.
@@ -400,7 +418,7 @@ clojurebridge-turtle.walk=> (map #(right % (* %2 45)) (turtle-names) (range 0 (c
 ([:trinity 0] [:smith0 45] [:smith1 90] [:smith2 135] [:neo 180])
 ```
 
-- 6.5 [bonus] recursion is another way to do
+- 7.3 [bonus] recursion is another way to do
 
 ```clojure
 ;; function definition
@@ -416,11 +434,14 @@ clojurebridge-turtle.walk=> (map #(right % (* %2 45)) (turtle-names) (range 0 (c
 (tilt-turtles-loop)
 ```
 
-
-- 6.6 move five turtles forward, right and forward
+#### 8. [Intermediate] write function to move five turtles forward, right and forward again
 
 We got five turtles, made their heads tilted in different directions.
 It's time to move all those five turtles, forward, right and forward.
+
+- 8.1 put three movements in one `doseq`
+
+Like we tried in 5.4, only one `doseq` works for the three movements.
 
 ```clojure
 (doseq [n (turtle-names)]
@@ -432,9 +453,14 @@ It's time to move all those five turtles, forward, right and forward.
 ![move turtles](img/move-turtles.png)
 
 
-#### 7. Change parameters of forwards and right
+- 8.2 change parameters of forwards and right
 
-Writing a function makes this easy.
+Putting three movements in one `doseq` is nice, but what if we want to
+change parameters?
+For example, forward 100, right 150, then forward 60, or
+forward 50, right 30, and forward 60.
+
+Defining a function that takes parameters will be the way to do.
 
 ```clojure
 ;; function definition
@@ -446,13 +472,20 @@ Writing a function makes this easy.
     (forward n len2)))
 
 ;; usage example
-(doseq-with-params 80 40 120)
+(home-all)
+(clean-all)
+(tilt-turtles)
+
+(doseq-with-params 100 60 150)
 ```
 
-![function with params](images/function-with-params.png)
+![params 100 60 150](img/parameters-100-60-150.png)
 
 
-#### 8.
+Try various parameters.
+
+
+#### 9. [Intermediate] put more stuff in a function
 
 Writing own function will make it easy to setup some state.
 
