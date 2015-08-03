@@ -173,15 +173,34 @@ clojurebridge-turtle.walk=> (turtle-names)
 ![fifth's move](img/fifth-turtle-move.png)
 
 
+- go five turtles forward by 20
+
+```clojure
+clojurebridge-turtle.walk=> (forward :trinity 20)
+[:trinity 20]
+clojurebridge-turtle.walk=> (forward :smith0 20)
+[:smith0 20]
+clojurebridge-turtle.walk=> (forward :smith1 20)
+[:smith1 20]
+clojurebridge-turtle.walk=> (forward :smith2 20)
+[:smith2 20]
+clojurebridge-turtle.walk=> (forward :neo 20)
+[:neo 20]
+```
+
+![forward 20 more](img/forward20plus.png)
+
+
 #### 5. move all five turtles - introduction to function
 
-We've had five turtles and want to move those five.
+We've had five turtles and want to move or tilt those five.
 Let's think how we can make all five turtles go forward by 40?
 The simplest way would be to type `(forward :name 40)` five times.
 
 But wait. We are almost exhausted to type quite similar commands many times.
 Is there any handy way of doing this? Yes, there is.
 Clojure has many functions to accomplish this purpose.
+`doseq` function is one of them.
 
 - move 5 turtles forward using `doseq` function
 
@@ -214,11 +233,22 @@ nil
 
 
 - [bonus] put two `doseq`s in one
+
 ```clojure
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
                        #_=> (right n 60)
                        #_=> (forward n 30))
 nil
+```
+
+- [bonus] using `map` (higher order function) and `juxt` functions
+
+```clojure
+clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30))
+(turtle-names))
+([[:trinity 60] [:trinity 30]] [[:smith0 60] [:smith0 30]]
+[[:smith1 60] [:smith1 30]] [[:smith2 60] [:smith2 30]] [[:neo 60]
+[:neo 30]])
 ```
 
 
@@ -402,7 +432,7 @@ It's time to move all those five turtles, forward, right and forward.
 ![move turtles](img/move-turtles.png)
 
 
-#### 7. 
+#### 7. Change parameters of forwards and right
 
 Writing a function makes this easy.
 
