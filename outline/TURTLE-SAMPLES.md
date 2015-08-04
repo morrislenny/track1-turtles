@@ -271,20 +271,19 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 #### 6. [easy - intermediate] Write a function that adds turtles
 
 While playing around with turtles, we may mess up their movements.
-The `(init)` command makes everything clean up and back to the
-starting state.
+The `(init)` command makes everything clean up and back to the initial state.
 It is a good command, but again, we need to repeat `(add-turtle)`
 command many times to get five turtles.
 
 We want something. Yes, we can define our own function for that.
 Once the function is defined, we can add five turtles by a single
-function anytime.
+function call anytime.
 
 
 - 6.1 define a function to add three turtles and a turtle with the name :neo
 
-Since we already have :trinity, we are going to add a couple of smiths
-and :neo in the end. Then, we will have five turtles.
+Since we already have :trinity, we are going to add three smiths
+and :neo. After that, we will have five turtles in total.
 
 ```clojure
 ;; function definition
@@ -303,7 +302,7 @@ and :neo in the end. Then, we will have five turtles.
 
 ![add four turtles](img/add-four-turtles.png)
 
-- 6.2 [bonus] add parameter to `add-four-turtles` function so that the last turtle can
+- 6.2 [bonus] add a parameter to `add-four-turtles` function so that the last turtle can
 take any name
 
 Our `add-four-turtles` function only add :neo in the end.
@@ -520,12 +519,13 @@ repeating the same sequence makes very easy.
 - 9.2 [bonus] use hash map as a function parameter
 
 As a number of function parameters increases, it goes confusing.
-For example, if we mis understand the order of len2 and angle, turtles
-go beyond the boundary.
+For example, if we misunderstand the order of len2 and angle, turtles
+may go beyond the boundary.
 
 To solve this problem, hash map is often used as a function parameter.
-Then using destructuring, those parameters are picked up from the hash
-map.
+The parameters in the hash map are picked up using destructuring.
+It is handy.
+
 
 ```clojure
 ;; function definition
@@ -548,7 +548,7 @@ If we look at the usage example, it's clear what parameter goes where.
 
 Going forward 480 and repeating 48 times of forward 10 are not the
 same for the turtles.
-To see the difference, let define utility function, `leftmost` first.
+To see the difference, let define an utility function, `leftmost` first.
 This function moves a turtle to the leftmost position.
 
 ```clojure
@@ -564,7 +564,7 @@ This function moves a turtle to the leftmost position.
   (right n 180))
 ```
 
-Then, try two forwards.
+Once the turtle moves to the leftmost position, try two types of forwards.
 
 ```clojure
 clojurebridge-turtle.walk=> (leftmost :trinity)
@@ -588,12 +588,12 @@ nil
 ![forward 48*10](img/forward48times10.png)
 
 
-Both forward the turtle from the leftmost to rightmost position, but
-look at the color difference.
-The stroke's RGB (Red/Green/Blue) values are calculated based on the
-x, y values of the endpoint.
+Both walked the turtle from the leftmost to rightmost position,
+however, the colors are not the same.
+The stroke's color is calculated from the x, y values of the endpoint.
 Forwarding 480 has only one endpoint, while forwarding 48 times has 48
-endpoints. This means the turtle changed the color 48 times.
+endpoints.
+This means the turtle changed the color 48 times.
 
 
 
