@@ -1,8 +1,9 @@
-# Turtles App Samples
+# How to Walk Turtles
 
-Here are some samples from very basic to a little bit high level ones.
+Here are some instructions from very basic to a little bit high level
+ones to walk turtles.
 
-Draw lines by your imagination!
+Walk them and draw lines by your imagination!
 
 #### 1. start up
 
@@ -44,6 +45,14 @@ clojurebridge-turtle.walk=> (state)
 
 
 See [TURTLE.md](TURTLE.md) for commands that turtles understand.
+
+
+- `undo`, `clean`, and `home`
+
+When the turtle has gone unexpectedly long or short distance, we can delete the
+line one by one using `undo`.
+If the turtle should start from its initial state,
+`clean` and `home` commands make the turtle back to the initial state.
 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
