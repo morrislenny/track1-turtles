@@ -333,7 +333,16 @@ Instead, let's give a freedom to choose any name for the last turtle.
 (turtle-names)
 ```
 
-- 6.3 side note
+- 6.3 [bonus] [exercise] control a number of smiths
+
+We can control over the number of smiths if we add one more parameter
+to the function. For example, smiths will added 2, or 5 by the
+function argument.
+
+Try it and add as many as smiths you want.
+
+
+- 6.4 side note
 
 If we continue using the same turtles, a combination of `clean-all` and
 `home-all` gives the same effect as `add-four-turtles` function.
