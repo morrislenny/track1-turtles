@@ -324,6 +324,22 @@ Instead, let's give a freedom to choose any name for the last turtle.
 (turtle-names)
 ```
 
+- 6.3 side note
+
+If we continue using the same turtles, a combination of `clean-all` and
+`home-all` gives the same effect as `add-four-turtles` function.
+
+```clojure
+;; deletes all lines
+(clean-all)
+
+;; moves all turtles back to the home position
+(home-all)
+
+;; check turtles' names
+(turtle-names)
+```
+
 #### 7. [intermediate - difficult] Write a function that tilts five turtles in different directions
 
 Next, we want to tilt five turtles' heads in different angles so that we can
