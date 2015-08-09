@@ -42,3 +42,7 @@
   :draw draw-state
   :features [:keep-on-top]
   :middleware [m/fun-mode])
+
+;;
+;; photo credit http://wall.alphacoders.com/big.php?i=345953
+;;
