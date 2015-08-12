@@ -42,12 +42,12 @@
                                 :y 0
                                 :angle 90
                                 :color color}))
-       [n (n @turtles)])))
+       {n (n @turtles)})))
 
 (defn turtle-names
   "returns turtle names"
   []
-  (keys @turtles))
+  (vec (keys @turtles)))
 
 (defn- update-thing
   [thing n f]
@@ -74,7 +74,7 @@
      (right turtle a))
   ([n a]
      (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
-     [n a]))
+     {n {:angle a}}))
 
 (defn left
   "turns the specified turtle's head by given degrees in counterclockwise.
@@ -103,7 +103,7 @@
                              (update-line n (fn [v] (conj v line)))
                              (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
        (update-turtle n translate)
-       [n len])))
+       {n {:length len}})))
 
 (defn backward
   "moves the specified turtle backward by a given length.
@@ -133,7 +133,7 @@
   ([]
      (state turtle))
   ([n]
-     [n (n @turtles)]))
+     {n (n @turtles)}))
 
 (defn clean
   "cleans up all lines of the specified turtle.

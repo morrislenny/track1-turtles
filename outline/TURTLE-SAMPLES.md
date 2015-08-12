@@ -34,9 +34,9 @@ nil
 user=> (ns clojurebridge-turtle.walk)  ;; no need to run this on LightTable
 nil
 clojurebridge-turtle.walk=> (turtle-names)
-(:trinity)
+[:trinity]
 clojurebridge-turtle.walk=> (state)
-[:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]
+{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}
 ```
 
 - initial state
@@ -52,7 +52,23 @@ See [TURTLE.md](TURTLE.md) for commands that turtles understand.
 When the turtle has gone unexpectedly long or short distance, we can delete the
 line one by one using `undo`.
 If the turtle should start from its initial state,
-`clean` and `home` commands make the turtle back to the initial state.
+a combination of `clean` and `home` commands make the turtle back to
+the initial state.
+
+- `state`
+
+When the turtle goes far away beyond the boundary, or you lost which
+one is what, you can check where they are by this command. The command
+returns absolute values.
+
+[note] The `forward`/`backward` or `right`/`left` commands take a
+relative value to the current state.
+
+- `doc`
+
+Without looking at command reference, we can check how to use each
+function by Clojure's `doc`. For examples, `(doc forward)` displays
+its usage.
 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
@@ -61,7 +77,7 @@ If the turtle should start from its initial state,
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
-[:trinity 40]
+{:trinity {:length 40}}
 ```
 
 ![forward 40](img/forward40.png)
@@ -71,7 +87,7 @@ clojurebridge-turtle.walk=> (forward 40)
 
 ```clojure
 clojurebridge-turtle.walk=> (right 90)
-[:trinity 90]
+{:trinity {:angle 90}}
 ```
 
 ![right 90](img/right90.png)
@@ -80,23 +96,23 @@ clojurebridge-turtle.walk=> (right 90)
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
-[:trinity 40]
+{:trinity {:length 40}}
 clojurebridge-turtle.walk=> (right 90)
-[:trinity 90]
+{:trinity {:angle 90}}
 clojurebridge-turtle.walk=> (forward 50)
-[:trinity 50]
+{:trinity {:length 50}}
 clojurebridge-turtle.walk=> (right 90)
-[:trinity 90]
+{:trinity {:angle 90}}
 clojurebridge-turtle.walk=> (forward 60)
-[:trinity 60]
+{:trinity {:length 60}}
 clojurebridge-turtle.walk=> (right 90)
-[:trinity 90]
+{:trinity {:angle 90}}
 clojurebridge-turtle.walk=> (forward 70)
-[:trinity 70]
+{:trinity {:length 70}}
 clojurebridge-turtle.walk=> (right 90)
-[:trinity 90]
+{:trinity {:angle 90}}
 clojurebridge-turtle.walk=> (forward 80)
-[:trinity 80]
+{:trinity {:length 80}}
 ```
 
 ![combination](img/forwardsandrights.png)
@@ -108,17 +124,17 @@ clojurebridge-turtle.walk=> (forward 80)
 clojurebridge-turtle.walk=> (init)
 :trinity
 clojurebridge-turtle.walk=> (forward 50)
-[:trinity 50]
+{:trinity {:length 50}}
 clojurebridge-turtle.walk=> (right 45)
-[:trinity 45]
+{:trinity {:angle 45}}
 clojurebridge-turtle.walk=> (backward 100)
-[:trinity -100]
+{:trinity {:length -100}}
 clojurebridge-turtle.walk=> (left 45)
-[:trinity -45]
+{:trinity {:angle -45}}
 clojurebridge-turtle.walk=> (forward 50)
-[:trinity 50]
+{:trinity {:length 50}}
 clojurebridge-turtle.walk=> (state)
-[:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [30 30 30]}]
+{:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [30 30 30]}}
 ```
 
 ![movement sample](img/various-combination.png)
@@ -133,13 +149,13 @@ clojurebridge-turtle.walk=> (state)
 clojurebridge-turtle.walk=> (init)
 :trinity
 clojurebridge-turtle.walk=> (add-turtle)
-[:smith0 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+{:smith0 {:x 0, :y 0, :angle 90, :color [10 107 30]}}
 clojurebridge-turtle.walk=> (add-turtle)
-[:smith1 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+{:smith1 {:x 0, :y 0, :angle 90, :color [10 107 30]}}
 clojurebridge-turtle.walk=> (add-turtle)
-[:smith2 {:x 0, :y 0, :angle 90, :color [10 107 30]}]
+{:smith2 {:x 0, :y 0, :angle 90, :color [10 107 30]}}
 clojurebridge-turtle.walk=> (turtle-names)
-(:trinity :smith0 :smith1 :smith2)
+[:trinity :smith0 :smith1 :smith2]
 ```
 
 ![four turtles](img/four-turtles.png)
@@ -148,11 +164,11 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ```clojure
 clojurebridge-turtle.walk=> (right :smith0 (* 1 45))
-[:smith0 45]
+{:smith0 {:angle 45}}
 clojurebridge-turtle.walk=> (right :smith1 (* 2 45))
-[:smith1 90]
+{:smith1 {:angle 90}}
 clojurebridge-turtle.walk=> (right :smith2 (* 3 45))
-[:smith2 135]
+{:smith2 {:angle 135}}
 ```
 
 ![four directions](img/four-directions.png)
@@ -161,13 +177,13 @@ clojurebridge-turtle.walk=> (right :smith2 (* 3 45))
 
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 40)
-[:trinity 40]
+{:trinity {:length 40}}
 clojurebridge-turtle.walk=> (forward :smith0 40)
-[:smith0 40]
+{:smith0 {:length 40}}
 clojurebridge-turtle.walk=> (forward :smith1 40)
-[:smith1 40]
+{:smith1 {:length 40}}
 clojurebridge-turtle.walk=> (forward :smith2 40)
-[:smith2 40]
+{:smith2 {:length 40}}
 ```
 
 ![four moves](img/four-forwards.png)
@@ -179,7 +195,7 @@ clojurebridge-turtle.walk=> (forward :smith2 40)
 
 ```clojure
 clojurebridge-turtle.walk=> (add-turtle :neo)
-[:neo {:x 0, :y 0, :angle 90, :color [75 0 130]}]
+{:neo {:x 0, :y 0, :angle 90, :color [75 0 130]}}
 ```
 
 ![fifth turtle](img/fifth-turtle.png)
@@ -189,11 +205,11 @@ clojurebridge-turtle.walk=> (add-turtle :neo)
 
 ```clojure
 clojurebridge-turtle.walk=> (left :neo 45)
-[:neo -45]
+{:neo {:angle -45}}
 clojurebridge-turtle.walk=> (forward :neo 40)
-[:neo 40]
+{:neo {:length 40}}
 clojurebridge-turtle.walk=> (turtle-names)
-(:trinity :smith0 :smith1 :smith2 :neo)
+[:trinity :smith0 :smith1 :smith2 :neo]
 ```
 
 ![fifth's move](img/fifth-turtle-move.png)
@@ -203,15 +219,15 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 20)
-[:trinity 20]
+{:trinity {:length 20}}
 clojurebridge-turtle.walk=> (forward :smith0 20)
-[:smith0 20]
+{:smith0 {:length 20}}
 clojurebridge-turtle.walk=> (forward :smith1 20)
-[:smith1 20]
+{:smith1 {:length 20}}
 clojurebridge-turtle.walk=> (forward :smith2 20)
-[:smith2 20]
+{:smith2 {:length 20}}
 clojurebridge-turtle.walk=> (forward :neo 20)
-[:neo 20]
+{:neo {:length 20}}
 ```
 
 ![forward 20 more](img/forward20plus.png)
@@ -242,7 +258,8 @@ nil
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
-([:trinity 40] [:smith0 40] [:smith1 40] [:smith2 40] [:neo 40])
+({:trinity {:length 40}} {:smith0 {:length 40}} {:smith1 {:length 40}}
+{:smith2 {:length 40}} {:neo {:length 40}})
 ```
 
 
@@ -271,9 +288,11 @@ nil
 
 ```clojure
 clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-names))
-([[:trinity 60] [:trinity 30]] [[:smith0 60] [:smith0 30]]
-[[:smith1 60] [:smith1 30]] [[:smith2 60] [:smith2 30]] [[:neo 60]
-[:neo 30]])
+([{:trinity {:angle 60}} {:trinity {:length 30}}]
+[{:smith0 {:angle 60}} {:smith0 {:length 30}}]
+[{:smith1 {:angle 60}} {:smith1 {:length 30}}]
+[{:smith2 {:angle 60}} {:smith2 {:length 30}}]
+[{:neo {:angle 60}} {:neo {:length 30}}])
 ```
 
 
@@ -452,7 +471,8 @@ line as in below.
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(right % (* %2 45)) (turtle-names) (range 0 (count (turtle-names))))
-([:trinity 0] [:smith0 45] [:smith1 90] [:smith2 135] [:neo 180])
+({:trinity {:angle 0}} {:smith0 {:angle 45}} {:smith1 {:angle 90}}
+{:smith2 {:angle 135}} {:neo {:angle 180}})
 ```
 
 - 7.3 [bonus] recursion is another way to do
@@ -602,18 +622,18 @@ Once the turtle moves to the leftmost position, try two types of forwards.
 
 ```clojure
 clojurebridge-turtle.walk=> (leftmost :trinity)
-[:trinity 180]
+{:trinity {:angle 180}}
 
 ;; forward 480
 clojurebridge-turtle.walk=> (forward 480)
-[:trinity 480]
+{:trinity {:length 480}}
 ```
 
 ![forward 480](img/forward480.png)
 
 ```clojure
 clojurebridge-turtle.walk=> (leftmost :trinity)
-[:trinity 180]
+{:trinity {:angle 180}}
 
 ;; 48 times of forward 10
 clojurebridge-turtle.walk=> (dotimes [i 48] (forward 10))
