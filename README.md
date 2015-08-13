@@ -13,19 +13,24 @@ LightTable - open `core.clj` and press
 
 Emacs - run cider, open `core.clj` and press `C-c C-k` to evaluate the file.
 
-REPL - run `(require 'welcometoclojurebridge.core)`.
+`lein repl` - run `(require 'welcometoclojurebridge.core)`.
 
 
 ## Usage 2 - try simple functions to walk a turtle
 
 LightTable - open `walk.clj` and press
 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
-<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the
+file.
+To evaluate additional form, move a cursor to the end of line and
+<kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Enter</kbd>.
+
 
 Emacs - run cider, open `walk.clj` and press `C-c C-k` to evaluate the
 file. On repl, type `(ns clojurebridge-turtle.walk)`.
 
-REPL - run `(require 'clojurebridge-turtle.walk)`, `(ns clojurebridge-turtle.walk)`.
+`lein repl` - run `(require 'clojurebridge-turtle.walk)`, `(ns clojurebridge-turtle.walk)`.
 
 #### How to move turtles
 
@@ -40,15 +45,15 @@ Original Works
 
 "Welcome to ClojureBridge" app is originally written by @orb for
 Austin, TX, USA workshop.
-The original repository is <https://github.com/orb/welcometoclojurebridge>.
+The repository is <https://github.com/orb/welcometoclojurebridge>.
 
 
 "Turtle" app is originally written by @echeran as Clojure port of Logo
 programming language.
-The original repository is <https://github.com/google/clojure-turtle>.
+The repository is <https://github.com/google/clojure-turtle>.
 
 
-Many thanks to original authors!
+Many thanks to @orb and @echeran.
 
 
 License

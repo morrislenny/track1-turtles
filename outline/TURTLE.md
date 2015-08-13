@@ -68,6 +68,7 @@ are relative to the current position or angle.
 |`(add-turtle) (add-turtle n)`| adds a turtle. if no name given, the turtle will be named, :smith0, :smith1, ...|
 |`(turtle-names)`| returns all turtle names.|
 |`(state) (state n)`| returns a current state of the turtle.|
+|`(state-all)`| returns current states of all turtles.|
 
 
 
@@ -81,11 +82,13 @@ are relative to the current position or angle.
 
 (state)                  ;; returns :trinity's current state
 (state :smith0)          ;; returns :smith0's current state
+
+(state-all)              ;; returns all turtles' current states
 ```
 
 The `state` command shows the *absolute* values not like relative values
 used in `forward`, `backward`, `right` and `left`.
-For example, `[:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}]`.
+For example, `{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`.
 
 Absolute dimensions and angles are setup as in below:
 

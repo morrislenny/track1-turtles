@@ -135,6 +135,11 @@
   ([n]
      {n (n @turtles)}))
 
+(defn state-all
+  "returns current states of all turtles."
+  []
+  (reduce conj [] (map #(state %) (turtle-names))))
+
 (defn clean
   "cleans up all lines of the specified turtle.
    if no name is given, :trinity's lines will be cleaned up."
