@@ -4,13 +4,13 @@
 (clean)
 (home)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; evaluate whole file by hitting
 ;;   ctrl + shift + enter, or
 ;;   cmd + shift + enter
 ;;
 ;; add some functions under these comment lines
-;; evaluate each line by hitting
+;; evaluate each form (line or function) by hitting
 ;;   ctrl + enter,  or
 ;;   cmd + enter
 ;;
