@@ -1,18 +1,75 @@
 # welcometoclojurebridge
 
-A sample app to test your install for ClojureBridge
+This repository has two apps.
 
-## Usage
+1. A sample app to test your install for ClojureBridge
+2. A template to try simple functions to walk a turtle
 
-LightTable - open `core.clj` and press `Ctrl+Shift+Enter` to evaluate the file.
+## Usage 1 - test your installation
+
+LightTable - open `core.clj` and press
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
 
 Emacs - run cider, open `core.clj` and press `C-c C-k` to evaluate the file.
 
-REPL - run `(require 'welcometoclojurebridge.core)`.
+`lein repl` - run `(require 'welcometoclojurebridge.core)`.
 
-## License
 
-Copyright © 2014 FIXME
+## Usage 2 - try simple functions to walk a turtle
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+LightTable - open `walk.clj` and press
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the
+file.
+To evaluate additional form, move a cursor to the end of line and
+<kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Enter</kbd>.
+
+
+Emacs - run cider, open `walk.clj` and press `C-c C-k` to evaluate the
+file. On repl, type `(ns clojurebridge-turtle.walk)`.
+
+`lein repl` - run `(require 'clojurebridge-turtle.walk)`, `(ns clojurebridge-turtle.walk)`.
+
+#### How to move turtles
+
+A turtle can move forward/backward and tilt its head right/left.
+Combinations of these will make interesting lines.
+
+See [outline/TURTLE.md](outline/TURTLE.md) for commands that turtles
+understand.
+
+For sample, have look [outline/TURTLE-SAMPLES.md](outline/TURTLE-SAMPLES.md).
+
+
+Original Works
+--------------
+
+"Welcome to ClojureBridge" app is originally written by @orb for
+Austin, TX, USA workshop.
+The repository is <https://github.com/orb/welcometoclojurebridge>.
+
+
+"Turtle" app is originally written by @echeran as Clojure port of Logo
+programming language.
+The repository is <https://github.com/google/clojure-turtle>.
+
+
+Many thanks to @orb and @echeran.
+
+
+License
+-------
+<a rel="license"
+href="http://creativecommons.org/licenses/by/4.0/deed.en_US"><img
+alt="Creative Commons License" style="border-width:0"
+src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br
+/><span xmlns:dct="http://purl.org/dc/terms/"
+href="http://purl.org/dc/dcmitype/Text" property="dct:title"
+rel="dct:type">ClojureBridge Curriculum</span> by <span
+xmlns:cc="http://creativecommons.org/ns#"
+property="cc:attributionName">ClojureBridge</span> is licensed under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by/4.0/deed.en_US">Creative
+Commons Attribution 4.0 International License</a>.
