@@ -146,6 +146,10 @@ Absolute dimensions and angles are setup as in below:
 (init)                   ;; makes back to the starting state, only :trinity is in home position
 ```
 
+## Samples
+
+[How to Walk Turtles](TURTLE-SAMPLES.md) has more examples as well as
+function study materials.
 
 License
 -------
