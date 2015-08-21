@@ -22,7 +22,13 @@ open the file
 `welcomeclojurebridge/src/clojurebridge_turtle/walk.clj`.
 Then,
 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
-<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
+<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the
+file.
+
+Once the turtles app starts running, evaluate each line by hitting,
+<kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+<kbd>Cmd</kbd> + <kbd>Enter</kbd> on the `walk.clj`.
+
 
 - load walk.clj on lein repl
 
