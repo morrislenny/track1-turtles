@@ -25,9 +25,10 @@ Then,
 <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the
 file.
 
-Once the turtles app starts running, evaluate each line by hitting,
+Once the turtles app starts running, evaluate each form (code fragment
+enclosed by matching parentheses) by hitting,
 <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-<kbd>Cmd</kbd> + <kbd>Enter</kbd> on the `walk.clj`.
+<kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line or function definition.
 
 
 - load walk.clj on lein repl
