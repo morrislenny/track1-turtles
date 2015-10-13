@@ -7,13 +7,15 @@
 (ns clojurebridge-turtle.core
   (:require [quil.core :as q]))
 
+(def trinity {:x 0
+              :y 0
+              :angle 90
+              :color [106 40 126]})
+
 ;; turtles map
 ;; {:name {:x x :y y :angle a :color [r g b]}
 ;; at the beginning, only :trinity is there
-(def turtles (atom {:trinity {:x 0
-                              :y 0
-                              :angle 90
-                              :color [30 30 30]}}))
+(def turtles (atom {:trinity trinity}))
 
 ;; lines map
 ;; {:name [[xs0 ys0 xe0 ye0] [xs1 ys1 xe1 ye1]]}
@@ -22,32 +24,31 @@
 
 (def turtle :trinity)
 
-;; counter is used to name a new turtle
-(def counter (atom -1))
-
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
-   if the name is not given, it will be :smith0, smith1, etc.
    additionally, allows to choose color, which is a vector of [r g b]"
-  ([]
-     (swap! counter inc)
-     (add-turtle (str "smith" @counter) [10 107 30]))
   ([name]
-     (add-turtle (keyword name) [75 0 130]))
+     (add-turtle (keyword name) [10 75 0]))
   ([name color]
      (let [n (keyword name)]
-       (dosync
-        (swap! lines assoc n [])
-        (swap! turtles assoc n {:x 0
-                                :y 0
-                                :angle 90
-                                :color color}))
+       (when-not (n @turtles)
+         (dosync
+          (swap! lines assoc n [])
+          (swap! turtles assoc n {:x 0
+                                  :y 0
+                                  :angle 90
+                                  :color color})))
        {n (n @turtles)})))
 
 (defn turtle-names
   "returns turtle names"
   []
   (vec (keys @turtles)))
+
+(defmacro when-onlyone [body]
+  `(if (= 1 (count @turtles))
+     (~@body)
+     "Specify name. You have more than one turtle."))
 
 (defn- update-thing
   [thing n f]
@@ -71,7 +72,7 @@
   "turns the specified turtle's head by given degrees in clockwise.
    if no name is given, only :trinity's head will be changed"
   ([a]
-     (right turtle a))
+     (when-onlyone (right turtle a)))
   ([n a]
      (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
      {n {:angle a}}))
@@ -88,7 +89,7 @@
   "moves the specified turtle forward by a given length.
    if no name is given, :trinity will go forward."
   ([len]
-     (forward turtle len))
+     (when-onlyone (forward turtle len)))
   ([n len]
      (let [rads      (fn [{:keys [angle]}]
                        (q/radians angle))
@@ -117,7 +118,7 @@
   "undos the specified turtle's last line and moves the turtle back.
    if no name is given, :trinity's move will be undoed."
   ([]
-     (undo turtle))
+     (when-onlyone (undo turtle)))
   ([n]
      (if (< 0 (-> @lines n count))
        (do
@@ -131,7 +132,7 @@
   "returns a current state of the specified turtle.
    if no name is given, :trinity's state will be returned."
   ([]
-     (state turtle))
+     (when-onlyone (state turtle)))
   ([n]
      {n (n @turtles)}))
 
@@ -144,7 +145,7 @@
   "cleans up all lines of the specified turtle.
    if no name is given, :trinity's lines will be cleaned up."
   ([]
-     (clean turtle))
+     (when-onlyone (clean turtle)))
   ([n]
      (update-line n (constantly []))
      n))
@@ -159,7 +160,7 @@
   "moves the specified turtle back to the home position.
    if no name is given, :trinity will be back home."
   ([]
-     (home turtle))
+     (when-onlyone (home turtle)))
   ([n]
      (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90})))
      n))
@@ -177,12 +178,8 @@
    only :trinity is in the home position."
   []
   (dosync
-   (swap! counter (constantly -1))
    (swap! lines (constantly {turtle []}))
-   (swap! turtles (constantly {turtle {:x 0
-                                       :y 0
-                                       :angle 90
-                                       :color [30 30 30]}})))
+   (swap! turtles (constantly {turtle trinity})))
   turtle)
 
 ;; triangle (by polar equations)
