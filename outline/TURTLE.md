@@ -10,12 +10,10 @@ change head angle clockwise/counterclockwise.
 ![initial state](img/initial-state.png)
 
 
-- Turtles can be added with/without a name.
-If no name is given, a new turtle's name will be :smith0, :smith1,
-etc.
+- Turtles can be added with a name.
 
 - Each turtle can move independently giving a command with the name.
-If no name is given, :trinity is the turtle to receive a command.
+If only :trinity is there, you don't need to give the name to commands.
 
 
 ## Movement
@@ -39,25 +37,25 @@ are relative to the current position or angle.
 ### usage examples
 
 ```clojure
-(forward 30)             ;; :trinity moves
-(forward :smith0 40)     ;; :smith0 moves
+(forward 30)         ;; :trinity moves only when :trinity is there
+(forward :neo 40)    ;; :neo moves
 
-(backward 35)            ;; :trinity moves
-(backward :smith0 100)   ;; :smith0 moves
+(backward 35)        ;; :trinity moves only when :trinity is there
+(backward :neo 100)  ;; :neo moves
 
-(right 45)               ;; :trinity tilts her head 45 degrees clockwise
-(right :smith0 90)       ;; :smith0 tilts his head 90 degrees clockwise
+(right 45)           ;; :trinity tilts her head 45 degrees clockwise only when :trinity is there
+(right :neo 90)      ;; :neo tilts his head 90 degrees clockwise
 
-(left 30)                ;; :trinity tilts her head 30 degrees counterclockwise
-(left :smith0 135)       ;; :smith0 tilts his head 135 degrees counterclockwise
+(left 30)            ;; :trinity tilts her head 30 degrees counterclockwise only when :trinity is there
+(left :neo 135)      ;; :neo tilts his head 135 degrees counterclockwise
 
-(undo)                   ;; :trinity's last line will be removed
-(undo :smith0)           ;; :smith0's last line will be removed
+(undo)               ;; :trinity's last line will be removed only when :trinity is there
+(undo :neo)          ;; :neo's last line will be removed
 
-(home)                   ;; moves :trinity back to the home position, center
-(home :smith0)           ;; moves :smith0 back to the home position, center
+(home)               ;; moves :trinity back to the home position, center only when :trinity is there
+(home :neo)          ;; moves :neo back to the home position, center
 
-(home-all)               ;; moves all turtles back to the home position
+(home-all)           ;; moves all turtles back to the home position
 ```
 
 
@@ -65,7 +63,7 @@ are relative to the current position or angle.
 
 | command | description |
 | ------- | ----------- |
-|`(add-turtle) (add-turtle n)`| adds a turtle. if no name given, the turtle will be named, :smith0, :smith1, ...|
+|`(add-turtle n)`| adds a turtle with its name.|
 |`(turtle-names)`| returns all turtle names.|
 |`(state) (state n)`| returns a current state of the turtle.|
 |`(state-all)`| returns current states of all turtles.|
@@ -75,15 +73,15 @@ are relative to the current position or angle.
 ### usage examples
 
 ```clojure
-(add-turtle)             ;; adds a turtle whose name is :smith0, then :smith1, ...
-(add-turtle :neo)        ;; adds a turtle whose name is :neo
+(add-turtle :neo)    ;; adds a turtle whose name is :neo
 
-(turtle-names)           ;; returns all turtle names
+(turtle-names)       ;; returns all turtle names
 
-(state)                  ;; returns :trinity's current state
-(state :smith0)          ;; returns :smith0's current state
+(state)              ;; returns :trinity's current state only when :trinity is there
 
-(state-all)              ;; returns all turtles' current states
+(state :neo)         ;; returns :neo's current state
+
+(state-all)          ;; returns all turtles' current states
 ```
 
 The `state` command shows the *absolute* values not like relative values
@@ -128,10 +126,10 @@ Absolute dimensions and angles are setup as in below:
 ### usage examples
 
 ```clojure
-(clean)                  ;; cleans all of :trinity's lines
-(clean :smith0)          ;; cleans all of :smith0's lines
+(clean)              ;; cleans all of :trinity's lines only when :trinity is there
+(clean :neo)         ;; cleans all of :neo's lines
 
-(clean-all)              ;; cleans all turtles all lines
+(clean-all)          ;; cleans all turtles all lines
 ```
 
 ## Initialize
@@ -143,7 +141,7 @@ Absolute dimensions and angles are setup as in below:
 ### usage examples
 
 ```clojure
-(init)                   ;; makes back to the starting state, only :trinity is in home position
+(init)               ;; makes back to the starting state, only :trinity is in home position
 ```
 
 ## Samples
