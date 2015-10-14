@@ -24,11 +24,16 @@
 
 (def turtle :trinity)
 
+(def colors [[65 56 57] [127 70 44] [128 5 23] [37 65 23] [21 27 84] [95 140 156] [208 74 0] [196 3 88]])
+(defn- rand-color
+  []
+  (nth colors (rand-int (count colors))))
+
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
    additionally, allows to choose color, which is a vector of [r g b]"
   ([name]
-     (add-turtle (keyword name) [10 75 0]))
+     (add-turtle (keyword name) (rand-color)))
   ([name color]
      (let [n (keyword name)]
        (when-not (n @turtles)
