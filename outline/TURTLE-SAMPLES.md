@@ -43,7 +43,7 @@ nil
 clojurebridge-turtle.walk=> (turtle-names)
 [:trinity]
 clojurebridge-turtle.walk=> (state)
-{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}
+{:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}}
 ```
 
 - initial state
@@ -79,6 +79,9 @@ its usage.
 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
+
+> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
 
 - forward
 
@@ -141,7 +144,7 @@ clojurebridge-turtle.walk=> (left 45)
 clojurebridge-turtle.walk=> (forward 50)
 {:trinity {:length 50}}
 clojurebridge-turtle.walk=> (state)
-{:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [30 30 30]}}
+{:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [106 40 126]}}
 ```
 
 ![movement sample](img/various-combination.png)
@@ -150,24 +153,27 @@ clojurebridge-turtle.walk=> (state)
 
 #### 3. [easy] Multiple turtles
 
+> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
+
 - add turtles
 
 ```clojure
 clojurebridge-turtle.walk=> (init)
 :trinity
 clojurebridge-turtle.walk=> (add-turtle :neo)
-{:neo {:x 0, :y 0, :angle 90, :color [37 65 23]}}
+{:neo {:x 0, :y 0, :angle 90, :color [12 84 0]}}
 clojurebridge-turtle.walk=> (add-turtle :oracle)
-{:oracle {:x 0, :y 0, :angle 90, :color [208 74 0]}}
+{:oracle {:x 0, :y 0, :angle 90, :color [189 63 0]}}
 clojurebridge-turtle.walk=> (add-turtle :cypher)
-{:cypher {:x 0, :y 0, :angle 90, :color [65 56 57]}}
+{:cypher {:x 0, :y 0, :angle 90, :color [75 102 125]}}
 clojurebridge-turtle.walk=> (turtle-names)
 [:trinity :neo :oracle :cypher]
 ```
 
 ![four turtles](img/four-turtles.png)
 
-- make smiths tilt different angles
+- make turtles tilt different angles
 
 ```clojure
 clojurebridge-turtle.walk=> (right :neo (* 1 45))
@@ -197,6 +203,9 @@ clojurebridge-turtle.walk=> (forward :cypher 40)
 
 
 #### 4. [easy] Add one more turtle and give them commands
+
+> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
 
 - add another turtle named :morpheus with color
 
@@ -241,6 +250,10 @@ clojurebridge-turtle.walk=> (forward :morpheus 20)
 
 
 #### 5. [easy - intermediate] Move all five turtles - introduction to function
+
+> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the last line of functions
+> on LightTable
 
 We've had five turtles and want to move or tilt those five.
 Let's think how we can make all five turtles go forward by 40?
@@ -304,9 +317,13 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 
 #### 6. [easy - intermediate] Write a function that adds turtles
 
+> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
+> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of each line or last
+> line of function definition on LightTable
+
 While playing around with turtles, we may mess up their movements.
 The `(init)` command makes everything clean up and back to the initial state.
-It is a good command, but again, we need to repeat `(add-turtle)`
+It is a good command, but again, we need to repeat `(add-turtle name)`
 command many times to get five turtles.
 
 We want something. Yes, we can define our own function for that.
@@ -316,16 +333,17 @@ function call anytime.
 
 - 6.1 define a function to add three turtles and a turtle with the name :neo
 
-Since we already have :trinity, we are going to add three smiths
-and :neo. After that, we will have five turtles in total.
+Since we already have :trinity, we are going to add four turtles.
+Let's name them, :neo, :oracle, :cypher, :morpheus.
+Once all are added, we will get five turtles in total.
 
 ```clojure
 ;; function definition
 (defn add-four-turtles
   []
-  (init)
-  (dotimes [i 3] (add-turtle))
-  (add-turtle :neo))
+  (let [names [:neo :oracle :cypher :morpheus]]
+    (init)
+    (dotimes [i (count names)] (add-turtle (nth names i)))))
 
 ;; usage of the five-turtles function
 (add-four-turtles)
@@ -336,40 +354,60 @@ and :neo. After that, we will have five turtles in total.
 
 ![add four turtles](img/add-four-turtles.png)
 
-- 6.2 [bonus] add a parameter to `add-four-turtles` function so that the last turtle can
-take any name
+- 6.2 [bonus] add a parameter to `add-four-turtles` function so that
+each turtle can take specified name.
 
-Our `add-four-turtles` function only add :neo in the end.
-Instead, let's give a freedom to choose any name for the last turtle.
+Our `add-four-turtles` function uses hard-coded names for turtles.
+Instead, let's enjoy a freedom to choose any name for them without
+rewriting the function.
+
+Now, we are going to write **multi-arity function**. The arity means a
+number of arguments the function takes. For example, our
+`add-four-turtle` function so far takes zero argument only. If we add
+`add-four-turtle` function which takes one argument, the function
+turns to a multi-arity function. This is because the function takes
+zero or one argument.
+
 
 ```clojure
 ;; function definition
 (defn add-four-turtles
-  ([] (add-four-turtles :neo))
-  ([n]
+  ([] (add-four-turtles [:neo :oracle :cypher :morpheus]))
+  ([names]
     (init)
-    (dotimes [i 3] (add-turtle))
-    (add-turtle n)))
+    (dotimes [i (count names)] (add-turtle (nth names i)))))
 
 ;; usage example
-(add-four-turtles :oracle)
+(add-four-turtles)                                 ;; uses predefined names
+(add-four-turtles [:taylor :tess :tiffany :tracy]) ;; uses given names
 
 ;; check turtle names
 (turtle-names)
 ```
 
-- 6.3 [bonus] [exercise] control a number of smiths
+Look at the multi-arity function above once more. The
+`add-four-turtles` function doesn't need to have `four` in its name.
+The number of turtles can be any. If you list two names in the vector,
+the function will add two turtles.
 
-We can control over the number of smiths if we add one more parameter
-to the function. For example, smiths will added 2, or 5 by the
-function argument.
 
-Try it and add as many as smiths you want.
+- 6.3 [bonus] [exercise] make `add-four-turtles` to add exactly four turtles
 
+We can add a check so that only when four names are provided, the
+function adds four turtles; otherwise does nothing.
+
+Hint: function body will look like:
+
+```clojure
+(if (= 4 (count names))
+  ....blah blah blah...)
+```
 
 - 6.4 side note
 
-If we continue using the same turtles, a combination of `clean-all` and
+Suppose you have already five turtles and continue using the same
+turtles. But, you want to clean up all lines and make them home
+position. In such a case, a combination of `clean-all` and
 `home-all` gives the same effect as `add-four-turtles` function.
 
 ```clojure
@@ -385,12 +423,12 @@ If we continue using the same turtles, a combination of `clean-all` and
 
 #### 7. [intermediate - difficult] Write a function that tilts five turtles in different directions
 
-Next, we want to tilt five turtles' heads in different angles so that we can
-see their move well.
-For example, :trinity 0, :smith0 45, :smith1 90, :smith2 135,
-:neo 180.
-To write this function is no more straightforward since we need two
-kinds of parameters at the same time, name and angle.
+Next, we want to tilt five turtles' heads in different angles so that
+we can see their move well. For example, :trinity 0, :neo 45, :oracle
+90, :cypher 135, :morpheus 180.
+This function will be no more straightforward like we wrote so far.
+Since we need two kinds of parameters at the same time, name and
+angle, while previous functions used only one kind of parameter.
 
 Again, Clojure has many ways to do this.
 
@@ -407,7 +445,7 @@ If we put two-parameter pair together to form one, we can use `doseq` like previ
 clojurebridge-turtle.walk=> (def m (zipmap (turtle-names) (range 0 (count (turtle-names)))))
 #'clojurebridge-turtle.walk/m
 clojurebridge-turtle.walk=> m
-{:trinity 0, :smith0 1, :smith1 2, :smith2 3, :neo 4}
+{:trinity 0, :neo 1, :oracle 2, :cypher 3, :morpheus 4}
 
 ;; see each part is doing what
 clojurebridge-turtle.walk=> (count (turtle-names))
@@ -429,28 +467,28 @@ clojurebridge-turtle.walk=> (zipmap [:a :b] [0 1])
 ;; see how doseq uses m
 clojurebridge-turtle.walk=> (doseq [t m] (prn t))
 [:trinity 0]
-[:smith0 1]
-[:smith1 2]
-[:smith2 3]
-[:neo 4]
+[:neo 1]
+[:oracle 2]
+[:cypher 3]
+[:morpheus 4]
 nil
 
 ;; see first and second function do
 clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (second t)))
 :trinity 0
-:smith0 1
-:smith1 2
-:smith2 3
-:neo 4
+:neo 1
+:oracle 2
+:cypher 3
+:morpheus 4
 nil
 
 ;; see what (* (second t) 45) does
 clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (* (second t) 45)))
 :trinity 0
-:smith0 45
-:smith1 90
-:smith2 135
-:neo 180
+:neo 45
+:oracle 90
+:cypher 135
+:morpheus 180
 nil
 ```
 
@@ -477,8 +515,8 @@ line as in below.
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(right % (* %2 45)) (turtle-names) (range 0 (count (turtle-names))))
-({:trinity {:angle 0}} {:smith0 {:angle 45}} {:smith1 {:angle 90}}
-{:smith2 {:angle 135}} {:neo {:angle 180}})
+({:trinity {:angle 0}} {:neo {:angle 45}} {:oracle {:angle 90}}
+{:cypher {:angle 135}} {:morpheus {:angle 180}})
 ```
 
 - 7.3 [bonus] recursion is another way to do
@@ -564,13 +602,13 @@ repeating the same sequence makes very easy.
 ```clojure
 ;; definition of walk-five-turtles functions
 (defn walk-five-turtles
-  [name len1 len2 angle]
-  (add-four-turtles name)
+  [names len1 len2 angle]
+  (add-four-turtles names)
   (tilt-turtles)
   (doseq-with-params len1 len2 angle))
 
 ;; usage examples
-(walk-five-turtles :oracle 10 60 90)
+(walk-five-turtles [:taylor :tess :tiffany :tracy] 10 60 90)
 ```
 
 ![walk five turtles](img/walk-five-turtles.png)
@@ -590,14 +628,14 @@ It is handy.
 ```clojure
 ;; function definition
 (defn walk-five-turtles-map
-  [{:keys [name len1 len2 angle]}]
-  (add-four-turtles name)
+  [{:keys [names len1 len2 angle]}]
+  (add-four-turtles names)
   (tilt-turtles)
   (doseq-with-params len1 len2 angle))
 
 
 ;; usage example
-(walk-five-turtles-map {:name :oracle :len1 10 :len2 60 :angle 90})
+(walk-five-turtles-map {:names [:taylor :tess :tiffany :tracy] :len1 10 :len2 60 :angle 90})
 ```
 
 If we look at the usage example, it's clear what parameter goes where.
@@ -631,7 +669,7 @@ clojurebridge-turtle.walk=> (leftmost :trinity)
 {:trinity {:angle 180}}
 
 ;; forward 480
-clojurebridge-turtle.walk=> (forward 480)
+clojurebridge-turtle.walk=> (forward :trinity 480)
 {:trinity {:length 480}}
 ```
 
@@ -642,7 +680,7 @@ clojurebridge-turtle.walk=> (leftmost :trinity)
 {:trinity {:angle 180}}
 
 ;; 48 times of forward 10
-clojurebridge-turtle.walk=> (dotimes [i 48] (forward 10))
+clojurebridge-turtle.walk=> (dotimes [i 48] (forward :trinity 10))
 nil
 ```
 ![forward 48*10](img/forward48times10.png)
