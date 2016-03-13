@@ -26,8 +26,8 @@ are relative to the current position or angle. The command may be given the name
 | ------- | ----------- | ----------|
 |`(forward length) (forward name length)`| moves the turtle forward by length.| ![go forward](img/go-forward.png) |
 |`(backward length) (backward name length)`| moves the turtle backward by length.| ![go backward](img/go-backward.png) |
-|`(right a) (right name a)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
-|`(left a) (left name a)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
+|`(right angle) (right name angle)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
+|`(left angle) (left name angle)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
 |`(undo) (undo name)`| undos the last line and back the turtle.||
 |`(home) (home name)`| moves the turtle back to the home position.||
 |`(home-all)`| moves all turtles back to the home position.||
