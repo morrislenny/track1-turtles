@@ -24,7 +24,11 @@ are relative to the current position or angle. The command may be given the name
 
 | command | description |           |
 | ------- | ----------- | ----------|
-|`(forward length) (forward name length)`| moves the turtle forward by length.| ![go forward](img/go-forward.png) |
+|
+```clojure
+(forward length)
+(forward name length)```
+| moves the turtle forward by length.| ![go forward](img/go-forward.png) |
 |`(backward length) (backward name length)`| moves the turtle backward by length.| ![go backward](img/go-backward.png) |
 |`(right angle) (right name angle)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
 |`(left angle) (left name angle)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
