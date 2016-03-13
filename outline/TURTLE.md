@@ -13,7 +13,7 @@ change head angle clockwise/counterclockwise.
 - Turtles can be added with a name.
 
 - Each turtle can move independently giving a command with its name.
-If only :trinity is there, you don't need to give the name to commands.
+If only `:trinity` is there, you don't need to give the name to commands.
 
 
 ## Movement
