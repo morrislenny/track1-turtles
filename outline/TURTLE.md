@@ -2,9 +2,9 @@
 
 ## Basics
 
-- At the beginning, only one turtle whose name is :trinity (don't omit ':'
+- At the beginning, only one turtle whose name is `:trinity` (don't omit `:`
 (colon), it is a Clojure keyword) will show up at the home position (center).
-This turtle, :trinity, can move forward/backward,
+This turtle, `:trinity`, can move forward/backward,
 change head angle clockwise/counterclockwise.
 
 ![initial state](img/initial-state.png)
@@ -12,24 +12,24 @@ change head angle clockwise/counterclockwise.
 
 - Turtles can be added with a name.
 
-- Each turtle can move independently giving a command with the name.
+- Each turtle can move independently giving a command with its name.
 If only :trinity is there, you don't need to give the name to commands.
 
 
 ## Movement
 
 All parameters to `forward`, `backward`, `right`, and `left` commands
-are relative to the current position or angle.
+are relative to the current position or angle. The command may be given the name of the turtle. Without the name they would refer to the only turtle on the canvas. 
 
 
 | command | description |           |
 | ------- | ----------- | ----------|
-|`(forward len) (forward n len)`| moves the turtle forward by len.| ![go forward](img/go-forward.png) |
-|`(backward len) (backward n len)`| moves the turtle backward by len.| ![go backward](img/go-backward.png) |
-|`(right a) (right n a)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
-|`(left a) (left n a)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
-|`(undo) (undo n)`| undos the last line and back the turtle.||
-|`(home) (home n)`| moves the turtle back to the home position.||
+|`(forward length) (forward name length)`| moves the turtle forward by length.| ![go forward](img/go-forward.png) |
+|`(backward length) (backward name length)`| moves the turtle backward by length.| ![go backward](img/go-backward.png) |
+|`(right a) (right name a)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
+|`(left a) (left name a)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
+|`(undo) (undo name)`| undos the last line and back the turtle.||
+|`(home) (home name)`| moves the turtle back to the home position.||
 |`(home-all)`| moves all turtles back to the home position.||
 
 
@@ -37,17 +37,17 @@ are relative to the current position or angle.
 ### usage examples
 
 ```clojure
-(forward 30)         ;; :trinity moves only when :trinity is there
+(forward 30)         ;; :trinity moves forward by 30 pixels only when :trinity is there
 (forward :neo 40)    ;; :neo moves
 
-(backward 35)        ;; :trinity moves only when :trinity is there
+(backward 35)        ;; :trinity moves backward by 35 pixels only when :trinity is there
 (backward :neo 100)  ;; :neo moves
 
-(right 45)           ;; :trinity tilts her head 45 degrees clockwise only when :trinity is there
-(right :neo 90)      ;; :neo tilts his head 90 degrees clockwise
+(right 45)           ;; :trinity turns 45 degrees clockwise only when :trinity is there
+(right :neo 90)      ;; :neo turns 90 degrees clockwise
 
-(left 30)            ;; :trinity tilts her head 30 degrees counterclockwise only when :trinity is there
-(left :neo 135)      ;; :neo tilts his head 135 degrees counterclockwise
+(left 30)            ;; :trinity turns 30 degrees counterclockwise only when :trinity is there
+(left :neo 135)      ;; :neo turns 135 degrees counterclockwise
 
 (undo)               ;; :trinity's last line will be removed only when :trinity is there
 (undo :neo)          ;; :neo's last line will be removed
@@ -63,12 +63,12 @@ are relative to the current position or angle.
 
 | command | description |
 | ------- | ----------- |
-|`(add-turtle n)`| adds a turtle with its name.|
+|`(add-turtle name)`| adds a turtle with its name.|
 |`(turtle-names)`| returns all turtle names.|
-|`(state) (state n)`| returns a current state of the turtle.|
+|`(state) (state name)`| returns a current state of the turtle.|
 |`(state-all)`| returns current states of all turtles.|
 
-
+Turtle's state includes its current coordinates (x,y), the angle it's pointing at, and its color. The color is encoded as three numbers in the RGB (Red, Green, Blue) encoding. 
 
 ### usage examples
 
@@ -77,14 +77,14 @@ are relative to the current position or angle.
 
 (turtle-names)       ;; returns all turtle names
 
-(state)              ;; returns :trinity's current state only when :trinity is there
+(state)              ;; returns :trinity's current state only when :trinity is there. 
 
 (state :neo)         ;; returns :neo's current state
 
 (state-all)          ;; returns all turtles' current states
 ```
 
-The `state` command shows the *absolute* values not like relative values
+The `state` command shows the *absolute* coordinates on the canvas, not coordinates relative to the starting point that are 
 used in `forward`, `backward`, `right` and `left`.
 For example, `{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`.
 
@@ -120,7 +120,7 @@ Absolute dimensions and angles are setup as in below:
 
 | command | description |
 | ------- | ----------- |
-|`(clean) (clean n)`| cleans all lines belong to the turtle. |
+|`(clean) (clean name)`| cleans all lines belong to the turtle. |
 |`(clean-all)`| cleans all lines of all turtles. |
 
 ### usage examples
@@ -136,12 +136,12 @@ Absolute dimensions and angles are setup as in below:
 
 | command | description |
 | ------- | ----------- |
-|`(init)`| makes back to the staring state. |
+|`(init)`| sets the canvas back to the staring state. |
 
 ### usage examples
 
 ```clojure
-(init)               ;; makes back to the starting state, only :trinity is in home position
+(init)               ;; sets the canvas back to the starting state, only :trinity is in home position
 ```
 
 ## Samples
