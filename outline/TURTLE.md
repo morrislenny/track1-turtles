@@ -1,4 +1,4 @@
-# Turtles App API
+# Turtles App API (Application Programming Interface)
 
 ## Basics
 
