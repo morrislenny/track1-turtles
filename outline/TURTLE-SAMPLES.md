@@ -386,8 +386,18 @@ Once all are added, we will get five turtles in total.
 
 ![add four turtles](img/add-four-turtles.png)
 
+#### ?? Exercise: chaotic turtles
+
+_EM: make a bunch of turtles and move them in random directions_
+
+#### ?? Bouncing off the walls
+
+_EM once a turtle is close to hitting a wall, it turns around_
+
 - 6.2 [bonus] add a parameter to `add-four-turtles` function so that
 each turtle can take specified name.
+
+_EM: not sure multi-arity functions are worth the time at this point_
 
 Our `add-four-turtles` function uses hard-coded names for turtles.
 Instead, let's enjoy a freedom to choose any name for them without
