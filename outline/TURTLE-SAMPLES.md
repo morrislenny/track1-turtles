@@ -9,17 +9,23 @@ Walk them and draw lines by your imagination!
 
 - preparation
 
+_EM comment: need to change for Windows since they need a git shell_ 
+
 If you haven't cloned out the repository, try this on the terminal:
 
 ```bash
-git clone https://github.com/ClojureBridge/welcometoclojurebridge
-cd welcometoclojurebridge
+git clone https://github.com/clojurebridge-boston/track1-turtles.git
+cd track1-turtles
 ```
 
-- load walk.clj on LightTable
+_EM comment: reminder on how to open a project in Nightcode and how to run it_
+
+- load walk.clj in Nightcode
+
+_EM commentt: Nightcode instructions instead:_
 
 open the file
-`welcomeclojurebridge/src/clojurebridge_turtle/walk.clj`.
+`track1-turtles/src/clojurebridge_turtle/walk.clj`.
 Then,
 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
 <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the
@@ -59,14 +65,14 @@ See [TURTLE.md](TURTLE.md) for commands that turtles understand.
 When the turtle has gone unexpectedly long or short distance, we can delete the
 line one by one using `undo`.
 If the turtle should start from its initial state,
-a combination of `clean` and `home` commands make the turtle back to
+a combination of `clean` and `home` commands takes the turtle back to
 the initial state.
 
 - `state`
 
 When the turtle goes far away beyond the boundary, or you lost which
 one is what, you can check where they are by this command. The command
-returns absolute values.
+returns absolute values. _EM comment clarify or give an example_
 
 [note] The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
@@ -74,11 +80,13 @@ relative value to the current state.
 - `doc`
 
 Without looking at command reference, we can check how to use each
-function by Clojure's `doc`. For examples, `(doc forward)` displays
-its usage.
+function by Clojure's `doc`. For example, `(doc forward)` displays
+its usage. _EM comment clarify and give an example_
 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
+
+_EM comment: remove references to LT, shorten this part, let students experiment on their own_
 
 > Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
 > <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
@@ -153,6 +161,8 @@ clojurebridge-turtle.walk=> (state)
 
 #### 3. [easy] Multiple turtles
 
+_EM: whats' with the color? Can we set it?_
+
 > Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
 > <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
 
@@ -204,6 +214,8 @@ clojurebridge-turtle.walk=> (forward :cypher 40)
 
 #### 4. [easy] Add one more turtle and give them commands
 
+_EM Ah, ok, we can set color. Need to add to the API and make a ref to RGB values (in the API and here)_
+
 > Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
 > <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
 
@@ -230,6 +242,7 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![fifth's move](img/fifth-turtle-move.png)
 
+_EM comment: shorten, perhaps_
 
 - walk five turtles forward by 20
 
@@ -262,6 +275,11 @@ The simplest way would be to type `(forward :name 40)` five times.
 But wait. We are almost exhausted to type quite similar commands many times.
 Is there any handy way of doing this? Yes, there is.
 Clojure has many functions to accomplish this purpose.
+
+<!--
+
+_EM: commented out doseq_
+
 `doseq` function is one of them.
 
 - 5.1 move 5 turtles forward using `doseq` function
@@ -270,18 +288,19 @@ Clojure has many functions to accomplish this purpose.
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (forward n 40))
 nil
 ```
+-->
 
 ![five turtles move](img/five-turtles-move.png)
 
 
-- 5.2 [bonus] using `map` function (higher order function)
+- 5.1 using `map` function (a higher order function)
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
 ({:trinity {:length 40}} {:neo {:length 40}} {:oracle {:length 40}} {:cypher {:length 40}} {:morpheus {:length 40}})
 ```
 
-
+<!--
 - 5.3 tilt and forward them by `doseq`s
 
 ```clojure
@@ -292,6 +311,7 @@ nil
 ```
 
 ![more moves](img/five-turtles-more-move.png)
+-->
 
 
 - 5.4 [bonus] put two `doseq`s in one

@@ -68,7 +68,7 @@ are relative to the current position or angle. The command may be given the name
 |`(state) (state name)`| returns a current state of the turtle.|
 |`(state-all)`| returns current states of all turtles.|
 
-Turtle's state includes its current coordinates (x,y), the angle it's pointing at, and its color. The color is encoded as three numbers in the RGB (Red, Green, Blue) encoding. 
+Turtle's state includes its current coordinates (x,y), the angle it's pointing at, and its color. The color is encoded as three numbers in the RGB (Red, Green, Blue) encoding. _EM comment: need to say something about colors_
 
 ### usage examples
 
