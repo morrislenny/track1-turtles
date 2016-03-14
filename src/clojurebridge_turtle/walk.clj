@@ -4,8 +4,6 @@
 (clean)
 (home)
 
-(forward 30)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; evaluate whole file by hitting
 ;;   ctrl + shift + enter, or

@@ -295,6 +295,8 @@ nil
 
 - 5.1 using `map` function (a higher order function)
 
+_EM: A LOT MORE EXPLANATION IS NEEDED HERE; SHOULD USE SLIDES AS WELL_
+
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
 ({:trinity {:length 40}} {:neo {:length 40}} {:oracle {:length 40}} {:cypher {:length 40}} {:morpheus {:length 40}})
@@ -314,6 +316,7 @@ nil
 -->
 
 
+<!--
 - 5.4 [bonus] put two `doseq`s in one
 
 ```clojure
@@ -322,8 +325,11 @@ clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
                        #_=> (forward n 30))
 nil
 ```
+-->
 
 - 5.5 [bonus] using `map` (higher order function) and `juxt` functions
+
+_EM: juxt is needed because you can't use comp: forward and friends do not return turtles> Need to explain briefly what juxt is. Show juxt on a single turtle?_
 
 ```clojure
 clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-names))
@@ -333,7 +339,11 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 [{:cypher {:angle 60}} {:cypher {:length 30}}]
 [{:morpheus {:angle 60}} {:morpheus {:length 30}}])
 ```
+#### 6. [easy - intermediate] Define variables and functions. 
 
+_EM: somewhere here we also explain let_
+
+_EM: also, here we may start writing code in the walk.clj file_
 
 #### 6. [easy - intermediate] Write a function that adds turtles
 
@@ -410,6 +420,7 @@ Look at the multi-arity function above once more. The
 The number of turtles can be any. If you list two names in the vector,
 the function will add two turtles.
 
+_EM: I am not sure where they are going with this_
 
 - 6.3 [bonus] [exercise] make `add-four-turtles` to add exactly four turtles
 
@@ -441,7 +452,9 @@ position. In such a case, a combination of `clean-all` and
 (turtle-names)
 ```
 
-#### 7. [intermediate - difficult] Write a function that tilts five turtles in different directions
+#### ?. [intermediate] Exercise on filter
+
+#### 7. [intermediate] Write a function that tilts five turtles in different directions
 
 Next, we want to tilt five turtles' heads in different angles so that
 we can see their move well. For example, :trinity 0, :neo 45, :oracle
@@ -451,6 +464,8 @@ Since we need two kinds of parameters at the same time, name and
 angle, while previous functions used only one kind of parameter.
 
 Again, Clojure has many ways to do this.
+
+_EM: I am not a fan of doseq, would remove it in favor of map_
 
 - 7.1 using `doseq` with a little tweak
 
