@@ -221,7 +221,9 @@ Note that once you have more turtles than just `:trinity`, you need to specify w
 
 - make turtles tilt different angles
 
-Note that `*` denotes mutiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us.  
+Note that `*` denotes mutiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
+
+The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on 2 and 45. 
 
 ```clojure
 clojurebridge-turtle.walk=> (right :neo 45)
@@ -233,6 +235,8 @@ clojurebridge-turtle.walk=> (right :cypher (* 3 45))
 ```
 
 ![four directions](img/four-directions.png)
+
+Feel free to change the multiplication function or its parameters to something else, see what happens. 
 
 - walk four turtles forward
 
@@ -299,17 +303,13 @@ clojurebridge-turtle.walk=> (forward :morpheus 20)
 
 #### 5. [easy - intermediate] Move all five turtles - introduction to function
 
-> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the last line of functions
-> on LightTable
-
 We've had five turtles and want to move or tilt those five.
 Let's think how we can make all five turtles go forward by 40?
 The simplest way would be to type `(forward :name 40)` five times.
 
 But wait. We are almost exhausted to type quite similar commands many times.
 Is there any handy way of doing this? Yes, there is.
-Clojure has many functions to accomplish this purpose.
+Clojure has uses functions to accomplish this purpose.
 
 <!--
 
@@ -332,10 +332,27 @@ nil
 
 _EM: A LOT MORE EXPLANATION IS NEEDED HERE; SHOULD USE SLIDES AS WELL_
 
+We can find out the names of all turtles by using `(turtle-names)`, this will give us a list `(:trinity :neo :oracle :cypher :morpheus)`. Then we can use a function `map` to go over the list and tell each turtle to move forward. 
+
+If we want `:trinity` to move forward by 40, we say `(forward :trinity 40)`. If we want `:neo` to do the same, we say `(forward :neo 40)`. Note that the command is the same. What changes is the name, and we would like each of the turtles' names be used. 
+
+`map` allows us to provide a "template" for the command in which the name will be filled in for each turtle as the function goes through the list of names. The "template" function is `#(forward % 40)`, where the `%` is the turtle name that will be each of the turtles, one by one. 
+
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
 ({:trinity {:length 40}} {:neo {:length 40}} {:oracle {:length 40}} {:cypher {:length 40}} {:morpheus {:length 40}})
 ```
+What do you think will happen if you type the following? 
+```clojure
+clojurebridge-turtle.walk=> (map #(forward % 40) '(:neo :oracle))
+``` 
+Don't worry about the single quote in `'(:neo :oracle)`, this is just how you give lists of things to Clojure. 
+
+Can you now make all turtles turn right by 90 degrees using `map`?
+Can you make only `:trinity` and `:morpheus` turn some more? Experiment with map until you are comfortable using it. Ask mentors questions if you have them. 
+
+Note: don't try to make turtles do two things at once, in one `map`. We will get to it later.  
+
 
 <!--
 - 5.3 tilt and forward them by `doseq`s

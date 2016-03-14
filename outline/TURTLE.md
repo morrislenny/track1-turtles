@@ -46,7 +46,7 @@ are relative to the current position or angle. The command may be given the name
 (right 45)           ;; :trinity turns 45 degrees clockwise when only :trinity is there
 (right :neo 90)      ;; :neo turns 90 degrees clockwise
 
-(left 30)            ;; :trinity turns 30 degrees counterclockwisewhen only  :trinity is there
+(left 30)            ;; :trinity turns 30 degrees counterclockwise when only  :trinity is there
 (left :neo 135)      ;; :neo turns 135 degrees counterclockwise
 
 (undo)               ;; :trinity's last line will be removed when only :trinity is there
