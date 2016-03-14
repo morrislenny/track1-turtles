@@ -11,17 +11,21 @@ Walk them and draw lines by your imagination!
 
 _EM comment: need to change for Windows since they need a git shell_ 
 
-If you haven't cloned out the repository, try this on the terminal:
-
+If you haven't cloned the project repository yesterday at the Installfest, follow the instructions there to install and open a `git` terminal and type (pressing enter after each command): 
 ```bash
 git clone https://github.com/clojurebridge-boston/track1-turtles.git
 cd track1-turtles
 ```
+##### 1.1 Opening and running the project:
 
-_EM comment: reminder on how to open a project in Nightcode and how to run it_
+- Start Nightcode and open the project in Nightcode by clicking "Import" in the menu and choosing the folder where the project was downloaded (`track1-turtles`). 
+- Open the project folder and its subfolder `src` in the left upper tab. 
+- Click on the file `walk.clj` so that it is highlighted.
+- In the right lower corner panel click on the button "Run with REPL". 
+- Once the command finishes (it will print `=== Finished ===`), click on Reload button.
+- Once that finishes, click on Eval. You should see a window pop up with a little triangle in it, facing up, as shown below: 
 
-- load walk.clj in Nightcode
-
+<!--
 _EM commentt: Nightcode instructions instead:_
 
 open the file
@@ -51,10 +55,11 @@ clojurebridge-turtle.walk=> (turtle-names)
 clojurebridge-turtle.walk=> (state)
 {:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}}
 ```
-
-- initial state
+-->
 
 ![initial state](img/initial-state.png)
+
+_EM: discuss interactions with Nightcode, errors, troubleshooting_
 
 
 See [TURTLE.md](TURTLE.md) for commands that turtles understand.
@@ -86,10 +91,7 @@ its usage. _EM comment clarify and give an example_
 
 #### 2. [easy] Basic movement - forward, backward, right and left
 
-_EM comment: remove references to LT, shorten this part, let students experiment on their own_
-
-> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
+_EM comment: shorten this part, let students experiment on their own_
 
 - forward
 
