@@ -5,11 +5,9 @@ ones to walk turtles.
 
 Walk them and draw lines by your imagination!
 
-#### 1. start up
+#### 1. Start up
 
-- preparation
-
-_EM comment: need to change for Windows since they need a git shell_ 
+We assume that you have successfully installed all the needed software during [Installfest](https://github.com/clojurebridge-boston/installfest)  and know how to start the programs we are using. Feel free to take a look there to check what there programs are and how to access them. Mentors are also here in case you have a question or something isn't working. 
 
 If you haven't cloned the project repository yesterday at the Installfest, follow the instructions there to install and open a `git` terminal and type (pressing enter after each command): 
 ```bash
@@ -22,8 +20,18 @@ cd track1-turtles
 - Open the project folder and its subfolder `src` in the left upper tab. 
 - Click on the file `walk.clj` so that it is highlighted.
 - In the right lower corner panel click on the button "Run with REPL". 
-- Once the command finishes (it will print `=== Finished ===`), click on Reload button.
+- Once the command finishes (it will print several lines ending with `=> user`; this may take a bit of time), click on Reload button.
+<!--
 - Once that finishes, click on Eval. You should see a window pop up with a little triangle in it, facing up, as shown below: 
+-->
+
+You will see the following in the right bottom panel:
+```clojure
+user=> 
+["walk.clj"]
+clojurebridge-turtle.walk=> 
+```
+This is a place where you can type turtle commands. You will also see your first turtle in a little pop-up window! 
 
 <!--
 _EM commentt: Nightcode instructions instead:_
@@ -61,6 +69,8 @@ clojurebridge-turtle.walk=> (state)
 
 _EM: discuss interactions with Nightcode, errors, troubleshooting_
 
+_EM: up arrow gives you your previous command that you can then edit. If you make a mistake, just retype your command (or use the up arrow to bring it back, and then correct)._
+
 
 See [TURTLE.md](TURTLE.md) for commands that turtles understand.
 
@@ -77,7 +87,25 @@ the initial state.
 
 When the turtle goes far away beyond the boundary, or you lost which
 one is what, you can check where they are by this command. The command
-returns absolute values. _EM comment clarify or give an example_
+returns absolute values from the position (0,0) in the middle of the canvas. Note that coordinates are computed with some rounding error, they are not whole numbers. 
+
+For instance, when the following shows the state changes when `:trinity` starts at (0,0), moves forward by 20, then turns right 45 degrees, and moves forward by 20 again. 
+```clojure
+clojurebridge-turtle.walk=> (init)
+:trinity
+clojurebridge-turtle.walk=> (state)
+{:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}}
+clojurebridge-turtle.walk=> (forward 20)
+{:trinity {:length 20}}
+clojurebridge-turtle.walk=> (state)
+{:trinity {:x -8.742278000372482E-7, :y 19.99999999999998, :angle 90, :color [106 40 126]}}
+clojurebridge-turtle.walk=> (right 45)
+{:trinity {:angle 45}}
+clojurebridge-turtle.walk=> (forward 20)
+{:trinity {:length 20}}
+clojurebridge-turtle.walk=> (state)
+{:trinity {:x 14.142134440416944, :y 34.142135932817126, :angle 45, :color [106 40 126]}}
+```
 
 [note] The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
@@ -86,12 +114,18 @@ relative value to the current state.
 
 Without looking at command reference, we can check how to use each
 function by Clojure's `doc`. For example, `(doc forward)` displays
-its usage. _EM comment clarify and give an example_
+its usage:
+```clojure
+-------------------------
+clojurebridge-turtle.core/init
+([])
+  returns to the starting state.
+   only :trinity is in the home position.
+nil
+```
 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
-
-_EM comment: shorten this part, let students experiment on their own_
 
 - forward
 
@@ -112,7 +146,9 @@ clojurebridge-turtle.walk=> (right 90)
 
 ![right 90](img/right90.png)
 
-- combinations of forward and right
+Try typing in the following movements, or some of your own, to move `:trinity` around. 
+
+- combinations of forward and right:
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
@@ -138,7 +174,7 @@ clojurebridge-turtle.walk=> (forward 80)
 ![combination](img/forwardsandrights.png)
 
 
-- combination of various commands
+- combination of various commands:
 
 ```clojure
 clojurebridge-turtle.walk=> (init)
@@ -159,14 +195,10 @@ clojurebridge-turtle.walk=> (state)
 
 ![movement sample](img/various-combination.png)
 
-
-
 #### 3. [easy] Multiple turtles
 
-_EM: whats' with the color? Can we set it?_
-
-> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
+You can add multiple turtles. They all start in the middle, facing up, and are 
+all of different colors. You can refer to each turtle by its name.
 
 - add turtles
 
@@ -185,10 +217,14 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![four turtles](img/four-turtles.png)
 
+Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error "Specify name. You have more than one turtle." 
+
 - make turtles tilt different angles
 
+Note that `*` denotes mutiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us.  
+
 ```clojure
-clojurebridge-turtle.walk=> (right :neo (* 1 45))
+clojurebridge-turtle.walk=> (right :neo 45)
 {:neo {:angle 45}}
 clojurebridge-turtle.walk=> (right :oracle (* 2 45))
 {:oracle {:angle 90}}
@@ -217,9 +253,6 @@ clojurebridge-turtle.walk=> (forward :cypher 40)
 #### 4. [easy] Add one more turtle and give them commands
 
 _EM Ah, ok, we can set color. Need to add to the API and make a ref to RGB values (in the API and here)_
-
-> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of the line on LightTable
 
 - add another turtle named :morpheus with color
 

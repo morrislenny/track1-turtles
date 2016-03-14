@@ -194,7 +194,7 @@
      (turtle-names)))
 
 (defn init
-  "makes back to the starting state.
+  "returns to the starting state.
    only :trinity is in the home position."
   []
   (dosync

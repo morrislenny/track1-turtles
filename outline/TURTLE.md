@@ -37,22 +37,22 @@ are relative to the current position or angle. The command may be given the name
 ### usage examples
 
 ```clojure
-(forward 30)         ;; :trinity moves forward by 30 pixels only when :trinity is there
+(forward 30)         ;; :trinity moves forward by 30 pixels when only :trinity is there
 (forward :neo 40)    ;; :neo moves
 
-(backward 35)        ;; :trinity moves backward by 35 pixels only when :trinity is there
+(backward 35)        ;; :trinity moves backward by 35 pixels when only  :trinity is there
 (backward :neo 100)  ;; :neo moves
 
-(right 45)           ;; :trinity turns 45 degrees clockwise only when :trinity is there
+(right 45)           ;; :trinity turns 45 degrees clockwise when only :trinity is there
 (right :neo 90)      ;; :neo turns 90 degrees clockwise
 
-(left 30)            ;; :trinity turns 30 degrees counterclockwise only when :trinity is there
+(left 30)            ;; :trinity turns 30 degrees counterclockwisewhen only  :trinity is there
 (left :neo 135)      ;; :neo turns 135 degrees counterclockwise
 
-(undo)               ;; :trinity's last line will be removed only when :trinity is there
+(undo)               ;; :trinity's last line will be removed when only :trinity is there
 (undo :neo)          ;; :neo's last line will be removed
 
-(home)               ;; moves :trinity back to the home position, center only when :trinity is there
+(home)               ;; moves :trinity back to the home position, center  when only :trinity is there
 (home :neo)          ;; moves :neo back to the home position, center
 
 (home-all)           ;; moves all turtles back to the home position
