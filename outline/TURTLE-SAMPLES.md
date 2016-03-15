@@ -328,9 +328,7 @@ nil
 ![five turtles move](img/five-turtles-move.png)
 
 
-- 5.1 using `map` function (a higher order function)
-
-_EM: A LOT MORE EXPLANATION IS NEEDED HERE; SHOULD USE SLIDES AS WELL_
+##### 5.1 using `map` function (a higher order function)
 
 We can find out the names of all turtles by using `(turtle-names)`, this will give us a list `(:trinity :neo :oracle :cypher :morpheus)`. Then we can use a function `map` to go over the list and tell each turtle to move forward. 
 
@@ -353,36 +351,22 @@ Can you make only `:trinity` and `:morpheus` turn some more? Experiment with map
 
 Note: don't try to make turtles do two things at once, in one `map`. We will get to it later.  
 
-
+##### 5.2 using `map` (higher order function) and `juxt` functions
+- 
 <!--
-- 5.3 tilt and forward them by `doseq`s
-
-```clojure
-clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (right n 60))
-nil
-clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (forward n 30))
-nil
-```
-
-![more moves](img/five-turtles-more-move.png)
--->
-
-
-<!--
-- 5.4 [bonus] put two `doseq`s in one
-
-```clojure
-clojurebridge-turtle.walk=> (doseq [n (turtle-names)]
-                       #_=> (right n 60)
-                       #_=> (forward n 30))
-nil
-```
--->
-
-- 5.5 [bonus] using `map` (higher order function) and `juxt` functions
-
 _EM: juxt is needed because you can't use comp: forward and friends do not return turtles> Need to explain briefly what juxt is. Show juxt on a single turtle?_
+-->
 
+What if you want to have all turtles move forward and then turn? You can do this in one `map` by passing a combination (a juxtaposition) of functions. 
+
+Typing this makes `:neo` first turn right by 60 degrees, and move forward by 30 pixels: 
+```clojure
+clojurebridge-turtle.walk=> ((juxt #(right % 60) #(forward % 30)) :neo)
+[{:neo {:length 50}} {:neo {:angle 30}}]
+```  
+Try this and other function combinations.    
+
+If we want to make all turtles do a combination of steps, we can use `map` with `juxt`: 
 ```clojure
 clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-names))
 ([{:trinity {:angle 60}} {:trinity {:length 30}}]
@@ -391,11 +375,17 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 [{:cypher {:angle 60}} {:cypher {:length 30}}]
 [{:morpheus {:angle 60}} {:morpheus {:length 30}}])
 ```
+Similarly, we can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a list of some turtle names: `'(:neo :morpheus)`. Don't forget the single quote in front of the list. 
+
+Experiment with `map` and `juxt`. 
+
 #### 6. [easy - intermediate] Define variables and functions. 
+
+-EM: we can write the above as a function. Or the sequence of steps as a function (draw square?_
 
 _EM: somewhere here we also explain let_
 
-_EM: also, here we may start writing code in the walk.clj file_
+_EM: also, here we may start writing code in the yourcode.clj file_
 
 #### 6. [easy - intermediate] Write a function that adds turtles
 
