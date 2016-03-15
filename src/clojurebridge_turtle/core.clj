@@ -147,6 +147,15 @@
   ([n]
      {n (n @turtles)}))
 
+(defn turtle-state 
+  "returns the current state of a specified turtle as its coordinates, angle, and color.
+   If no name is given, :trinity's state will be returned"
+  ([]
+    (when-onlyone (:trinity (state turtle))))
+  ([n]
+    (n @turtles)))
+  
+
 (defn state-all
   "returns current states of all turtles."
   []
@@ -185,7 +194,7 @@
      (turtle-names)))
 
 (defn init
-  "makes back to the starting state.
+  "returns to the starting state.
    only :trinity is in the home position."
   []
   (dosync

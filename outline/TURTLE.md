@@ -1,4 +1,4 @@
-# Turtles App API
+# Turtles App API (Application Programming Interface)
 
 ## Basics
 
@@ -37,22 +37,22 @@ are relative to the current position or angle. The command may be given the name
 ### usage examples
 
 ```clojure
-(forward 30)         ;; :trinity moves forward by 30 pixels only when :trinity is there
+(forward 30)         ;; :trinity moves forward by 30 pixels when only :trinity is there
 (forward :neo 40)    ;; :neo moves
 
-(backward 35)        ;; :trinity moves backward by 35 pixels only when :trinity is there
+(backward 35)        ;; :trinity moves backward by 35 pixels when only  :trinity is there
 (backward :neo 100)  ;; :neo moves
 
-(right 45)           ;; :trinity turns 45 degrees clockwise only when :trinity is there
+(right 45)           ;; :trinity turns 45 degrees clockwise when only :trinity is there
 (right :neo 90)      ;; :neo turns 90 degrees clockwise
 
-(left 30)            ;; :trinity turns 30 degrees counterclockwise only when :trinity is there
+(left 30)            ;; :trinity turns 30 degrees counterclockwise when only  :trinity is there
 (left :neo 135)      ;; :neo turns 135 degrees counterclockwise
 
-(undo)               ;; :trinity's last line will be removed only when :trinity is there
+(undo)               ;; :trinity's last line will be removed when only :trinity is there
 (undo :neo)          ;; :neo's last line will be removed
 
-(home)               ;; moves :trinity back to the home position, center only when :trinity is there
+(home)               ;; moves :trinity back to the home position, center  when only :trinity is there
 (home :neo)          ;; moves :neo back to the home position, center
 
 (home-all)           ;; moves all turtles back to the home position
@@ -66,9 +66,16 @@ are relative to the current position or angle. The command may be given the name
 |`(add-turtle name)`| adds a turtle with its name.|
 |`(turtle-names)`| returns all turtle names.|
 |`(state) (state name)`| returns a current state of the turtle.|
+|`(turtle-state) (turtle-state name)` | returns a current state of a turtle, not including its name. More convenient to use in functions like `filter`| 
 |`(state-all)`| returns current states of all turtles.|
 
-Turtle's state includes its current coordinates (x,y), the angle it's pointing at, and its color. The color is encoded as three numbers in the RGB (Red, Green, Blue) encoding. 
+Turtle's state includes its current coordinates (x,y), the angle it's pointing at, and its color. The color is encoded as three numbers in the RGB (Red, Green, Blue) encoding. _EM comment: need to say something about colors_
+
+When called as `(state)`, returns the state with the turtle name, for instance:
+`{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`. This is convenient for viewing since you know which turtle the state is referring to. 
+
+When called as `(turtle-state)`, returns just the state, with no name:
+`{:x 0, :y 0, :angle 90, :color [30 30 30]}`. This is more convenient when you want to do something based on the turtle's state, such as move all the turtles that are facing right. 
 
 ### usage examples
 
@@ -81,10 +88,14 @@ Turtle's state includes its current coordinates (x,y), the angle it's pointing a
 
 (state :neo)         ;; returns :neo's current state
 
+(turtle-state)       ;; returns :trinity's current state, without its name
+
+(turtle-state :neo)  ;; returns :neo's current state, without its name
+
 (state-all)          ;; returns all turtles' current states
 ```
 
-The `state` command shows the *absolute* coordinates on the canvas, not coordinates relative to the starting point that are 
+The `state` functions show the *absolute* coordinates on the canvas, not coordinates relative to the starting point that are 
 used in `forward`, `backward`, `right` and `left`.
 For example, `{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`.
 
