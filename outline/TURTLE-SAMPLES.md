@@ -387,7 +387,7 @@ Can you make only `:trinity` and `:morpheus` turn some more? Experiment with map
 Note: don't try to make turtles do two things at once, in one `map`. We will get to it later.  
 
 ##### 5.2 using `map` (higher order function) and `juxt` functions
-- 
+
 <!--
 _EM: juxt is needed because you can't use comp: forward and friends do not return turtles> Need to explain briefly what juxt is. Show juxt on a single turtle?_
 -->
