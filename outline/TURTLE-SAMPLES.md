@@ -7,9 +7,9 @@ Walk them and draw lines by your imagination!
 
 #### 1. Start up
 
-We assume that you have successfully installed all the needed software during [Installfest](https://github.com/clojurebridge-boston/installfest)  and know how to start the programs we are using. Feel free to take a look there to check what there programs are and how to access them. Mentors are also here in case you have a question or something isn't working. 
+We assume that you have successfully installed all the needed software during [Installfest](https://github.com/clojurebridge-boston/installfest)  and know how to start the programs we are using. Feel free to take a look there to check what these programs are and how to access them. Mentors are also here in case you have a question or something isn't working. 
 
-If you haven't cloned the project repository yesterday at the Installfest, follow the instructions there to install and open a `git` terminal and type (pressing enter after each command): 
+If you haven't cloned the project repository yesterday at the [Installfest](https://github.com/clojurebridge-boston/installfest), follow the instructions there to install and open a `git` terminal and type (pressing enter after each command): 
 ```bash
 git clone https://github.com/clojurebridge-boston/track1-turtles.git
 cd track1-turtles
@@ -17,7 +17,7 @@ cd track1-turtles
 ##### 1.1 Opening and running the project:
 
 - Start Nightcode and open the project in Nightcode by clicking "Import" in the menu and choosing the folder where the project was downloaded (`track1-turtles`). 
-- Open the project folder and its subfolder `src` in the left upper tab. 
+- Open the project folder and its subfolder `src` in the left upper panel of Nightcode. 
 - Click on the file `walk.clj` so that it is highlighted.
 - In the right lower corner panel click on the button "Run with REPL". 
 - Once the command finishes (it will print several lines ending with `=> user`; this may take a bit of time), click on Reload button.
@@ -64,7 +64,7 @@ clojurebridge-turtle.walk=> (state)
 
 ![initial state](img/initial-state.png)
 
-For the first few tasks you will be typing your commands into the right bottom area: the turtle project REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: to tell it to do something, and it performs the operation and gives you back the result. 
+For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: to tell it to do something, and it performs the operation and gives you back the result. 
 
 Place your cursor at the end of the line: 
 ```clojure
@@ -77,16 +77,29 @@ clojurebridge-turtle.walk=> (forward 30)
 {:trinity {:length 30}}
 clojurebridge-turtle.walk=> 
 ```
-_EM: when do we introduce the name :trinity to students?_
 
+This command moves the turtle on the canvas (that's how we call the little pop-up window) forward by 30 pixels in the direction it is facing. You may have many turtles on the screen, and they all have names. The very first turtle on the canvas is called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon. 
 
-_EM: discuss interactions with Nightcode, errors, troubleshooting_
+After you have entered a command, the turtle moves, and REPL displays what move it just made. In this case it said `{:trinity {:length 30}}` indicating the `:trinity` moved forward by 30 pixels. 
 
-_EM: up arrow gives you your previous command that you can then edit. If you make a mistake, just retype your command (or use the up arrow to bring it back, and then correct)._
+See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with moving `:trinity` around. 
 
+A few helpful tips:
 
-See [TURTLE.md](TURTLE.md) for commands that turtles understand.
+ - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter. 
+ - If you made a mistake, you will get an error message from Clojure. 
 
+For instance, if you mistype a command name, you would see something like this:
+```clojure
+clojurebridge-turtle.walk=> (frward 70)
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: frward in this context, compiling:(C:\Users\E\AppData\Local\Temp\form-init8602391256138879508.clj:1:1) 
+clojurebridge-turtle.walk=> 
+```
+This means that Clojure doesn't know what `frward` is. 
+
+Error messages may be very confusing at first. If you can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
+
+Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used. You might want to keep this file open in a browser tab so that you can look at it as needed.
 
 - `undo`, `clean`, and `home`
 
