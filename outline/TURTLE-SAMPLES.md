@@ -21,9 +21,6 @@ cd track1-turtles
 - Click on the file `walk.clj` so that it is highlighted.
 - In the right lower corner panel click on the button "Run with REPL". 
 - Once the command finishes (it will print several lines ending with `=> user`; this may take a bit of time), click on Reload button.
-<!--
-- Once that finishes, click on Eval. You should see a window pop up with a little triangle in it, facing up, as shown below: 
--->
 
 You will see the following in the right bottom panel:
 ```clojure
@@ -66,6 +63,22 @@ clojurebridge-turtle.walk=> (state)
 -->
 
 ![initial state](img/initial-state.png)
+
+For the first few tasks you will be typing your commands into the right bottom area: the turtle project REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: to tell it to do something, and it performs the operation and gives you back the result. 
+
+Place your cursor at the end of the line: 
+```clojure
+clojurebridge-turtle.walk=> 
+```
+
+Type `(forward 30)` and press enter:
+```clojure
+clojurebridge-turtle.walk=> (forward 30)
+{:trinity {:length 30}}
+clojurebridge-turtle.walk=> 
+```
+_EM: when do we introduce the name :trinity to students?_
+
 
 _EM: discuss interactions with Nightcode, errors, troubleshooting_
 
@@ -221,7 +234,7 @@ Note that once you have more turtles than just `:trinity`, you need to specify w
 
 - make turtles tilt different angles
 
-Note that `*` denotes mutiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
+Note that `*` denotes multiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
 
 The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on 2 and 45. 
 
@@ -301,7 +314,7 @@ clojurebridge-turtle.walk=> (forward :morpheus 20)
 ![forward 20 more](img/forward20plus.png)
 
 
-#### 5. [easy - intermediate] Move all five turtles - introduction to function
+#### 5. [easy - intermediate] Move all five turtles - Clojure functions
 
 We've had five turtles and want to move or tilt those five.
 Let's think how we can make all five turtles go forward by 40?
@@ -379,7 +392,11 @@ Similarly, we can use map to make a group of turtles, but not all of them, perfo
 
 Experiment with `map` and `juxt`. 
 
-#### 6. [easy - intermediate] Define variables and functions. 
+#### 6. [intermediate] Define your own functions. 
+
+Clojure has a lot of convenient functions, and we will see quite a few of these. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give functions names so that you can use them many times.
+
+Suppose I want my turtle to draw a square. It consists of 
 
 -EM: we can write the above as a function. Or the sequence of steps as a function (draw square?_
 
