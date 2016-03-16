@@ -30,6 +30,8 @@ clojurebridge-turtle.walk=>
 ```
 This is a place where you can type turtle commands. You will also see your first turtle in a little pop-up window! 
 
+We will refer to the little pop-up window as the canvas since that's where turtles drawings go.
+
 <!--
 _EM commentt: Nightcode instructions instead:_
 
@@ -64,7 +66,7 @@ clojurebridge-turtle.walk=> (state)
 
 ![initial state](img/initial-state.png)
 
-For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: to tell it to do something, and it performs the operation and gives you back the result. 
+For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: you type in what you want it to do, it performs the operation and gives you back the result. 
 
 Place your cursor at the end of the line: 
 ```clojure
@@ -78,33 +80,20 @@ clojurebridge-turtle.walk=> (forward 30)
 clojurebridge-turtle.walk=> 
 ```
 
-This command moves the turtle on the canvas (that's how we call the little pop-up window) forward by 30 pixels in the direction it is facing:
+This command moves the turtle on the canvas forward by 30 pixels in the direction it is facing:
 
 ![forward 30](img/forward30.png)
 
 
-You may have many turtles on the screen, and they all have names. The very first turtle on the canvas is called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon. 
+At some point in your interactions you may have many turtles on the canvas, so turtles are created with names to tell them apart. The very first turtle on the canvas is called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon. 
 
 After you have entered a command, the turtle moves, and REPL displays what move it just made. In this case it said `{:trinity {:length 30}}` indicating the `:trinity` moved forward by 30 pixels. 
 
 See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with moving `:trinity` around. 
 
-A few helpful tips:
+##### 1.2 Helpful tips on interacting with Clojure
 
  - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter. 
- - If you made a mistake, you will get an error message from Clojure. 
-
-For instance, if you mistype a command name, you would see something like this:
-```clojure
-clojurebridge-turtle.walk=> (frward 70)
-CompilerException java.lang.RuntimeException: Unable to resolve symbol: frward in this context, compiling:(C:\Users\E\AppData\Local\Temp\form-init8602391256138879508.clj:1:1) 
-clojurebridge-turtle.walk=> 
-```
-This means that Clojure doesn't know what `frward` is. 
-
-Error messages may be very confusing at first. If you can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
-
-Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used. You might want to keep this file open in a browser tab so that you can look at it as needed.
 
 - `undo`, `clean`, and `home`
 
@@ -155,6 +144,23 @@ clojurebridge-turtle.core/init
 nil
 ```
 
+##### 1.3 How to deal with mistakes
+
+If you made a mistake, you will get an error message from Clojure. 
+
+For instance, if you mistype a command name, you would see something like this:
+```clojure
+clojurebridge-turtle.walk=> (frward 70)
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: frward in this context, compiling:(C:\Users\E\AppData\Local\Temp\form-init8602391256138879508.clj:1:1) 
+clojurebridge-turtle.walk=> 
+```
+This means that Clojure doesn't know what `frward` is. 
+
+Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, would make Clojure not understand a name or a function. You might want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
+
+If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. things) a function is supposed to take. Sometimes Clojure will say that it cannot covert, or cast, on type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
+
+If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
 
@@ -311,8 +317,6 @@ clojurebridge-turtle.walk=> (turtle-names)
 ```
 
 ![fifth's move](img/fifth-turtle-move.png)
-
-_EM comment: shorten, perhaps_
 
 - walk five turtles forward by 20
 
