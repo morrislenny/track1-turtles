@@ -95,15 +95,15 @@ See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with
 
  - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter. 
 
-- `undo`, `clean`, and `home`
+- `(undo)`, `(clean)`, and `(home)`
 
 When the turtle has gone unexpectedly long or short distance, we can delete the
-line one by one using `undo`.
+line one by one using `(undo)`.
 If the turtle should start from its initial state,
-a combination of `clean` and `home` commands takes the turtle back to
+a combination of `(clean)` and `(home)` commands takes the turtle back to
 the initial state.
 
-- `state`
+- `(state)`
 
 When the turtle goes far away beyond the boundary, or you lost which
 one is what, you can check where they are by this command. The command
@@ -133,14 +133,14 @@ relative value to the current state.
 - `doc`
 
 Without looking at command reference, we can check how to use each
-function by Clojure's `doc`. For example, `(doc forward)` displays
+function by Clojure's `doc`. For example, `(doc init)` displays
 its usage:
 ```clojure
 -------------------------
 clojurebridge-turtle.core/init
 ([])
   returns to the starting state.
-   only :trinity is in the home position.
+  only :trinity is in the home position.
 nil
 ```
 
@@ -369,7 +369,9 @@ We can find out the names of all turtles by using `(turtle-names)`, this will gi
 
 If we want `:trinity` to move forward by 40, we say `(forward :trinity 40)`. If we want `:neo` to do the same, we say `(forward :neo 40)`. Note that the command is the same. What changes is the name, and we would like each of the turtles' names be used. 
 
-`map` allows us to provide a "template" for the command in which the name will be filled in for each turtle as the function goes through the list of names. The "template" function is `#(forward % 40)`, where the `%` is the turtle name that will be each of the turtles, one by one. 
+`map` allows us to apply a function to each of the elements in a list and returns a list of all results. For example, we can apply a `forward` function to a list of names of all turtles on the canvas, and they all will move forward. 
+
+We provide a "template" function for the command in which the name will be filled in for each turtle as the function goes through the list of names. The "template" function is `#(forward % 40)`, where the `%` is the turtle name that will be each of the turtles, one by one. 
 
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
@@ -417,9 +419,29 @@ Experiment with `map` and `juxt`.
 
 Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times.
 
-Suppose I want my turtle to draw a square. This movement consists of 
+Let's say I want my turtle to draw a square. This movement consists of moving forward, turning right, and repeating this on each side of the square. I can write this movement as a function. I don't know which turtle I will be using, and I also want to make it so that I can draw squares of different sizes. Thus I will make the turtle name and the length of the side parameters to the function. 
 
--EM: we can write the above as a function. Or the sequence of steps as a function (draw square?_
+The function is going to be fairly long, so it's inconvenient to write it in REPL. We will write functions in a file and then load them into REPL. 
+
+- Find the file `yourcode.clj` in the left upper panel of Nightcode and double-click on it. 
+- Copy the following code into that file under the things that are already there:
+```clojure
+(defn draw-square [name length]
+  (forward name length)
+  (right name 90)
+  (forward name length)
+  (right name 90)
+  (forward name length)
+  (right name 90)
+  (forward name length)
+  (right name 90))
+```
+
+Here is what's in it:
+
+-  `defn` is a Clojure keyword for "define a function". You always use it when you want to define a function with a name. 
+-  `draw-square`
+-  
 
 _EM: somewhere here we also explain let_
 
