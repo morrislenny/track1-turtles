@@ -450,11 +450,11 @@ Now that we have looked at how the function is defined, let's see how it works.
 Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually tell our function to work, we only defined what it will do when it works. 
 
 In the REPL panel (lower right) type `(init)` (to make sure that 
+the canvas are back to initial state). Then type `(draw-square :trinity 100)`. You will see a nice square drawn by `:trinity`:
 
+![Turtle square](img/square.png)
 
 _EM: somewhere here we also explain let_
-
-_EM: also, here we may start writing code in the yourcode.clj file_
 
 #### 6. [easy - intermediate] Write a function that adds turtles
 
