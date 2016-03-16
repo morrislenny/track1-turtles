@@ -78,7 +78,12 @@ clojurebridge-turtle.walk=> (forward 30)
 clojurebridge-turtle.walk=> 
 ```
 
-This command moves the turtle on the canvas (that's how we call the little pop-up window) forward by 30 pixels in the direction it is facing. You may have many turtles on the screen, and they all have names. The very first turtle on the canvas is called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon. 
+This command moves the turtle on the canvas (that's how we call the little pop-up window) forward by 30 pixels in the direction it is facing:
+
+![forward 30](img/forward30.png)
+
+
+You may have many turtles on the screen, and they all have names. The very first turtle on the canvas is called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon. 
 
 After you have entered a command, the turtle moves, and REPL displays what move it just made. In this case it said `{:trinity {:length 30}}` indicating the `:trinity` moved forward by 30 pixels. 
 
