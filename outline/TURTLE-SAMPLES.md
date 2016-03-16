@@ -377,9 +377,8 @@ clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
 ```
 What do you think will happen if you type the following? 
 ```clojure
-clojurebridge-turtle.walk=> (map #(forward % 40) '(:neo :oracle))
-``` 
-Don't worry about the single quote in `'(:neo :oracle)`, this is just how you give lists of things to Clojure. 
+clojurebridge-turtle.walk=> (map #(forward % 40) [:neo :oracle])
+```  
 
 Can you now make all turtles turn right by 90 degrees using `map`?
 Can you make only `:trinity` and `:morpheus` turn some more? Experiment with map until you are comfortable using it. Ask mentors questions if you have them. 
@@ -410,15 +409,15 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 [{:cypher {:angle 60}} {:cypher {:length 30}}]
 [{:morpheus {:angle 60}} {:morpheus {:length 30}}])
 ```
-Similarly, we can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a list of some turtle names: `'(:neo :morpheus)`. Don't forget the single quote in front of the list. 
+Similarly, we can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
 
 Experiment with `map` and `juxt`. 
 
 #### 6. [intermediate] Define your own functions. 
 
-Clojure has a lot of convenient functions, and we will see quite a few of these. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give functions names so that you can use them many times.
+Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times.
 
-Suppose I want my turtle to draw a square. It consists of 
+Suppose I want my turtle to draw a square. This movement consists of 
 
 -EM: we can write the above as a function. Or the sequence of steps as a function (draw square?_
 
