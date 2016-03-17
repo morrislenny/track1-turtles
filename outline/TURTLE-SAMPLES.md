@@ -454,403 +454,43 @@ the canvas are back to initial state). Then type `(draw-square :trinity 100)`. Y
 
 ![Turtle square](img/square.png)
 
-_EM: somewhere here we also explain let_
+_EM: refactor: take repeated code into a smaller function_
 
-#### 6. [easy - intermediate] Write a function that adds turtles
+_EM: :neo draws a square_
 
-> Use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-> <kbd>Cmd</kbd> + <kbd>Enter</kbd> at the end of each line or last
-> line of function definition on LightTable
+_map new function_
 
-While playing around with turtles, we may mess up their movements.
-The `(init)` command makes everything clean up and back to the initial state.
-It is a good command, but again, we need to repeat `(add-turtle name)`
-command many times to get five turtles.
+_Show: add turtles by mapping over a list of names_
 
-We want something. Yes, we can define our own function for that.
-Once the function is defined, we can add five turtles by a single
-function call anytime.
+_Exercise: draw a triangle_
 
+<!-- _EM: somewhere here we also explain let - maybe?_ -->
 
-- 6.1 define a function to add three turtles and a turtle with the name :neo
+#### Side note: map with multiple lists
 
-Since we already have :trinity, we are going to add four turtles.
-Let's name them, :neo, :oracle, :cypher, :morpheus.
-Once all are added, we will get five turtles in total.
-
-```clojure
-;; function definition
-(defn add-four-turtles
-  []
-  (let [names [:neo :oracle :cypher :morpheus]]
-    (init)
-    (dotimes [i (count names)] (add-turtle (nth names i)))))
-
-;; usage of the five-turtles function
-(add-four-turtles)
-
-;; check turtle names
-(turtle-names)
-```
-
-![add four turtles](img/add-four-turtles.png)
+_EM: this is useful, but not required_
 
 #### ?? Exercise: chaotic turtles
 
 _EM: make a bunch of turtles and move them in random directions_
 
+#### Getting turtle information: keywords
+
+#### Checking a condition
+
+_EM: 'if;, the idea of true/false 
+
 #### ?? Bouncing off the walls
 
 _EM once a turtle is close to hitting a wall, it turns around_
-
-- 6.2 [bonus] add a parameter to `add-four-turtles` function so that
-each turtle can take specified name.
-
-_EM: not sure multi-arity functions are worth the time at this point_
-
-Our `add-four-turtles` function uses hard-coded names for turtles.
-Instead, let's enjoy a freedom to choose any name for them without
-rewriting the function.
-
-Now, we are going to write **multi-arity function**. The arity means a
-number of arguments the function takes. For example, our
-`add-four-turtle` function so far takes zero argument only. If we add
-`add-four-turtle` function which takes one argument, the function
-turns to a multi-arity function. This is because the function takes
-zero or one argument.
-
-
-```clojure
-;; function definition
-(defn add-four-turtles
-  ([] (add-four-turtles [:neo :oracle :cypher :morpheus]))
-  ([names]
-    (init)
-    (dotimes [i (count names)] (add-turtle (nth names i)))))
-
-;; usage example
-(add-four-turtles)                                 ;; uses predefined names
-(add-four-turtles [:taylor :tess :tiffany :tracy]) ;; uses given names
-
-;; check turtle names
-(turtle-names)
-```
-
-Look at the multi-arity function above once more. The
-`add-four-turtles` function doesn't need to have `four` in its name.
-The number of turtles can be any. If you list two names in the vector,
-the function will add two turtles.
-
-_EM: I am not sure where they are going with this_
-
-- 6.3 [bonus] [exercise] make `add-four-turtles` to add exactly four turtles
-
-We can add a check so that only when four names are provided, the
-function adds four turtles; otherwise does nothing.
-
-Hint: function body will look like:
-
-```clojure
-(if (= 4 (count names))
-  ....blah blah blah...)
-```
-
-- 6.4 side note
-
-Suppose you have already five turtles and continue using the same
-turtles. But, you want to clean up all lines and make them home
-position. In such a case, a combination of `clean-all` and
-`home-all` gives the same effect as `add-four-turtles` function.
-
-```clojure
-;; deletes all lines
-(clean-all)
-
-;; moves all turtles back to the home position
-(home-all)
-
-;; check turtles' names
-(turtle-names)
-```
 
 #### ?. [intermediate] Exercise on filter
 
 #### 7. [intermediate] Write a function that tilts five turtles in different directions
 
-Next, we want to tilt five turtles' heads in different angles so that
-we can see their move well. For example, :trinity 0, :neo 45, :oracle
-90, :cypher 135, :morpheus 180.
-This function will be no more straightforward like we wrote so far.
-Since we need two kinds of parameters at the same time, name and
-angle, while previous functions used only one kind of parameter.
+#### Recursion 
 
-Again, Clojure has many ways to do this.
-
-_EM: I am not a fan of doseq, would remove it in favor of map_
-
-- 7.1 using `doseq` with a little tweak
-
-Let's think how we can use `doseq` here also.
-
-- 7.1.1 put two parameters in one hash map
-
-If we put two-parameter pair together to form one, we can use `doseq` like previous examples.
-
-```clojure
-;; put turtle names and digits together and create a hash map
-clojurebridge-turtle.walk=> (def m (zipmap (turtle-names) (range 0 (count (turtle-names)))))
-#'clojurebridge-turtle.walk/m
-clojurebridge-turtle.walk=> m
-{:trinity 0, :neo 1, :oracle 2, :cypher 3, :morpheus 4}
-
-;; see each part is doing what
-clojurebridge-turtle.walk=> (count (turtle-names))
-5
-clojurebridge-turtle.walk=> (range 0 5)
-(0 1 2 3 4)
-clojurebridge-turtle.walk=> (zipmap [:a :b] [0 1])
-{:a 0, :b 1}
-```
-
-- 7.1.2 use `doseq` to iterate hash map
-
-```clojure
-;; using m which is created by zipmap
-(doseq [t m] (right (first t) (* (second t) 45)))
-
-;; again, see each part is doing what
-
-;; see how doseq uses m
-clojurebridge-turtle.walk=> (doseq [t m] (prn t))
-[:trinity 0]
-[:neo 1]
-[:oracle 2]
-[:cypher 3]
-[:morpheus 4]
-nil
-
-;; see first and second function do
-clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (second t)))
-:trinity 0
-:neo 1
-:oracle 2
-:cypher 3
-:morpheus 4
-nil
-
-;; see what (* (second t) 45) does
-clojurebridge-turtle.walk=> (doseq [t m] (prn (first t) (* (second t) 45)))
-:trinity 0
-:neo 45
-:oracle 90
-:cypher 135
-:morpheus 180
-nil
-```
-
-- 7.1.3 put hash map creation and `doseq` in one function
-
-```clojure
-;; function definition
-(defn tilt-turtles
-  []
-  (let [m (zipmap (turtle-names) (range 0 (count (turtle-names))))]
-    (doseq [t m] (right (first t) (* (second t) 45)))))
-
-;; usage
-(tilt-turtles)
-```
-
-![tilt turtles](img/tilt-turtles.png)
-
-
-- 7.2 [bonus] map function (higher order function) is another way to do
-
-Using `map` function, tilt-turtles function can be written a single
-line as in below.
-
-```clojure
-clojurebridge-turtle.walk=> (map #(right % (* %2 45)) (turtle-names) (range 0 (count (turtle-names))))
-({:trinity {:angle 0}} {:neo {:angle 45}} {:oracle {:angle 90}}
-{:cypher {:angle 135}} {:morpheus {:angle 180}})
-```
-
-- 7.3 [bonus] recursion is another way to do
-
-```clojure
-;; function definition
-(defn tilt-turtles-loop
-  []
-  (loop [t nil
-         n (turtle-names)
-         s 0]
-    (if (empty? n) :completed
-        (recur (right (first n) (* s 45)) (rest n) (inc s)))))
-
-;; usage
-(tilt-turtles-loop)
-```
-
-#### 8. [intermediate] Write a function that moves five turtles forward, right and forward again
-
-We got five turtles, made their heads tilted in different directions.
-It's time to move all those five turtles, forward, right and forward.
-
-- 8.1 put three movements in one `doseq`
-
-Like we tried in 5.4, only one `doseq` works for the three movements.
-
-```clojure
-(doseq [n (turtle-names)]
-  (forward n 60)
-  (right n 90)
-  (forward n 50))
-```
-
-![move turtles](img/move-turtles.png)
-
-
-- 8.2 change parameters of forwards and right
-
-Putting three movements in one `doseq` is nice, but what if we want to
-change parameters?
-For example, forward 100, right 150, then forward 60, or
-forward 50, right 30, and forward 60.
-
-Defining a function that takes parameters is the way to do.
-
-```clojure
-;; function definition
-(defn doseq-with-params
-  [len1 len2 angle]
-  (doseq [n (turtle-names)]
-    (forward n len1)
-    (right n angle)
-    (forward n len2)))
-
-;; usage example
-(home-all)
-(clean-all)
-(tilt-turtles)
-
-(doseq-with-params 100 60 150)
-```
-
-![params 100 60 150](img/parameters-100-60-150.png)
-
-
-Try various parameters.
-
-
-#### 9. [intermediate] put whole stuff in a function
-
-So far, we added four turtles and got five in total.
-Each turtle's head was tilted in a different direction.
-Finally, five turtles walked forward, changed heads by some degrees,
-then walked again.
-There were three steps.
-
-We've already learned writing a function makes things put into one, and
-repeating the same sequence makes very easy.
-
-- 9.1 write a function so that all three steps can be done by only one function.
-
-```clojure
-;; definition of walk-five-turtles functions
-(defn walk-five-turtles
-  [names len1 len2 angle]
-  (add-four-turtles names)
-  (tilt-turtles)
-  (doseq-with-params len1 len2 angle))
-
-;; usage examples
-(walk-five-turtles [:taylor :tess :tiffany :tracy] 10 60 90)
-```
-
-![walk five turtles](img/walk-five-turtles.png)
-
-
-- 9.2 [bonus] use hash map as a function parameter
-
-As a number of function parameters increases, it goes confusing.
-For example, if we misunderstand the order of len2 and angle, turtles
-may go beyond the boundary.
-
-To solve this problem, hash map is often used as a function parameter.
-The parameters in the hash map are picked up using destructuring.
-It is handy.
-
-
-```clojure
-;; function definition
-(defn walk-five-turtles-map
-  [{:keys [names len1 len2 angle]}]
-  (add-four-turtles names)
-  (tilt-turtles)
-  (doseq-with-params len1 len2 angle))
-
-
-;; usage example
-(walk-five-turtles-map {:names [:taylor :tess :tiffany :tracy] :len1 10 :len2 60 :angle 90})
-```
-
-If we look at the usage example, it's clear what parameter goes where.
-
-
-
-#### #. side note: forward 480 and 48 times of forward 10
-
-Going forward 480 and repeating 48 times of forward 10 are not the
-same for the turtles.
-To see the difference, let define an utility function, `leftmost` first.
-This function moves a turtle to the leftmost position.
-
-```clojure
-;; function definition
-
-(defn leftmost
-  [n]
-  (home n)
-  (clean n)
-  (left n 90)
-  (forward n 240)
-  (clean n)
-  (right n 180))
-```
-
-Once the turtle moves to the leftmost position, try two types of forwards.
-
-```clojure
-clojurebridge-turtle.walk=> (leftmost :trinity)
-{:trinity {:angle 180}}
-
-;; forward 480
-clojurebridge-turtle.walk=> (forward :trinity 480)
-{:trinity {:length 480}}
-```
-
-![forward 480](img/forward480.png)
-
-```clojure
-clojurebridge-turtle.walk=> (leftmost :trinity)
-{:trinity {:angle 180}}
-
-;; 48 times of forward 10
-clojurebridge-turtle.walk=> (dotimes [i 48] (forward :trinity 10))
-nil
-```
-![forward 48*10](img/forward48times10.png)
-
-
-Both walked the turtle from the leftmost to rightmost position,
-however, the colors are not the same.
-The stroke's color is calculated from the x, y values of the endpoint.
-Forwarding 480 has only one endpoint, while forwarding 48 times has 48
-endpoints.
-This means the turtle changed the color 48 times.
-
-
-
+#### Exercises
 
 License
 -------
