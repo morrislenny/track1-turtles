@@ -447,11 +447,13 @@ Here is what's in it:
 -  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. 
 - `[name length]` are the parameters. In order to tell a turtle to draw a square, we will need to provide a turtle name and the length of the side to the function.
 - What follows is the function body, i.e. the commands it's composed of. Note that all our commands use the turtle name, and the `forward` uses the side length.
-- Note that we enclose `defn` and the function body in parentheses. Click on the opening parenthesis before `defn` in Nightcode, it will show you the matching closing one (all the way at the end of the function). Nightcode helps you match parenteses (and there is a lot of parentheses in Clojure!)
+- Note that we enclose `defn` and the function body in parentheses. Click on the opening parenthesis before `defn` in Nightcode, it will show you the matching closing one (all the way at the end of the function). Nightcode helps you match parentheses (and there is a lot of parentheses in Clojure!)
 
 Now that we have looked at how the function is defined, let's see how it works. 
 
-Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually tell our function to work, we only defined what it will do when it works. 
+Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually tell our function to do its work, we only defined what it will do when it works. 
+
+In order to tell it to work we need to _call it_. In Clojure calling a function means that we put its name and parameters (in the right order) in parentheses, such as `(forward :trinity 100)` or `(* 2 45)`. We have been calling functions all along! Now let's call our own function. 
 
 In the REPL panel (lower right) type `(init)` (to make sure that 
 the canvas are back to initial state). Then type `(draw-square :trinity 100)`. You will see a nice square drawn by `:trinity`:
@@ -552,6 +554,9 @@ Now we will use the helper function to rewrite our `draw-square` function: we wi
   (draw-side-of-square name length)
   (draw-side-of-square name length))
 ```
+
+The process of changing existing program code to make it more readbable or more efficient, without changing what it does, is called _refactoring_. 
+
 This is much easier to read, and these functions are very useful, we expect to use them more. Since they are useful, we also want to put s description in them to let those who will be using them know what they do. The comments describing what a function does go after the function name and before its parameters, and are written in double-quotes:
 
 ```clojure
@@ -591,7 +596,7 @@ You have written your first function documentation. From now on, make sure to wr
 
 ##### 6.4 [Intermediate] Exercises on writing your own functions. 
 
-Write a function to draw a triangle (easy) or another shape. Use helper functions (often you start by writing short functions and then build larger functions out of them, rather than the other way around). Don't forget to write "doc" descriptions of your functions. **Don't forget to Reload your file when any new function is finished**. Test functions early and often. 
+Write a function to draw a triangle with equal sides or another shape of your choice (some are easier, some are harder). Use helper functions. Often you start by writing short functions and then build larger functions out of them, rather than the other way around. Don't forget to write "doc" descriptions of your functions. **Don't forget to Reload your file when any new function is finished**. Test functions early and often. 
 
 This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.  
 
