@@ -454,7 +454,7 @@ Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Sh
 In the REPL panel (lower right) type `(init)` (to make sure that 
 the canvas are back to initial state). Then type `(draw-square :trinity 100)`. You will see a nice square drawn by `:trinity`:
 
-![Turtle square](img/square.png)
+![Turtle square](img/Square.png)
 
 Now type `(draw-square :trinity 50)`. Now there are two squares drawn by `:trinity`. 
 
