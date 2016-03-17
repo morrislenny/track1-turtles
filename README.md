@@ -1,36 +1,9 @@
-# welcometoclojurebridge
+# Welcome to Clojure Bridge!
 
 This repository has two apps.
 
 1. A sample app to test your install for ClojureBridge
-2. A template to try simple functions to walk a turtle
-
-## Usage 1 - test your installation
-
-LightTable - open `core.clj` and press
-<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
-<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the file.
-
-Emacs - run cider, open `core.clj` and press `C-c C-k` to evaluate the file.
-
-`lein repl` - run `(require 'welcometoclojurebridge.core)`.
-
-
-## Usage 2 - try simple functions to walk a turtle
-
-LightTable - open `walk.clj` and press
-<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> or
-<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to evaluate the
-file.
-To evaluate additional form, move a cursor to the end of line and
-<kbd>Ctrl</kbd> + <kbd>Enter</kbd> or
-<kbd>Cmd</kbd> + <kbd>Enter</kbd>.
-
-
-Emacs - run cider, open `walk.clj` and press `C-c C-k` to evaluate the
-file. On repl, type `(ns clojurebridge-turtle.walk)`.
-
-`lein repl` - run `(require 'clojurebridge-turtle.walk)`, `(ns clojurebridge-turtle.walk)`.
+2. A template to try simple functions to walk a turtle   
 
 #### How to move turtles
 
