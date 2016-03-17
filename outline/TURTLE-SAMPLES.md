@@ -413,6 +413,8 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 ```
 Similarly, we can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
 
+A group of things in square brackets is called a _vector_ in Clojure. You can have vectors of names, numbers, or anything else. For instance, turtle color is given as a vector of RGB values (numbers). 
+
 Experiment with `map` and `juxt`. 
 
 #### 6. [intermediate] Define your own functions. 
@@ -460,16 +462,58 @@ Now type `(draw-square :trinity 50)`. Now there are two squares drawn by `:trini
 
 We can also have another turtle draw a couple of squares:
 
-![Turtle two squares](img/FourSquares.png)
+```clojure
+clojurebridge-turtle.walk=> (add-turtle :neo)
+{:neo {:x 0, :y 0, :angle 90, :color [12 84 0]}}
+clojurebridge-turtle.walk=> (right :neo 180)
+{:neo {:angle 180}}
+clojurebridge-turtle.walk=> (draw-square :neo 100)
+{:neo {:angle 90}}
+clojurebridge-turtle.walk=> (draw-square :neo 50)
+{:neo {:angle 90}}
+```
 
-_EM: :neo draws a square_
+![Turtle four squares](img/FourSquares.png)
 
+What if we want squares in all four corners? We can have add four turtles one-by-one and have them draw squares, or we can go back to `map` and use it first to add four turtles, and then have them draw the squares. 
+
+Let's start with `(init)` to remove the current squares and make it so that only `:trinity` is on the canvas. 
+
+Recall that `map` takes a function and a vector of things to apply this function to, and applies the function to each element of the vector. If we want to use `map` to add several turtles, our function is `add-turtle` and the list of names can be anything you want. 
+
+The following adds three turtles named `:taylor :tess`, and `:tracy` to the canvas:
+```clojure
+clojurebridge-turtle.walk=> (map add-turtle [:taylor :tess :tracy])
+```
+They are all facing up now. At this point we will move them manually so that they are facing different directions (up, down, left, and right). Later we will see that we could do it with a `map` as well. 
+
+```clojure
+clojurebridge-turtle.walk=> (right :taylor 90)
+{:taylor {:angle 90}}
+clojurebridge-turtle.walk=> (right :tess 180)
+{:tess {:angle 180}}
+clojurebridge-turtle.walk=> (right :tracy 270)
+{:tracy {:angle 270}}
+```
+
+At this point we can use a `map` to draw squares on all four sides. We have a function `draw-square` that we can map over all turtles. Take a look at the functions, notice that it takes two things: a name and a side length. Thus our map will make a template function that passes the turtle name and the length of a square to our `draw-square`. Let's draw squares of length 100: 
+
+```clojure
+clojurebridge-turtle.walk=> (map #(draw-square % 100) (turtle-names))
+```
+We see that all four turtles made their moves, and here is the resulting picture:
+
+![Four squares by four turtles](img/FourSquaresFourTurtles.png)
+
+Let's do it again, change the size of the squares in the template (don't forget to use Up arrow in Nightcode REPL to bring back the previous command, this way you just change one number):
+
+```clojure
+clojurebridge-turtle.walk=> (map #(draw-square % 50) (turtle-names))
+``` 
+
+![Eight squares by four turtles](img/EightSquaresFourTurtles.png)
 
 _EM: refactor: take repeated code into a smaller function_
-
-_map new function_
-
-_Show: add turtles by mapping over a list of names_
 
 _Exercise: draw a triangle_
 
@@ -478,10 +522,6 @@ _Exercise: draw a triangle_
 #### Side note: map with multiple lists
 
 _EM: this is useful, but not required_
-
-#### ?? Exercise: chaotic turtles
-
-_EM: make a bunch of turtles and move them in random directions_
 
 #### Getting turtle information: keywords
 
@@ -495,9 +535,13 @@ _EM once a turtle is close to hitting a wall, it turns around_
 
 #### ?. [intermediate] Exercise on filter
 
-#### 7. [intermediate] Write a function that tilts five turtles in different directions
-
 #### Recursion 
+
+#### ?? Exercise: chaotic turtles
+
+_EM: intro to random_
+
+_EM: make a bunch of turtles and move them in random directions_
 
 #### Exercises
 
