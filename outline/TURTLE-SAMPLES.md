@@ -454,9 +454,18 @@ the canvas are back to initial state). Then type `(draw-square :trinity 100)`. Y
 
 ![Turtle square](img/square.png)
 
-_EM: refactor: take repeated code into a smaller function_
+Now type `(draw-square :trinity 50)`. Now there are two squares drawn by `:trinity`. 
+
+![Turtle two squares](img/TwoSquares.png)
+
+We can also have another turtle draw a couple of squares:
+
+![Turtle two squares](img/FourSquares.png)
 
 _EM: :neo draws a square_
+
+
+_EM: refactor: take repeated code into a smaller function_
 
 _map new function_
 
