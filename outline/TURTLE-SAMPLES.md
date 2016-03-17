@@ -336,7 +336,7 @@ clojurebridge-turtle.walk=> (forward :morpheus 20)
 ![forward 20 more](img/forward20plus.png)
 
 
-#### 5. [easy - intermediate] Move all five turtles - Clojure functions
+#### 5. [intermediate] Move all five turtles - Clojure functions
 
 We've had five turtles and want to move or tilt those five.
 Let's think how we can make all five turtles go forward by 40?
@@ -421,6 +421,8 @@ Experiment with `map` and `juxt`.
 
 Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times.
 
+##### 6.1 Writing a function to draw a square
+
 Let's say we want my turtle to draw a square. This movement consists of moving forward, turning right, and repeating this on each side of the square. We can write this movement as a function. We don't know which turtle we will be using, and we also want to make it so that we can draw squares of different sizes. Thus we will make the turtle name and the length of the side parameters to the function. 
 
 The function is going to be fairly long, so it's inconvenient to write it in REPL. We will write functions in a file and then load them into REPL. 
@@ -473,6 +475,8 @@ clojurebridge-turtle.walk=> (draw-square :neo 50)
 {:neo {:angle 90}}
 ```
 
+##### 6.2 Using a map with your own function 
+
 ![Turtle four squares](img/FourSquares.png)
 
 What if we want squares in all four corners? We can have add four turtles one-by-one and have them draw squares, or we can go back to `map` and use it first to add four turtles, and then have them draw the squares. 
@@ -513,15 +517,93 @@ clojurebridge-turtle.walk=> (map #(draw-square % 50) (turtle-names))
 
 ![Eight squares by four turtles](img/EightSquaresFourTurtles.png)
 
-_EM: refactor: take repeated code into a smaller function_
+##### 6.3 Using functions in functions; code refactoring
 
-_Exercise: draw a triangle_
+Before we move on to the next Clojure features, let's look back at what we have accomplished. We wrote a function to draw a square that takes a turtle name and the length of the side as parameters, and directs that turtle to move in a square pattern. Then we used this function to map over four turtle to draw four squares. 
 
-<!-- _EM: somewhere here we also explain let - maybe?_ -->
+Looking at the function, I notice that it is still quite repetitive: it repeats the forward/right combination four times, and it's exactly the same commands! 
 
-#### Side note: map with multiple lists
+We would like to make it look better by creating a _helper function_ `draw-side-of-square` that will draw a side of a square:
+```clojure
+(defn draw-side-of-square [name length]
+  (forward name length)
+  (right name 90))
+```
+Press _Reload_ (or use the shortcut Ctrl-Shift-S on Windows or Ctrl-Cmd-S on a Mac) to reload your file since you have added a function. Use `(init)` to clear the canvas and test your function by typing `(draw-side-of-square :trinity 100)` to have `:trinity` draw a line and turn right (it's important to reload your program code and test your functions every time you have added something to the file).  
+ 
+Now we will use the helper function to rewrite our `draw-square` function: we will use it four times to draw four sides. Here is what `yourcode.clj` file will look like after the change (it's important that the new function is above the `draw-square` since it is used in it):
+```clojure
+(ns clojurebridge-turtle.walk
+  (:use clojure.repl)
+  (:use clojurebridge-turtle.core))
+
+;; You might want to start with (init) to make sure
+;; that the canvas are in the initial state: 
+;; only :trinity is on the canvas, at the center
+;(init)
+
+(defn draw-side-of-square [name length]
+  (forward name length)
+  (right name 90))
+
+(defn draw-square [name length]
+  (draw-side-of-square name length)
+  (draw-side-of-square name length)
+  (draw-side-of-square name length)
+  (draw-side-of-square name length))
+```
+This is much easier to read, and these functions are very useful, we expect to use them more. Since they are useful, we also want to put s description in them to let those who will be using them know what they do. The comments describing what a function does go after the function name and before its parameters, and are written in double-quotes:
+
+```clojure
+(ns clojurebridge-turtle.walk
+  (:use clojure.repl)
+  (:use clojurebridge-turtle.core))
+
+;; You might want to start with (init) to make sure
+;; that the canvas are in the initial state: 
+;; only :trinity is on the canvas, at the center
+;(init)
+
+(defn draw-line-and-turn 
+  "Makes a turtle with the given name draw a line of the given length 
+   and then turn right 90 degrees"
+  [name length]
+  (forward name length)
+  (right name 90))
+
+(defn draw-square 
+ "Makes a turtle with the given name draw a square of the given length of side" 
+  [name length]
+  (draw-line-and-turn name length)
+  (draw-line-and-turn name length)
+  (draw-line-and-turn name length)
+  (draw-line-and-turn name length))
+```
+
+Now Reload your file and try this in REPL:  
+```clojure
+(doc draw-square)
+```
+
+What do you see? 
+
+You have written your first function documentation. From now on, make sure to write short descriptions of your functions so that you can easily look them up using a `doc` command.
+
+##### 6.4 [Intermediate] Exercises on writing your own functions. 
+
+Write a function to draw a triangle (easy) or another shape. Use helper functions (often you start by writing short functions and then build larger functions out of them, rather than the other way around). Don't forget to write "doc" descriptions of your functions. **Don't forget to Reload your file when any new function is finished**. Test functions early and often. 
+
+This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.  
+
+##### 6.5 [Challenging] Exercises on using map
+
+One you are done with writing your own functions, use map top make multiple turtles draw multiple copies of this shape. Once again, ask a mentor if you need help or have a question, we will be happy to help. 
+
+#### 6.6 [Optional]: map with multiple lists
 
 _EM: this is useful, but not required_
+
+## You may continue working on functions (show us the shapes your turtles draw!), or you may move on to more Clojure features. 
 
 #### Getting turtle information: keywords
 
