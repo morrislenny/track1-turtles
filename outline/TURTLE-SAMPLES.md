@@ -666,7 +666,16 @@ We will be using keywords in order to make turtles behave differently depending 
 ##### 8.1 Choosing options: when, if 
 A turtle is going up when its angle is between 0 and 180. It's going down when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be going down (its angle more than 180). If it is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
 
-We will be using a Clojure `when` function to do this. You can check out a description of it here: [when](https://clojuredocs.org/clojure.core/when)
+We will be using a Clojure `when` function to do this. It's a function that can be used to perform an action only when a certain condition is true. For instance, 
+in a function where we have a `length` parameter we can say 
+```clojure
+(when (< length 150) (forward :neo length)
+```
+This means that if the length is less than 150, `:neo` moves. Otherwise he stays put. 
+
+You can check out a description of it here: [when](https://clojuredocs.org/clojure.core/when)
+
+Note that just like we write `(* 2 45)` for multiplication, we write `(< length 150)` for "length < 150". This is because Clojure uses _prefix notation_: the function that you are calling always goes first in parentheses. `*` and `<` are functions, so they follow this pattern. 
 
 We will start writing the function definition in `yourcode.clj` file, under the functions that you already have there. We give the function a name `point-up`. It only needs to know who the turtle is, so we have a single parameter `name`. We write a brief description of the function. 
 ```clojure
@@ -696,7 +705,7 @@ Try it in the REPL by applying it to different turtles, such as `(point-up :trin
 There are other useful functions that allow you to check and combine conditions. Check them out at [https://clojuredocs.org/](https://clojuredocs.org/) This is a community-powered Clojure documentation, which means that it is written by those who use Clojure, and is usually very good, with helpful examples and discussion.
  
  * [when-not](https://clojuredocs.org/clojure.core/when-not) allows you to do something when a condition is false, rather than when it is true.
- * [if](https://clojuredocs.org/clojure.core/if) allows you do one thing when a condition is true, and another one when it is false.
+ * [if](https://clojuredocs.org/clojure.core/if) allows you do one thing when a condition is true, and another one when it is false. 
  * [and](https://clojuredocs.org/clojure.core/and), [or](https://clojuredocs.org/clojure.core/or) allow you to combine two (or more) conditions, i.e. to do something only when both conditions are true, or when at least one is true. 
 
 ##### 8.2 Exercise [more challenging]: Turtles wandering off
@@ -731,11 +740,58 @@ Here is the complete code (that you would write in `yourcode.clj`):
 ```
 The function will draw two lines (with turns), then make another call to `spiral` with the same turtle name, but the length smaller by 5. That function call will draw the next two lines, then call spiral again, but with the smaller length, and so on. Once the length becomes 5 or less, `when` will do nothing instead of drawing the lines and making a call, so the function will stop.  
 
-Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since `:trinity` was at the center facing up, your spiral will be located differently. You can bring `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. 
+Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since `:trinity` was at the center facing up, your spiral will be located differently. You can walk `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. 
 
- 
 
 #### 10. [More challenging, optional] Clojure function filter (higher order function)
+
+`filter` is another helpful Clojure function that allows you to work with vectors. Suppose you have a bunch of turtles, and you want all of the turtles that are pointing up (the angle is less than 180) to take a 20 pixel step forward. Filter can select all turtles facing up. After they are selected, you can use `map` to make them all move forward. 
+
+Just like a `map`, `filter` can work with a template function. Here is how you perform this task: 
+```clojure
+(filter #(< (:angle (turtle-state %)) 180) (turtle-names))
+```
+Let's say there are three turtles on the canvas, and their state is 
+```clojure
+[{:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}} 
+{:neo {:x -8.742278000372482E-7, :y 19.99999999999998, :angle 240, :color [3 61 196]}} 
+{:oracle {:x 0, :y 0, :angle 120, :color [134 30 64]}}]
+```
+`filter` will pick the first turtle name, which is `:trinity`, and apply the template, so it will calling the function:
+```clojure
+(< (:angle (turtle-state :trinity)) 180)
+```
+`:trinity`'s angle is 90, which is smaller than 180, so the condition is true. Thus `:trinity` will be added to the resulting vector. 
+
+Next it will check the same template condition for `:neo`:
+template, so it will calling the function:
+```clojure
+(< (:angle (turtle-state :neo)) 180)
+```
+`:neo`'s angle is 240, which is not smaller than 180, so he doesn't get added to the result - sorry, `:neo`. 
+
+`:oracle`'s angle is less than 180, so she is added to the result. 
+
+As we just figured out, the result is:
+```clojure
+clojurebridge-turtle.walk=> (filter #(< (:angle (turtle-state %)) 180) (turtle-names))
+(:trinity :oracle)
+```
+
+If we want to make only such turtles move forward, we can combine `filter` with `map`: 
+```clojure
+clojurebridge-turtle.walk=> (map #(forward % 20) (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
+({:trinity {:length 20}} {:oracle {:length 20}})
+```
+
+This works (we see the right results), but it is very long. Alternatively we can use Clojure's ability to save results into variables, and then use them later. To define a variable, you use `def` (not `defn` as for a function), and you can define them in the REPL or in the file. We will go with the REPL option:
+```clojure
+clojurebridge-turtle.walk=> (def up-facing-turtles (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
+#'clojurebridge-turtle.walk/up-facing-turtles
+clojurebridge-turtle.walk=> (map #(forward % 20) up-facing-turtles)
+({:trinity {:length 20}} {:oracle {:length 20}})
+```
+
 
 #### 11. [More challenging, optional] Exercise on filter
 
