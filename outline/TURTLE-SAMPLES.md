@@ -246,7 +246,9 @@ clojurebridge-turtle.walk=> (state)
 You can add multiple turtles. They all start in the middle, facing up, and are 
 all of different colors. You can refer to each turtle by its name.
 
-- add turtles
+###### add turtles
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (init)
@@ -263,10 +265,11 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![four turtles](img/four-turtles.png)
 
-Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error "Specify name. You have more than one turtle." 
+Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error `"Specify name. You have more than one turtle."` 
 
-- make turtles tilt different angles
+###### make turtles tilt different angles
 
+---
 Note that `*` denotes multiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
 
 The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on 2 and 45. 
@@ -284,8 +287,9 @@ clojurebridge-turtle.walk=> (right :cypher (* 3 45))
 
 Feel free to change the multiplication function or its parameters to something else, see what happens. 
 
-- walk four turtles forward
+###### walk four turtles forward
 
+---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 40)
 {:trinity {:length 40}}
