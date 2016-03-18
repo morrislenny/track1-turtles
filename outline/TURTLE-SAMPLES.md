@@ -600,37 +600,55 @@ Write a function to draw a triangle with equal sides or another shape of your ch
 
 This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.  
 
-##### 6.5 [Challenging] Exercises on using map
+##### 6.5 [More challenging] Exercises on using map
 
 One you are done with writing your own functions, use map top make multiple turtles draw multiple copies of this shape. Once again, ask a mentor if you need help or have a question, we will be happy to help. 
 
-#### 6.6 [Optional]: map with multiple lists
+##### 6.6 [Optional] map with multiple vectors
 
 _EM: this is useful, but not required_
 
 ## You may continue working on functions (show us the shapes your turtles draw!), or you may move on to more Clojure features. 
 
-#### Getting turtle information: keywords
+#### 7. [More challenging] Getting turtle information: keywords 
 
-#### Checking a condition
+Now we are going to look more into the way Clojure stores information. Let's take a look at a turtles state. **Important:** we will be using a `turtle-state` function, not `state` function that you have used before since it's more convenient for what we are trying to do here. 
+
+In the REPL type: 
+```clojure
+clojurebridge-turtle.walk=> (turtle-state :trinity)
+{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}
+```
+
+What you get back is `:trinity`'s current coordinates, angle, and her color (the state may be different for you, depending on where `:trinity` is on your canvas). 
+
+You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage container called a _hashmap_. Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps   
+
+#### 8. [More challenging] Checking a condition
+
+##### 8.1 Choosing one of two options: if 
 
 _EM: 'if;, the idea of true/false 
 
-#### ?? Bouncing off the walls
+##### 8.2 Exercise: Bouncing off the walls
 
 _EM once a turtle is close to hitting a wall, it turns around_
 
-#### ?. [intermediate] Exercise on filter
+#### 9. [More challenging] Clojure function filter (higher order function)
 
-#### Recursion 
 
-#### ?? Exercise: chaotic turtles
+#### 10. [More challenging] Exercise on filter
+
+#### 11: [More challenging] Recursion 
+
+#### 12: Exercises: 
+
+_EM: chaotic turtles_
 
 _EM: intro to random_
 
 _EM: make a bunch of turtles and move them in random directions_
 
-#### Exercises
 
 License
 -------
