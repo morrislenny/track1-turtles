@@ -30,7 +30,7 @@ clojurebridge-turtle.walk=>
 ```
 This is a place where you can type turtle commands. You will also see your first turtle in a little pop-up window! 
 
-We will refer to the little pop-up window as the canvas since that's where turtles drawings go.
+We will refer to the little pop-up window as the canvas since that's where turtle drawings go.
 
 <!--
 _EM commentt: Nightcode instructions instead:_
@@ -66,7 +66,7 @@ clojurebridge-turtle.walk=> (state)
 
 ![initial state](img/initial-state.png)
 
-For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: you type in what you want it to do, it performs the operation and gives you back the result. 
+For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for *Read-Evaluate-Print Loop*, and it's a place to interact with Clojure: you type in what you want it to do, it performs the operation and gives you back the result. 
 
 Place your cursor at the end of the line: 
 ```clojure
