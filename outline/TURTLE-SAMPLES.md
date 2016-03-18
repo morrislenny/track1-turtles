@@ -169,7 +169,9 @@ If you are getting an error and can't figure out what's wrong, ask one of the me
 
 #### 2. [easy] Basic movement - forward, backward, right and left
 
-- forward
+###### forward
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
@@ -179,7 +181,9 @@ clojurebridge-turtle.walk=> (forward 40)
 ![forward 40](img/forward40.png)
 
 
-- right
+###### right
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (right 90)
