@@ -785,12 +785,16 @@ clojurebridge-turtle.walk=> (map #(forward % 20) (filter #(< (:angle (turtle-sta
 ```
 
 This works (we see the right results), but it is very long. Alternatively we can use Clojure's ability to save results into variables, and then use them later. To define a variable, you use `def` (not `defn` as for a function), and you can define them in the REPL or in the file. We will go with the REPL option:
+
 ```clojure
 clojurebridge-turtle.walk=> (def up-facing-turtles (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
 #'clojurebridge-turtle.walk/up-facing-turtles
 clojurebridge-turtle.walk=> (map #(forward % 20) up-facing-turtles)
 ({:trinity {:length 20}} {:oracle {:length 20}})
 ```
+
+#### Side note: Clojure randomness. 
+
 
 
 #### 11. [More challenging, optional] Exercise on filter
