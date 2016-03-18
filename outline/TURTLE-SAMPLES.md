@@ -1,4 +1,4 @@
-# How to Walk Turtles
+#  :turtle:  :turtle: :turtle:  How to Walk Turtles :turtle:  :turtle:  :turtle:
 
 Here are some instructions from very basic to a little bit high level
 ones to walk turtles.
@@ -30,7 +30,7 @@ clojurebridge-turtle.walk=>
 ```
 This is a place where you can type turtle commands. You will also see your first turtle in a little pop-up window! 
 
-We will refer to the little pop-up window as the canvas since that's where turtles drawings go.
+We will refer to the little pop-up window as the canvas since that's where turtle drawings go.
 
 <!--
 _EM commentt: Nightcode instructions instead:_
@@ -66,7 +66,7 @@ clojurebridge-turtle.walk=> (state)
 
 ![initial state](img/initial-state.png)
 
-For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for Read-Evaluate-Print Loop, and it's a place to interact with Clojure: you type in what you want it to do, it performs the operation and gives you back the result. 
+For the first few tasks you will be typing your commands into the right bottom area known as the REPL. REPL stands for *Read-Evaluate-Print Loop*, and it's a place to interact with Clojure: you type in what you want it to do, it performs the operation and gives you back the result. 
 
 Place your cursor at the end of the line: 
 ```clojure
@@ -93,21 +93,23 @@ See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with
 
 ##### 1.2 Helpful tips on interacting with Clojure
 
- - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter. 
+ - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter.   
 
-- `(undo)`, `(clean)`, and `(home)`
 
+
+###### `(undo)`, `(clean)`, and `(home)`
+---
 When the turtle has gone unexpectedly long or short distance, we can delete the
 line one by one using `(undo)`.
 If the turtle should start from its initial state,
 a combination of `(clean)` and `(home)` commands takes the turtle back to
-the initial state.
+the initial state.   
 
-- `(state)`
-
-When the turtle goes far away beyond the boundary, or you lost which
-one is what, you can check where they are by this command. The command
-returns absolute values from the position (0,0) in the middle of the canvas. Note that coordinates are computed with some rounding error, they are not whole numbers. 
+###### `(state)` 
+---
+When the turtle goes far away beyond the boundary, or you lost which turtle
+is which, you can check where a turtle is using this `(state)`. `(state)`
+returns absolute values from the position (0,0) in the middle of the canvas. Note that coordinates are computed with some rounding error, they are not whole numbers.   
 
 For instance, when the following shows the state changes when `:trinity` starts at (0,0), moves forward by 20, then turns right 45 degrees, and moves forward by 20 again. 
 ```clojure
@@ -130,8 +132,9 @@ clojurebridge-turtle.walk=> (state)
 [note] The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
 
-- `doc`
+###### `doc`
 
+---
 Without looking at command reference, we can check how to use each
 function by Clojure's `doc`. For example, `(doc init)` displays
 its usage:
@@ -144,7 +147,7 @@ clojurebridge-turtle.core/init
 nil
 ```
 
-##### 1.3 How to deal with mistakes
+##### 1.3 How to deal with errors
 
 If you made a mistake, you will get an error message from Clojure. 
 
@@ -156,15 +159,19 @@ clojurebridge-turtle.walk=>
 ```
 This means that Clojure doesn't know what `frward` is. 
 
-Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, would make Clojure not understand a name or a function. You might want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
+Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, will make Clojure not understand a name or a function. You will want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
 
-If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. things) a function is supposed to take. Sometimes Clojure will say that it cannot covert, or cast, on type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
+If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
+
+Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse Clojure beyond the point of no return. When this happens, Clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunately, this means that all the movements that you have made with your turtles will be lost :cry: 
 
 If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
 #### 2. [easy] Basic movement - forward, backward, right and left
 
-- forward
+###### forward
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
@@ -174,7 +181,9 @@ clojurebridge-turtle.walk=> (forward 40)
 ![forward 40](img/forward40.png)
 
 
-- right
+###### right
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (right 90)
@@ -237,7 +246,9 @@ clojurebridge-turtle.walk=> (state)
 You can add multiple turtles. They all start in the middle, facing up, and are 
 all of different colors. You can refer to each turtle by its name.
 
-- add turtles
+###### add turtles
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (init)
@@ -254,10 +265,11 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![four turtles](img/four-turtles.png)
 
-Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error "Specify name. You have more than one turtle." 
+Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error `"Specify name. You have more than one turtle."` 
 
-- make turtles tilt different angles
+###### make turtles tilt different angles
 
+---
 Note that `*` denotes multiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
 
 The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on 2 and 45. 
@@ -275,8 +287,9 @@ clojurebridge-turtle.walk=> (right :cypher (* 3 45))
 
 Feel free to change the multiplication function or its parameters to something else, see what happens. 
 
-- walk four turtles forward
+###### walk four turtles forward
 
+---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 40)
 {:trinity {:length 40}}
@@ -291,11 +304,23 @@ clojurebridge-turtle.walk=> (forward :cypher 40)
 ![four moves](img/four-forwards.png)
 
 
-#### 4. [easy] Add one more turtle and give them commands
+#### 4. [easy] Add one more turtle and give them commands 
 
-_EM Ah, ok, we can set color. Need to add to the API and make a ref to RGB values (in the API and here)_
+###### add another turtle named :morpheus with color
 
-- add another turtle named :morpheus with color
+---
+You can change the color of the turtle (the triangle) but not the line behind it. 
+The way you add color to the turtle might be very different than what you might be used to.
+You input colors with three vales (known as RGB values):
+- the first changes how much red is in the color
+- the second changes how much blue is in the color
+- the third changes how much green is in the color   
+
+Each value ranges from 0 to 255. [0, 0, 0] is black, and [255, 255, 255] is white.
+Below is an example in code, showing how it works in Clojure.   
+
+[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a hepful link where you can play with RGB colors!
+
 
 ```clojure
 clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
@@ -305,7 +330,9 @@ clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
 ![fifth turtle](img/fifth-turtle.png)
 
 
-- tilt and go forward :morpheus
+###### tilt and move forward :morpheus
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (left :morpheus 45)
@@ -318,8 +345,9 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![fifth's move](img/fifth-turtle-move.png)
 
-- walk five turtles forward by 20
+###### walk five turtles forward by 20
 
+---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 20)
 {:trinity {:length 20}}
@@ -625,7 +653,9 @@ Write your initials using turtles. They only move in straight lines, so some let
 
 Hint: you can move a turtle into a position to start a letter, and then use `clean` to remove its lines. For instance, `(clean :neo)` would clean up `:neo`'s lines. You can use this in a function as well. 
 
-## You may continue working on functions (w ewould love to see the shapes your turtles draw!), or you may move on to more Clojure features. If you need to have a lot of repeated code fragments, you might want to look at the section on recursion below. 
+## You may continue working on functions (we would love to see the shapes your turtles draw!), or you may move on to more Clojure features. 
+
+If you need to have a lot of repeated code fragments, you might want to look at the section on recursion below. You might also want to look at the side note about randomness below. 
 
 #### 7. [Intermediate] Getting turtle information: keywords and hashmaps
 
@@ -666,7 +696,16 @@ We will be using keywords in order to make turtles behave differently depending 
 ##### 8.1 Choosing options: when, if 
 A turtle is going up when its angle is between 0 and 180. It's going down when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be going down (its angle more than 180). If it is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
 
-We will be using a Clojure `when` function to do this. You can check out a description of it here: [when](https://clojuredocs.org/clojure.core/when)
+We will be using a Clojure `when` function to do this. It's a function that can be used to perform an action only when a certain condition is true. For instance, 
+in a function where we have a `length` parameter we can say 
+```clojure
+(when (< length 150) (forward :neo length)
+```
+This means that if the length is less than 150, `:neo` moves. Otherwise he stays put. 
+
+You can check out a description of it here: [when](https://clojuredocs.org/clojure.core/when)
+
+Note that just like we write `(* 2 45)` for multiplication, we write `(< length 150)` for "length < 150". This is because Clojure uses _prefix notation_: the function that you are calling always goes first in parentheses. `*` and `<` are functions, so they follow this pattern. 
 
 We will start writing the function definition in `yourcode.clj` file, under the functions that you already have there. We give the function a name `point-up`. It only needs to know who the turtle is, so we have a single parameter `name`. We write a brief description of the function. 
 ```clojure
@@ -696,7 +735,7 @@ Try it in the REPL by applying it to different turtles, such as `(point-up :trin
 There are other useful functions that allow you to check and combine conditions. Check them out at [https://clojuredocs.org/](https://clojuredocs.org/) This is a community-powered Clojure documentation, which means that it is written by those who use Clojure, and is usually very good, with helpful examples and discussion.
  
  * [when-not](https://clojuredocs.org/clojure.core/when-not) allows you to do something when a condition is false, rather than when it is true.
- * [if](https://clojuredocs.org/clojure.core/if) allows you do one thing when a condition is true, and another one when it is false.
+ * [if](https://clojuredocs.org/clojure.core/if) allows you do one thing when a condition is true, and another one when it is false. 
  * [and](https://clojuredocs.org/clojure.core/and), [or](https://clojuredocs.org/clojure.core/or) allow you to combine two (or more) conditions, i.e. to do something only when both conditions are true, or when at least one is true. 
 
 ##### 8.2 Exercise [more challenging]: Turtles wandering off
@@ -731,22 +770,85 @@ Here is the complete code (that you would write in `yourcode.clj`):
 ```
 The function will draw two lines (with turns), then make another call to `spiral` with the same turtle name, but the length smaller by 5. That function call will draw the next two lines, then call spiral again, but with the smaller length, and so on. Once the length becomes 5 or less, `when` will do nothing instead of drawing the lines and making a call, so the function will stop.  
 
-Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since `:trinity` was at the center facing up, your spiral will be located differently. You can bring `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. 
+Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since `:trinity` was at the center facing up, your spiral will be located differently. You can walk `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. 
 
- 
 
 #### 10. [More challenging, optional] Clojure function filter (higher order function)
 
+`filter` is another helpful Clojure function that allows you to work with vectors. Suppose you have a bunch of turtles, and you want all of the turtles that are pointing up (the angle is less than 180) to take a 20 pixel step forward. Filter can select all turtles facing up. After they are selected, you can use `map` to make them all move forward. 
+
+Just like a `map`, `filter` can work with a template function. Here is how you perform this task: 
+```clojure
+(filter #(< (:angle (turtle-state %)) 180) (turtle-names))
+```
+Let's say there are three turtles on the canvas, and their state is 
+```clojure
+[{:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}} 
+{:neo {:x -8.742278000372482E-7, :y 19.99999999999998, :angle 240, :color [3 61 196]}} 
+{:oracle {:x 0, :y 0, :angle 120, :color [134 30 64]}}]
+```
+`filter` will pick the first turtle name, which is `:trinity`, and apply the template, so it will calling the function:
+```clojure
+(< (:angle (turtle-state :trinity)) 180)
+```
+`:trinity`'s angle is 90, which is smaller than 180, so the condition is true. Thus `:trinity` will be added to the resulting vector. 
+
+Next it will check the same template condition for `:neo`:
+template, so it will calling the function:
+```clojure
+(< (:angle (turtle-state :neo)) 180)
+```
+`:neo`'s angle is 240, which is not smaller than 180, so he doesn't get added to the result - sorry, `:neo`. 
+
+`:oracle`'s angle is less than 180, so she is added to the result. 
+
+As we just figured out, the result is:
+```clojure
+clojurebridge-turtle.walk=> (filter #(< (:angle (turtle-state %)) 180) (turtle-names))
+(:trinity :oracle)
+```
+
+If we want to make only such turtles move forward, we can combine `filter` with `map`: 
+```clojure
+clojurebridge-turtle.walk=> (map #(forward % 20) (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
+({:trinity {:length 20}} {:oracle {:length 20}})
+```
+
+This works (we see the right results), but it is very long. Alternatively we can use Clojure's ability to save results into variables, and then use them later. To define a variable, you use `def` (not `defn` as for a function), and you can define them in the REPL or in the file. We will go with the REPL option:
+
+```clojure
+clojurebridge-turtle.walk=> (def up-facing-turtles (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
+#'clojurebridge-turtle.walk/up-facing-turtles
+clojurebridge-turtle.walk=> (map #(forward % 20) up-facing-turtles)
+({:trinity {:length 20}} {:oracle {:length 20}})
+```
+
 #### 11. [More challenging, optional] Exercise on filter
+Use `filter` to make only turtles in the in the right upper quadrant move. 
 
-#### 12: Exercises: 
+#### Side note: Clojure randomness. 
 
-_EM: chaotic turtles_
+Clojure has a convenient random number generator. You can use it to make a turtle walk a random distance or turn a random angle. 
 
-_EM: intro to random_
+##### Picking a random integer. 
+Let's say we want our turtle to walk a random distance of at least 20 pixels, and up to 100. The distance will then be 20 plus a random chunk anywhere between 0 and 80. `(rand-int 80)` gives you that random part (which will be different every time you run your program). Thus your command may look like this:
+```clojure
+(forward :trinity (+ 20 (rand-int 80)))
+```
+Try it and see `:trinity` move different amounts every time. 
 
-_EM: make a bunch of turtles and move them in random directions_
+See more information on [rand-int](https://clojuredocs.org/clojure.core/rand-nth)
 
+##### Choosing a random turtle out of a vector
+Another useful function is `rand-nth` that selects a random element out of a vector. For instance, `(rand-nth (turtle-names))` will return the name of one of the turtles on the canvas, chosen at random. 
+
+See more information on [rand-nth](https://clojuredocs.org/clojure.core/rand-nth)
+
+#### 12: Exercises
+
+At this point you can do anything you want with turtles. How about having several turtles on the canvas draw squares at random places? Or in a pattern? Making quilts? You can even draw pretty good circles by making turtles move forward very small distance and turn.
+
+Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. 
 
 License
 -------
