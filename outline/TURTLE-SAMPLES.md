@@ -93,18 +93,22 @@ See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with
 
 ##### 1.2 Helpful tips on interacting with Clojure
 
- - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter. 
+ - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter.   
 
-- `(undo)`, `(clean)`, and `(home)`
 
+###### `(undo)`, `(clean)`, and `(home)`
+
+---
 When the turtle has gone unexpectedly long or short distance, we can delete the
 line one by one using `(undo)`.
 If the turtle should start from its initial state,
 a combination of `(clean)` and `(home)` commands takes the turtle back to
-the initial state.
+the initial state. 
 
-- `(state)`
 
+###### `(state)` 
+
+---
 When the turtle goes far away beyond the boundary, or you lost which
 one is what, you can check where they are by this command. The command
 returns absolute values from the position (0,0) in the middle of the canvas. Note that coordinates are computed with some rounding error, they are not whole numbers. 
@@ -130,8 +134,9 @@ clojurebridge-turtle.walk=> (state)
 [note] The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
 
-- `doc`
+###### `doc`
 
+---
 Without looking at command reference, we can check how to use each
 function by Clojure's `doc`. For example, `(doc init)` displays
 its usage:
