@@ -1,4 +1,4 @@
-# How to Walk Turtles
+# How to Walk Turtles :turtle:
 
 Here are some instructions from very basic to a little bit high level
 ones to walk turtles.
@@ -163,7 +163,7 @@ Error messages may be very confusing at first. Don't forget to look at [TURTLE.m
 
 If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
 
-Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse Clojure beyond the point of no return. When this happens, Clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunately, this means that all the movements that you have made with your turtles will be lost :( 
+Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse Clojure beyond the point of no return. When this happens, Clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunately, this means that all the movements that you have made with your turtles will be lost :cry: 
 
 If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
