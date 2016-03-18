@@ -132,7 +132,7 @@ clojurebridge-turtle.walk=> (state)
 [note] The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
 
-###### *`(doc)`*
+###### **`(doc)`**
 
 ---
 Without looking at command reference, we can check how to use each
