@@ -630,7 +630,9 @@ Write your initials using turtles. They only move in straight lines, so some let
 
 Hint: you can move a turtle into a position to start a letter, and then use `clean` to remove its lines. For instance, `(clean :neo)` would clean up `:neo`'s lines. You can use this in a function as well. 
 
-## You may continue working on functions (w ewould love to see the shapes your turtles draw!), or you may move on to more Clojure features. If you need to have a lot of repeated code fragments, you might want to look at the section on recursion below. 
+## You may continue working on functions (we would love to see the shapes your turtles draw!), or you may move on to more Clojure features. 
+
+If you need to have a lot of repeated code fragments, you might want to look at the section on recursion below. You might also want to look at the side note about randomness below. 
 
 #### 7. [Intermediate] Getting turtle information: keywords and hashmaps
 
@@ -815,20 +817,15 @@ Try it and see `:trinity` move different amounts every time.
 See more information on [rand-int](https://clojuredocs.org/clojure.core/rand-nth)
 
 ##### Choosing a random turtle out of a vector
-Another useful function is `rand-nth` 
+Another useful function is `rand-nth` that selects a random element out of a vector. For instance, `(rand-nth (turtle-names))` will return the name of one of the turtles on the canvas, chosen at random. 
 
+See more information on [rand-nth](https://clojuredocs.org/clojure.core/rand-nth)
 
+#### 12: Exercises
 
-#### 11. [More challenging, optional] Exercise on filter
+At this point you can do anything you want with turtles. How about having several turtles on the canvas draw squares at random places? Or in a pattern? Making quilts? You can even draw pretty good circles by making turtles move forward very small distance and turn.
 
-#### 12: Exercises: 
-
-_EM: chaotic turtles_
-
-_EM: intro to random_
-
-_EM: make a bunch of turtles and move them in random directions_
-
+Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. 
 
 License
 -------
