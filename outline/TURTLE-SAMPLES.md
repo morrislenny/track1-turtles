@@ -304,11 +304,23 @@ clojurebridge-turtle.walk=> (forward :cypher 40)
 ![four moves](img/four-forwards.png)
 
 
-#### 4. [easy] Add one more turtle and give them commands
+#### 4. [easy] Add one more turtle and give them commands 
 
-_EM Ah, ok, we can set color. Need to add to the API and make a ref to RGB values (in the API and here)_
+###### add another turtle named :morpheus with color
 
-- add another turtle named :morpheus with color
+---
+You can change the color of the turtle (the triangle) but not the line behind it. 
+The way you add color to the turtle might be very different than what you might be used to.
+You input colors with three vales (known as RGB values):
+- the first changes how much red is in the color
+- the second changes how much blue is in the color
+- the third changes how much green is in the color   
+
+Each value ranges from 0 to 255. [0, 0, 0] is black, and [255, 255, 255] is white.
+Below is an example in code, showing how it works in Clojure.   
+
+[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a hepful link where you can play with RGB colors!
+
 
 ```clojure
 clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
@@ -318,7 +330,9 @@ clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
 ![fifth turtle](img/fifth-turtle.png)
 
 
-- tilt and go forward :morpheus
+###### tilt and move forward :morpheus
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (left :morpheus 45)
@@ -331,8 +345,9 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![fifth's move](img/fifth-turtle-move.png)
 
-- walk five turtles forward by 20
+###### walk five turtles forward by 20
 
+---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 20)
 {:trinity {:length 20}}
