@@ -705,11 +705,39 @@ Write and try a function that, if a turtle is out of bounds by x or y coordinate
 
 Use `map` to apply your function to all turtles. 
 
-#### 9. [More challenging, optional] Clojure function filter (higher order function)
+#### 9: [Intermediate - challenging] Recursion 
 
-#### 10. [More challenging, optional] Exercise on filter
+Sometimes we want to repeat an action until a certain stopping condition. For instance, consider this spiral pattern: 
+![Spiral](img/spiral.png)
 
-#### 11: [Intermediate] Recursion 
+If you look at it closer, you will notice that the turtle started at the right upper corner facing down, moved forward some length, turned right 90 degrees, moved forward, turned, moved forward a slightly less distance (by 5 pixels, to be exact), turned, moved forward the same length as the last time, etc. 
+
+So the pattern seems to be: move some length, turn right 90, move the same length, turn 90, and then repeat the same thing, but with the length 5 pixels less, and keep going until the length becomes too small (say, smaller than 5 pixels). 
+
+Let's write this as a function. We know most of its parts: we have a helpful helper function `draw-line-and-turn`, we know that the Clojure `when` function would do perform an action only when a condition is true, and would do nothing otherwise (that would be helpful for stopping the repetition when the length is too small). 
+
+Now we just need to know how to make a function repeat itself. And this turns out to be very simple: we just call the function using its name, like we always do! 
+
+Here is the complete code (that you would write in `yourcode.clj`):
+```clojure
+(defn spiral
+  "Makes a turtle with a given name draw a spiral of the strating side 
+   length as given"
+  [name length]
+  (when (> length 5)
+    (draw-line-and-turn name length)
+    (draw-line-and-turn name length)
+    (spiral name (- length 5))))
+```
+The function will draw two lines (with turns), then make another call to `spiral` with the same turtle name, but the length smaller by 5. That function call will draw the next two lines, then call spiral again, but with the smaller length, and so on. Once the length becomes 5 or less, `when` will do nothing instead of drawing the lines and making a call, so the function will stop.  
+
+Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since `:trinity` was at the center facing up, your spiral will be located differently. You can bring `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. 
+
+ 
+
+#### 10. [More challenging, optional] Clojure function filter (higher order function)
+
+#### 11. [More challenging, optional] Exercise on filter
 
 #### 12: Exercises: 
 
