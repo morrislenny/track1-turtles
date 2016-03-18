@@ -107,8 +107,8 @@ the initial state.
 
 ###### `(state)` 
 ---
-When the turtle goes far away beyond the boundary, or you lost which
-one is what, you can check where they are by this command. The command
+When the turtle goes far away beyond the boundary, or you lost which turtle
+is which, you can check where a turtle is using this `(state)`. `(state)`
 returns absolute values from the position (0,0) in the middle of the canvas. Note that coordinates are computed with some rounding error, they are not whole numbers.   
 
 For instance, when the following shows the state changes when `:trinity` starts at (0,0), moves forward by 20, then turns right 45 degrees, and moves forward by 20 again. 
@@ -162,6 +162,8 @@ This means that Clojure doesn't know what `frward` is.
 Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, will make Clojure not understand a name or a function. You will want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
 
 If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
+
+Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse clojure beyond the point of no return. When this happens, clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunatly, this means that all the movenments that you have made with your turtles will be lost :( 
 
 If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
