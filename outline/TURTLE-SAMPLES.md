@@ -147,7 +147,7 @@ clojurebridge-turtle.core/init
 nil
 ```
 
-##### 1.3 How to deal with mistakes
+##### 1.3 How to deal with errors
 
 If you made a mistake, you will get an error message from Clojure. 
 
@@ -163,7 +163,7 @@ Error messages may be very confusing at first. Don't forget to look at [TURTLE.m
 
 If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
 
-Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse clojure beyond the point of no return. When this happens, clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunatly, this means that all the movenments that you have made with your turtles will be lost :( 
+Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse Clojure beyond the point of no return. When this happens, Clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunately, this means that all the movements that you have made with your turtles will be lost :( 
 
 If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
@@ -798,7 +798,24 @@ clojurebridge-turtle.walk=> (map #(forward % 20) up-facing-turtles)
 ({:trinity {:length 20}} {:oracle {:length 20}})
 ```
 
+#### 11. [More challenging, optional] Exercise on filter
+Use `filter` to make only turtles in the in the right upper quadrant move. 
+
 #### Side note: Clojure randomness. 
+
+Clojure has a convenient random number generator. You can use it to make a turtle walk a random distance or turn a random angle. 
+
+##### Picking a random integer. 
+Let's say we want our turtle to walk a random distance of at least 20 pixels, and up to 100. The distance will then be 20 plus a random chunk anywhere between 0 and 80. `(rand-int 80)` gives you that random part (which will be different every time you run your program). Thus your command may look like this:
+```clojure
+(forward :trinity (+ 20 (rand-int 80)))
+```
+Try it and see `:trinity` move different amounts every time. 
+
+See more information on [rand-int](https://clojuredocs.org/clojure.core/rand-nth)
+
+##### Choosing a random turtle out of a vector
+Another useful function is `rand-nth` 
 
 
 
