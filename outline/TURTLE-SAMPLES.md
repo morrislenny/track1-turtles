@@ -594,21 +594,38 @@ What do you see?
 
 You have written your first function documentation. From now on, make sure to write short descriptions of your functions so that you can easily look them up using a `doc` command.
 
-##### 6.4 [Intermediate] Exercises on writing your own functions. 
+##### 6.4 [Optional, intermediate] map with two vectors
+
+What if you want to move all your turtles forward, but different distances? For instance `:trinity` need to move by 50, `:neo` by 30, and `:morpheus` by 100? 
+
+You can use `map` to take a function and two vectors: one of turtles names, and one of the distances they are moving. Then the first turtle will move by the first distance, the second by the second distance, etc. 
+
+The template function in `map` will then have two placeholders, named `%1` and `%2`: 
+```clojure
+(map #(forward %1 %2) [:trinity :neo :morpheus] [50 30 100]) 
+``` 
+
+The first time `forward` is called it will replace `%1` with `:trinity` (the first element of the first list), and `%2` with 50 (the first element of the second list). The second time it will be `:neo` and 30, and finally `:morpheus` and 100. You can make these lists as long as you'd like. 
+
+This approach is also convenient for making multiple turtles turn different angles, try it!  
+
+##### 6.5 [Intermediate] Exercises on writing your own functions. 
 
 Write a function to draw a triangle with equal sides or another shape of your choice (some are easier, some are harder). Use helper functions. Often you start by writing short functions and then build larger functions out of them, rather than the other way around. Don't forget to write "doc" descriptions of your functions. **Don't forget to Reload your file when any new function is finished**. Test functions early and often. 
 
-This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.  
+This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.
 
-##### 6.5 [More challenging] Exercises on using map
+##### 6.6 [More challenging] Exercises on using map
 
-One you are done with writing your own functions, use map top make multiple turtles draw multiple copies of this shape. Once again, ask a mentor if you need help or have a question, we will be happy to help. 
+Once you are done with writing your own functions, use map to make multiple turtles draw multiple copies of this shape. Once again, ask a mentor if you need help or have a question, we will be happy to help.  
 
-##### 6.6 [Optional] map with multiple vectors
+##### 6.7 [Intermediate] Exercise: writing turtles
 
-_EM: this is useful, but not required_
+Write your initials using turtles. They only move in straight lines, so some letters may come out a bit strange, but that's ok. Use functions. 
 
-## You may continue working on functions (show us the shapes your turtles draw!), or you may move on to more Clojure features. 
+Hint: you can move a turtle into a position to start a letter, and then use `clean` to remove its lines. For instance, `(clean :neo)` would clean up `:neo`'s lines. You can use this in a function as well. 
+
+## You may continue working on functions (w ewould love to see the shapes your turtles draw!), or you may move on to more Clojure features. 
 
 #### 7. [More challenging] Getting turtle information: keywords 
 
@@ -622,7 +639,9 @@ clojurebridge-turtle.walk=> (turtle-state :trinity)
 
 What you get back is `:trinity`'s current coordinates, angle, and her color (the state may be different for you, depending on where `:trinity` is on your canvas). 
 
-You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage container called a _hashmap_. Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps   
+You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage container called a _hashmap_. 
+
+Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color.  
 
 #### 8. [More challenging] Checking a condition
 
@@ -635,7 +654,6 @@ _EM: 'if;, the idea of true/false
 _EM once a turtle is close to hitting a wall, it turns around_
 
 #### 9. [More challenging] Clojure function filter (higher order function)
-
 
 #### 10. [More challenging] Exercise on filter
 
