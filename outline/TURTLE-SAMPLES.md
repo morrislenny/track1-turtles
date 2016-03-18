@@ -629,6 +629,8 @@ Hint: you can move a turtle into a position to start a letter, and then use `cle
 
 #### 7. [More challenging] Getting turtle information: keywords 
 
+##### 7.1 What keywords are
+
 Now we are going to look more into the way Clojure stores information. Let's take a look at a turtles state. **Important:** we will be using a `turtle-state` function, not `state` function that you have used before since it's more convenient for what we are trying to do here. 
 
 In the REPL type: 
@@ -641,7 +643,17 @@ What you get back is `:trinity`'s current coordinates, angle, and her color (the
 
 You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage container called a _hashmap_. 
 
-Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color.  
+Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color. 
+
+##### 7.2 How to use keywords
+
+If you are given a hashmap, it is very easy to get an element that is associated with a particular keyword. For instance, to get the angle from the turtle state I just need to write
+```clojure
+(:angle (turtle-state :trinity))
+``` 
+If the `:trinity`'s state is as above, you will get back 270. Try it with the other parts of `:trinity`'s state (her x and y coordinates and her color). Add another turtle, move it, and then use keywords to get parts of its turtle state. 
+
+We will be using keywords in order to make turtles behave differently depending on what their state is. 
 
 #### 8. [More challenging] Checking a condition
 
