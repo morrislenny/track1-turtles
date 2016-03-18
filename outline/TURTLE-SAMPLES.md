@@ -625,9 +625,11 @@ Write your initials using turtles. They only move in straight lines, so some let
 
 Hint: you can move a turtle into a position to start a letter, and then use `clean` to remove its lines. For instance, `(clean :neo)` would clean up `:neo`'s lines. You can use this in a function as well. 
 
-## You may continue working on functions (w ewould love to see the shapes your turtles draw!), or you may move on to more Clojure features. 
+## You may continue working on functions (w ewould love to see the shapes your turtles draw!), or you may move on to more Clojure features. If you need to have a lot of repeated code fragments, you might want to look at the section on recursion below. 
 
-#### 7. [More challenging] Getting turtle information: keywords 
+#### 7. [Intermediate] Getting turtle information: keywords and hashmaps
+
+##### 7.1 What keywords are
 
 Now we are going to look more into the way Clojure stores information. Let's take a look at a turtles state. **Important:** we will be using a `turtle-state` function, not `state` function that you have used before since it's more convenient for what we are trying to do here. 
 
@@ -641,23 +643,73 @@ What you get back is `:trinity`'s current coordinates, angle, and her color (the
 
 You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage container called a _hashmap_. 
 
-Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color.  
+Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color. 
 
-#### 8. [More challenging] Checking a condition
+##### 7.2 How to use keywords
 
-##### 8.1 Choosing one of two options: if 
+If you are given a hashmap, it is very easy to get an element that is associated with a particular keyword. For instance, to get the angle from the turtle state I just need to write
+```clojure
+(:angle (turtle-state :trinity))
+``` 
+If the `:trinity`'s state is as above, you will get back 270. Try it with the other parts of `:trinity`'s state (her x and y coordinates and her color). Add another turtle, move it, and then use keywords to get parts of its turtle state.
 
-_EM: 'if;, the idea of true/false 
+Keep in mind that if you are looking for a keyword in a hashmap that doesn't have it, you get back a special value called `nil`:
+```clojure
+(:mood (turtle-state :trinity))
+``` 
+returns `nil` since `:mood` isn't a part of a turtle's state. This by itself isn't a problem, but if you get `nil` by mistake, and try to use the result later on, you may get a nasty `NullPointerException` error since instead of a number you may end with `nil` (which stands for _nothing_). Be careful with spelling of keywords: if you misspell it, it's difficult to find and fix the error.
 
-##### 8.2 Exercise: Bouncing off the walls
+We will be using keywords in order to make turtles behave differently depending on what their state is. 
 
-_EM once a turtle is close to hitting a wall, it turns around_
+#### 8. [Intermediate] Checking a condition
 
-#### 9. [More challenging] Clojure function filter (higher order function)
+##### 8.1 Choosing options: when, if 
+A turtle is going up when its angle is between 0 and 180. It's going down when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be going down (its angle more than 180). If it is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
 
-#### 10. [More challenging] Exercise on filter
+We will be using a Clojure `when` function to do this. You can check out a description of it here: [when](https://clojuredocs.org/clojure.core/when)
 
-#### 11: [More challenging] Recursion 
+We will start writing the function definition in `yourcode.clj` file, under the functions that you already have there. We give the function a name `point-up`. It only needs to know who the turtle is, so we have a single parameter `name`. We write a brief description of the function. 
+```clojure
+(defn point-up
+  "Takes a turtle name. If the turtle is already pointing up, nothing 
+   is changed. Otherwise makes the turtle turn 180 degrees. 
+   If the turtle's angle is 0 or 180, it doesn't change"
+  [name]
+```
+Now we need to fill in the function body: we want to get the current turtle's angle by `(:angle (turtle-state name))`, and then check if it's greater than 180. 
+That can be done by applying the function `>`. Think back to the `(* 2 45)` example, this follows exactly the same pattern: `(> (:angle (turtle-state name)) 180)`. 
+
+Finally, we need a `when` function so that when the angle is indeed greater than 180, we turn the turtle right by 180 degrees. If the angle is 180 or below, the condition for `when` will be false, and nothing will happen. 
+
+Here is the completed function: 
+```clojure
+(defn point-up
+  "Takes a turtle name. If the turtle is already pointing up, nothing 
+   is changed. Otherwise makes the turtle turn 180 degrees. 
+   If the turtle's angle is 0 or 180, it doesn't change"
+  [name]
+  (when (> (:angle (turtle-state name)) 180)
+    (right name 180)))
+```
+Try it in the REPL by applying it to different turtles, such as `(point-up :trinity)`. Check their state after the function call. 
+
+There are other useful functions that allow you to check and combine conditions. Check them out at [https://clojuredocs.org/](https://clojuredocs.org/) This is a community-powered Clojure documentation, which means that it is written by those who use Clojure, and is usually very good, with helpful examples and discussion.
+ 
+ * [when-not](https://clojuredocs.org/clojure.core/when-not) allows you to do something when a condition is false, rather than when it is true.
+ * [if](https://clojuredocs.org/clojure.core/if) allows you do one thing when a condition is true, and another one when it is false.
+ * [and](https://clojuredocs.org/clojure.core/and), [or](https://clojuredocs.org/clojure.core/or) allow you to combine two (or more) conditions, i.e. to do something only when both conditions are true, or when at least one is true. 
+
+##### 8.2 Exercise [more challenging]: Turtles wandering off
+
+Write and try a function that, if a turtle is out of bounds by x or y coordinate, changes its direction to the opposite so that on the next move the turtle starts coming back. 
+
+Use `map` to apply your function to all turtles. 
+
+#### 9. [More challenging, optional] Clojure function filter (higher order function)
+
+#### 10. [More challenging, optional] Exercise on filter
+
+#### 11: [Intermediate] Recursion 
 
 #### 12: Exercises: 
 
