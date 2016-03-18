@@ -169,7 +169,9 @@ If you are getting an error and can't figure out what's wrong, ask one of the me
 
 #### 2. [easy] Basic movement - forward, backward, right and left
 
-- forward
+###### forward
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
@@ -179,7 +181,9 @@ clojurebridge-turtle.walk=> (forward 40)
 ![forward 40](img/forward40.png)
 
 
-- right
+###### right
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (right 90)
@@ -242,7 +246,9 @@ clojurebridge-turtle.walk=> (state)
 You can add multiple turtles. They all start in the middle, facing up, and are 
 all of different colors. You can refer to each turtle by its name.
 
-- add turtles
+###### add turtles
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (init)
@@ -259,10 +265,11 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![four turtles](img/four-turtles.png)
 
-Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error "Specify name. You have more than one turtle." 
+Note that once you have more turtles than just `:trinity`, you need to specify what turtle your commands refer to. For instance, if you just type `(forward 30)`, you will get an error `"Specify name. You have more than one turtle."` 
 
-- make turtles tilt different angles
+###### make turtles tilt different angles
 
+---
 Note that `*` denotes multiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
 
 The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on 2 and 45. 
@@ -280,8 +287,9 @@ clojurebridge-turtle.walk=> (right :cypher (* 3 45))
 
 Feel free to change the multiplication function or its parameters to something else, see what happens. 
 
-- walk four turtles forward
+###### walk four turtles forward
 
+---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 40)
 {:trinity {:length 40}}
@@ -296,11 +304,23 @@ clojurebridge-turtle.walk=> (forward :cypher 40)
 ![four moves](img/four-forwards.png)
 
 
-#### 4. [easy] Add one more turtle and give them commands
+#### 4. [easy] Add one more turtle and give them commands 
 
-_EM Ah, ok, we can set color. Need to add to the API and make a ref to RGB values (in the API and here)_
+###### add another turtle named :morpheus with color
 
-- add another turtle named :morpheus with color
+---
+You can change the color of the turtle (the triangle) but not the line behind it. 
+The way you add color to the turtle might be very different than what you might be used to.
+You input colors with three vales (known as RGB values):
+- the first changes how much red is in the color
+- the second changes how much blue is in the color
+- the third changes how much green is in the color   
+
+Each value ranges from 0 to 255. [0, 0, 0] is black, and [255, 255, 255] is white.
+Below is an example in code, showing how it works in Clojure.   
+
+[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a hepful link where you can play with RGB colors!
+
 
 ```clojure
 clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
@@ -310,7 +330,9 @@ clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
 ![fifth turtle](img/fifth-turtle.png)
 
 
-- tilt and go forward :morpheus
+###### tilt and move forward :morpheus
+
+---
 
 ```clojure
 clojurebridge-turtle.walk=> (left :morpheus 45)
@@ -323,8 +345,9 @@ clojurebridge-turtle.walk=> (turtle-names)
 
 ![fifth's move](img/fifth-turtle-move.png)
 
-- walk five turtles forward by 20
+###### walk five turtles forward by 20
 
+---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 20)
 {:trinity {:length 20}}
