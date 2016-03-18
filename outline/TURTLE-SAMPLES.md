@@ -132,7 +132,7 @@ clojurebridge-turtle.walk=> (state)
 [note] The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
 
-###### **`(doc)`**
+###### `doc`
 
 ---
 Without looking at command reference, we can check how to use each
@@ -159,9 +159,9 @@ clojurebridge-turtle.walk=>
 ```
 This means that Clojure doesn't know what `frward` is. 
 
-Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, would make Clojure not understand a name or a function. You might want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
+Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, will make Clojure not understand a name or a function. You will want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
 
-If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. things) a function is supposed to take. Sometimes Clojure will say that it cannot covert, or cast, on type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
+If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
 
 If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
