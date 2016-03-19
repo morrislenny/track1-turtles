@@ -2,8 +2,8 @@
 
 This repository has two apps.
 
-1. A sample app to test your install for ClojureBridge
-2. A template to try simple functions to walk a turtle   
+1. A very small sample app to test your install for ClojureBridge
+2. A set of Clojure lessons using turtles :turtle:.   
 
 #### How to move turtles
 
@@ -13,7 +13,7 @@ Combinations of these will make interesting lines.
 See [outline/TURTLE.md](outline/TURTLE.md) for commands that turtles
 understand.
 
-For sample, have look [outline/TURTLE-SAMPLES.md](outline/TURTLE-SAMPLES.md).
+For Clojure turtle lessons see [outline/TURTLE-SAMPLES.md](outline/TURTLE-SAMPLES.md).
 
 
 Original Works
