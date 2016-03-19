@@ -445,7 +445,7 @@ Experiment with `map` and `juxt`.
 
 #### 6. [intermediate] Define your own functions. 
 
-Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times.
+Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times. 
 
 Let's say we want my turtle to draw a square. This movement consists of moving forward, turning right, and repeating this on each side of the square. We can write this movement as a function. We don't know which turtle we will be using, and we also want to make it so that we can draw squares of different sizes. Thus we will make the turtle name and the length of the side parameters to the function. 
 
@@ -468,14 +468,14 @@ The function is going to be fairly long, so it's inconvenient to write it in REP
 Here is what's in it:
 
 -  `defn` is a Clojure keyword for "define a function". You always use it when you want to define a function with a name. 
--  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. 
+-  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. Notice how all the function names so far have done a good job of describing what they do. It is important to put some thought into your function names so that anyone (including you in two days) can get a good idea of what is going on from your function name. 
 - `[name length]` are the parameters. In order to tell a turtle to draw a square, we will need to provide a turtle name and the length of the side to the function.
 - What follows is the function body, i.e. the commands it's composed of. Note that all our commands use the turtle name, and the `forward` uses the side length.
 - Note that we enclose `defn` and the function body in parentheses. Click on the opening parenthesis before `defn` in Nightcode, it will show you the matching closing one (all the way at the end of the function). Nightcode helps you match parenteses (and there is a lot of parentheses in Clojure!)
 
 Now that we have looked at how the function is defined, let's see how it works. 
 
-Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually tell our function to work, we only defined what it will do when it works. 
+First, make sure to save the file you are working on. You can do that by using Ctrl-S on Windows/Linus, Cmd-S on a mac or clicking on the `save` button in the top of NightCode. Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually tell our function to work, we only defined what it will do when it works. 
 
 In the REPL panel (lower right) type `(init)` (to make sure that 
 the canvas are back to initial state). Then type `(draw-square :trinity 100)`. You will see a nice square drawn by `:trinity`:
