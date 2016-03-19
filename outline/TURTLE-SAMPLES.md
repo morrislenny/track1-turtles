@@ -439,7 +439,7 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 [{:cypher {:angle 60}} {:cypher {:length 30}}]
 [{:morpheus {:angle 60}} {:morpheus {:length 30}}])
 ```
-Similarly, we can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
+Reminder: We can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
 
 A group of things in square brackets is called a _vector_ in Clojure. You can have vectors of names, numbers, or anything else. For instance, turtle color is given as a vector of RGB values (numbers). 
 
@@ -447,7 +447,7 @@ Experiment with `map` and `juxt`.
 
 #### 6. [intermediate] Define your own functions. 
 
-Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times.
+Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times. 
 
 ##### 6.1 Writing a function to draw a square
 
@@ -472,14 +472,14 @@ The function is going to be fairly long, so it's inconvenient to write it in REP
 Here is what's in it:
 
 -  `defn` is a Clojure keyword for "define a function". You always use it when you want to define a function with a name. 
--  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. 
+-  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. Notice how all the function names so far have done a good job of describing what they do. It is important to put some thought into your function names so that anyone (including you in two days) can get a good idea of what is going on from your function name. 
 - `[name length]` are the parameters. In order to tell a turtle to draw a square, we will need to provide a turtle name and the length of the side to the function.
 - What follows is the function body, i.e. the commands it's composed of. Note that all our commands use the turtle name, and the `forward` uses the side length.
 - Note that we enclose `defn` and the function body in parentheses. Click on the opening parenthesis before `defn` in Nightcode, it will show you the matching closing one (all the way at the end of the function). Nightcode helps you match parentheses (and there is a lot of parentheses in Clojure!)
 
 Now that we have looked at how the function is defined, let's see how it works. 
 
-Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually tell our function to do its work, we only defined what it will do when it works. 
+First, make sure to save the file you are working on. You can do that by using Ctrl-S on Windows/Linux, Cmd-S on a mac, or clicking on the `save` button in the top of NightCode. Reload the file ("Reload" button in Nightcode or Ctrl-Shift-S on Windows, Cmd-Shift-S on a Mac). Nothing changed on the canvas. That's because we haven't actually told our function to work, we only defined what it will do when it works.
 
 In order to tell it to work we need to _call it_. In Clojure calling a function means that we put its name and parameters (in the right order) in parentheses, such as `(forward :trinity 100)` or `(* 2 45)`. We have been calling functions all along! Now let's call our own function. 
 
