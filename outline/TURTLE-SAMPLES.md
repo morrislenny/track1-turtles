@@ -439,7 +439,7 @@ clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-na
 [{:cypher {:angle 60}} {:cypher {:length 30}}]
 [{:morpheus {:angle 60}} {:morpheus {:length 30}}])
 ```
-Similarly, we can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
+Reminder: We can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
 
 Experiment with `map` and `juxt`. 
 
