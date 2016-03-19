@@ -583,7 +583,7 @@ Now we will use the helper function to rewrite our `draw-square` function: we wi
   (draw-side-of-square name length))
 ```
 
-The process of changing existing program code to make it more readbable or more efficient, without changing what it does, is called _refactoring_. 
+The process of changing existing program code to make it more readable or more efficient, without changing what it does, is called _refactoring_. 
 
 This is much easier to read, and these functions are very useful, we expect to use them more. Since they are useful, we also want to put s description in them to let those who will be using them know what they do. The comments describing what a function does go after the function name and before its parameters, and are written in double-quotes:
 
@@ -613,7 +613,7 @@ This is much easier to read, and these functions are very useful, we expect to u
   (draw-line-and-turn name length))
 ```
 
-Now Reload your file and try this in REPL:  
+Now save and reload your file and try this in REPL:  
 ```clojure
 (doc draw-square)
 ```
@@ -639,7 +639,7 @@ This approach is also convenient for making multiple turtles turn different angl
 
 ##### 6.5 [Intermediate] Exercises on writing your own functions. 
 
-Write a function to draw a triangle with equal sides or another shape of your choice (some are easier, some are harder). Use helper functions. Often you start by writing short functions and then build larger functions out of them, rather than the other way around. Don't forget to write "doc" descriptions of your functions. **Don't forget to Reload your file when any new function is finished**. Test functions early and often. 
+Write a function to draw a triangle with equal sides or another shape of your choice (some are easier, some are harder). Use helper functions. Often you start by writing short functions and then build larger functions out of them, rather than the other way around. Don't forget to write "doc" descriptions of your functions. **Don't forget to save and reload your file when any new function is finished**. Test functions early and often. 
 
 This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.
 
@@ -647,7 +647,7 @@ This is a process that requires keeping track of a lot of small details. **Don't
 
 Once you are done with writing your own functions, use map to make multiple turtles draw multiple copies of this shape. Once again, ask a mentor if you need help or have a question, we will be happy to help.  
 
-##### 6.7 [Intermediate] Exercise: writing turtles
+##### 6.7 [Intermediate] Exercise: can you write your initials with a turtle? 
 
 Write your initials using turtles. They only move in straight lines, so some letters may come out a bit strange, but that's ok. Use functions. 
 
@@ -661,7 +661,7 @@ If you need to have a lot of repeated code fragments, you might want to look at 
 
 ##### 7.1 What keywords are
 
-Now we are going to look more into the way Clojure stores information. Let's take a look at a turtles state. **Important:** we will be using a `turtle-state` function, not `state` function that you have used before since it's more convenient for what we are trying to do here. 
+Now we are going to look more into the way Clojure stores information. Let's take a look at a turtle's state. **Important:** we will be using a `turtle-state` function, not `state` function that you have used before since it's more convenient for what we are trying to do here. 
 
 In the REPL type: 
 ```clojure
@@ -671,9 +671,9 @@ clojurebridge-turtle.walk=> (turtle-state :trinity)
 
 What you get back is `:trinity`'s current coordinates, angle, and her color (the state may be different for you, depending on where `:trinity` is on your canvas). 
 
-You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage container called a _hashmap_. 
+You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage called a _hashmap_. 
 
-Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color. 
+Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps are written using curly braces. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color. 
 
 ##### 7.2 How to use keywords
 
@@ -687,14 +687,14 @@ Keep in mind that if you are looking for a keyword in a hashmap that doesn't hav
 ```clojure
 (:mood (turtle-state :trinity))
 ``` 
-returns `nil` since `:mood` isn't a part of a turtle's state. This by itself isn't a problem, but if you get `nil` by mistake, and try to use the result later on, you may get a nasty `NullPointerException` error since instead of a number you may end with `nil` (which stands for _nothing_). Be careful with spelling of keywords: if you misspell it, it's difficult to find and fix the error.
+returns `nil`  (which stands for _nothing_) since `:mood` isn't a part of a turtle's state. This by itself isn't a problem, but if you get `nil` by mistake, and try to use it later on instead of what you expected to get (a number, a name, etc.), you may get a nasty `NullPointerException` error. Be careful with spelling of keywords: if you misspell it, you may get 'nil` as the result, and it would be difficult to find and fix the error.
 
-We will be using keywords in order to make turtles behave differently depending on what their state is. 
+We will be using keywords in order to make turtles behavior depend on what their state is. 
 
 #### 8. [Intermediate] Checking a condition
 
 ##### 8.1 Choosing options: when, if 
-A turtle is going up when its angle is between 0 and 180. It's going down when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be going down (its angle more than 180). If it is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
+A turtle is going up on the canvas when its angle is between 0 and 180. It's going down when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be moving down (its angle more than 180). If the angle is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
 
 We will be using a Clojure `when` function to do this. It's a function that can be used to perform an action only when a certain condition is true. For instance, 
 in a function where we have a `length` parameter we can say 
@@ -716,7 +716,7 @@ We will start writing the function definition in `yourcode.clj` file, under the 
   [name]
 ```
 Now we need to fill in the function body: we want to get the current turtle's angle by `(:angle (turtle-state name))`, and then check if it's greater than 180. 
-That can be done by applying the function `>`. Think back to the `(* 2 45)` example, this follows exactly the same pattern: `(> (:angle (turtle-state name)) 180)`. 
+That can be done by applying the function `>`: `(> (:angle (turtle-state name)) 180)`. 
 
 Finally, we need a `when` function so that when the angle is indeed greater than 180, we turn the turtle right by 180 degrees. If the angle is 180 or below, the condition for `when` will be false, and nothing will happen. 
 
@@ -736,7 +736,7 @@ There are other useful functions that allow you to check and combine conditions.
  
  * [when-not](https://clojuredocs.org/clojure.core/when-not) allows you to do something when a condition is false, rather than when it is true.
  * [if](https://clojuredocs.org/clojure.core/if) allows you do one thing when a condition is true, and another one when it is false. 
- * [and](https://clojuredocs.org/clojure.core/and), [or](https://clojuredocs.org/clojure.core/or) allow you to combine two (or more) conditions, i.e. to do something only when both conditions are true, or when at least one is true. 
+ * [and](https://clojuredocs.org/clojure.core/and), [or](https://clojuredocs.org/clojure.core/or) allow you to combine two (or more) conditions. The allow you to do something only when both conditions are true, or when at least one is true. 
 
 ##### 8.2 Exercise [more challenging]: Turtles wandering off
 
@@ -757,7 +757,7 @@ Let's write this as a function. We know most of its parts: we have a helpful hel
 
 Now we just need to know how to make a function repeat itself. And this turns out to be very simple: we just call the function using its name, like we always do! 
 
-Here is the complete code (that you would write in `yourcode.clj`):
+Here is the complete code that you would write in `yourcode.clj`:
 ```clojure
 (defn spiral
   "Makes a turtle with a given name draw a spiral of the strating side 
@@ -770,7 +770,7 @@ Here is the complete code (that you would write in `yourcode.clj`):
 ```
 The function will draw two lines (with turns), then make another call to `spiral` with the same turtle name, but the length smaller by 5. That function call will draw the next two lines, then call spiral again, but with the smaller length, and so on. Once the length becomes 5 or less, `when` will do nothing instead of drawing the lines and making a call, so the function will stop.  
 
-Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since `:trinity` was at the center facing up, your spiral will be located differently. You can walk `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. 
+Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral on your canvas! Since in our example `:trinity` was at the center facing up, your spiral may be located differently. You can walk `:trinity` to the starting position (100, 100) first and make it face down, then clean its lines, and then call `spiral`, that will show the same spiral as in the picture. You can put this sequence of step into a function, too.
 
 
 #### 10. [More challenging, optional] Clojure function filter (higher order function)
@@ -814,7 +814,7 @@ clojurebridge-turtle.walk=> (map #(forward % 20) (filter #(< (:angle (turtle-sta
 ({:trinity {:length 20}} {:oracle {:length 20}})
 ```
 
-This works (we see the right results), but it is very long. Alternatively we can use Clojure's ability to save results into variables, and then use them later. To define a variable, you use `def` (not `defn` as for a function), and you can define them in the REPL or in the file. We will go with the REPL option:
+This works (we see the right results), but it is very long. Alternatively we can use Clojure's ability to save results into variables, and then use them later. To define a variable, you use `def` (not `defn`, as you would for a function), and you can define them in the REPL or in the file. We will go with the REPL option:
 
 ```clojure
 clojurebridge-turtle.walk=> (def up-facing-turtles (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
@@ -845,8 +845,7 @@ Another useful function is `rand-nth` that selects a random element out of a vec
 See more information on [rand-nth](https://clojuredocs.org/clojure.core/rand-nth)
 
 #### 12: Exercises
-
-At this point you can do anything you want with turtles. How about having several turtles on the canvas draw squares at random places? Or in a pattern? Making quilts? You can even draw pretty good circles by making turtles move forward very small distance and turn.
+This is your time to do anything you want using turtles. How about having several turtles on the canvas draw squares at random places? Or in a pattern? Making quilts? You can even draw pretty good circles by making turtles repeatedly move forward very small distance and then turn.
 
 Another idea: can you write a recursive function to draw a tree? It may look something like this:
 
