@@ -848,7 +848,13 @@ See more information on [rand-nth](https://clojuredocs.org/clojure.core/rand-nth
 
 At this point you can do anything you want with turtles. How about having several turtles on the canvas draw squares at random places? Or in a pattern? Making quilts? You can even draw pretty good circles by making turtles move forward very small distance and turn.
 
-Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. 
+Another idea: can you write a recursive function to draw a tree? It may look something like this:
+
+![Recursive tree picture](img/christmasTree.png)
+
+And yes, that's a turtle on top of the tree! Our turtles are magical. 
+
+Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. Hope you have fun with our little turtles and Clojure! 
 
 License
 -------
