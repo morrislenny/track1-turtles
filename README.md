@@ -13,7 +13,7 @@ Combinations of these will make interesting lines.
 See [outline/TURTLE.md](outline/TURTLE.md) for commands that turtles
 understand.
 
-For sample, have look [outline/TURTLE-SAMPLES.md](outline/TURTLE-SAMPLES.md).
+For Clojure turtle lessons see [outline/TURTLE-SAMPLES.md](outline/TURTLE-SAMPLES.md).
 
 
 Original Works
