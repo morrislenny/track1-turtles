@@ -19,7 +19,7 @@ If only `:trinity` is there, you don't need to give the name to commands.
 ## Movement
 
 All parameters to `forward`, `backward`, `right`, and `left` commands
-are relative to the current position or angle. The command may be given the name of the turtle. Without the name they would refer to the only turtle on the canvas. 
+are relative to the current position or angle. The command may be given the name of the turtle. Without the name they would refer to the only turtle on the canvas.
 
 
 | command | description |           |
@@ -28,6 +28,7 @@ are relative to the current position or angle. The command may be given the name
 |`(backward length)` <br /> `(backward name length)`| moves the turtle backward by length.| ![go backward](img/go-backward.png) |
 |`(right angle)` <br /> `(right name angle)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
 |`(left angle)` <br /> `(left name angle)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
+|`(set-color r g b)` <br /> `(set-color name r g b)`| changes the color of the turtle.||
 |`(undo)` <br /> `(undo name)`| undos the last line and back the turtle.||
 |`(home)` <br /> `(home name)`| moves the turtle back to the home position.||
 |`(home-all)`| moves all turtles back to the home position.||
@@ -49,6 +50,9 @@ are relative to the current position or angle. The command may be given the name
 (left 30)            ;; :trinity turns 30 degrees counterclockwise when only  :trinity is there
 (left :neo 135)      ;; :neo turns 135 degrees counterclockwise
 
+(set-color 255 0 0)  ;; :trinity is now red when only :trinity is there
+(set-color :neo 0 255 0) ;; :neo is now green
+
 (undo)               ;; :trinity's last line will be removed when only :trinity is there
 (undo :neo)          ;; :neo's last line will be removed
 
@@ -66,16 +70,16 @@ are relative to the current position or angle. The command may be given the name
 |`(add-turtle name)`| adds a turtle with its name.|
 |`(turtle-names)`| returns all turtle names.|
 |`(state) (state name)`| returns a current state of the turtle.|
-|`(turtle-state) (turtle-state name)` | returns a current state of a turtle, not including its name. More convenient to use in functions like `filter`| 
+|`(turtle-state) (turtle-state name)` | returns a current state of a turtle, not including its name. More convenient to use in functions like `filter`|
 |`(state-all)`| returns current states of all turtles.|
 
 Turtle's state includes its current coordinates (x,y), the angle it's pointing at, and its color. The color is encoded as three numbers in the RGB (Red, Green, Blue) encoding. _EM comment: need to say something about colors_
 
 When called as `(state)`, returns the state with the turtle name, for instance:
-`{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`. This is convenient for viewing since you know which turtle the state is referring to. 
+`{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`. This is convenient for viewing since you know which turtle the state is referring to.
 
 When called as `(turtle-state)`, returns just the state, with no name:
-`{:x 0, :y 0, :angle 90, :color [30 30 30]}`. This is more convenient when you want to do something based on the turtle's state, such as move all the turtles that are facing right. 
+`{:x 0, :y 0, :angle 90, :color [30 30 30]}`. This is more convenient when you want to do something based on the turtle's state, such as move all the turtles that are facing right.
 
 ### usage examples
 
@@ -84,7 +88,7 @@ When called as `(turtle-state)`, returns just the state, with no name:
 
 (turtle-names)       ;; returns all turtle names
 
-(state)              ;; returns :trinity's current state only when :trinity is there. 
+(state)              ;; returns :trinity's current state only when :trinity is there.
 
 (state :neo)         ;; returns :neo's current state
 
@@ -95,7 +99,7 @@ When called as `(turtle-state)`, returns just the state, with no name:
 (state-all)          ;; returns all turtles' current states
 ```
 
-The `state` functions show the *absolute* coordinates on the canvas, not coordinates relative to the starting point that are 
+The `state` functions show the *absolute* coordinates on the canvas, not coordinates relative to the starting point that are
 used in `forward`, `backward`, `right` and `left`.
 For example, `{:trinity {:x 0, :y 0, :angle 90, :color [30 30 30]}}`.
 

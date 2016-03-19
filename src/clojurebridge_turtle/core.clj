@@ -18,7 +18,8 @@
 (def turtles (atom {:trinity trinity}))
 
 ;; lines map
-;; {:name [[xs0 ys0 xe0 ye0] [xs1 ys1 xe1 ye1]]}
+;; (OLD VERSION) {:name [[xs0 ys0 xe0 ye0] [xs1 ys1 xe1 ye1]]} 
+;; {:name [[xs0 ys0 xe0 ye0 r0 g0 b0] ...]}
 ;; at the beginning, only :trinity is there
 (def lines (atom {:trinity []}))
 
@@ -39,17 +40,17 @@
   "creates a new turtle with a name and adds to turtls map.
    additionally, allows to choose color, which is a vector of [r g b]"
   ([name]
-     (add-turtle (keyword name) (rand-color)))
+   (add-turtle (keyword name) (rand-color)))
   ([name color]
-     (let [n (keyword name)]
-       (when-not (n @turtles)
-         (dosync
-          (swap! lines assoc n [])
-          (swap! turtles assoc n {:x 0
-                                  :y 0
-                                  :angle 90
-                                  :color color})))
-       {n (n @turtles)})))
+   (let [n (keyword name)]
+     (when-not (n @turtles)
+       (dosync
+        (swap! lines assoc n [])
+        (swap! turtles assoc n {:x 0
+                                :y 0
+                                :angle 90
+                                :color color})))
+     {n (n @turtles)})))
 
 (defn turtle-names
   "returns turtle names"
@@ -79,81 +80,91 @@
   [n f]
   (update-thing lines n f))
 
+(defn set-color
+  "Change the color of a turtle"
+  ([r g b]
+   (when-onlyone (set-color turtle r g b)))
+  ([n r g b]
+   (update-turtle n (fn [m] (assoc m :color [r g b])))
+   {n {:color [r g b]}}))
+
 (defn right
   "turns the specified turtle's head by given degrees in clockwise.
    if no name is given, only :trinity's head will be changed"
   ([a]
-     (when-onlyone (right turtle a)))
+   (when-onlyone (right turtle a)))
   ([n a]
-     (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
-     {n {:angle a}}))
+   (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
+   {n {:angle a}}))
 
 (defn left
   "turns the specified turtle's head by given degrees in counterclockwise.
    if no name is given, only :trinity's head will be changed"
   ([a]
-     (right (* -1 a)))
+   (right (* -1 a)))
   ([n a]
-     (right n (* -1 a))))
+   (right n (* -1 a))))
 
 (defn forward
   "moves the specified turtle forward by a given length.
    if no name is given, :trinity will go forward."
   ([len]
-     (when-onlyone (forward turtle len)))
+   (when-onlyone (forward turtle len)))
   ([n len]
-     (let [rads      (fn [{:keys [angle]}]
-                       (q/radians angle))
-           diffs     (fn [m]
-                       (let [r (rads m)]
-                         [(* len (Math/cos r)) (* len (Math/sin r))]))
-           translate (fn [m]
-                       (let [[dx dy] (diffs m)]
-                         (if (or (not= 0 dx) (not= 0 dy))
-                           (let [{:keys [x y]} m
-                                 line          [x y (+ x dx) (+ y dy)]]
-                             (update-line n (fn [v] (conj v line)))
-                             (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
-       (update-turtle n translate)
-       {n {:length len}})))
+   (let [rads      (fn [{:keys [angle]}]
+                     (q/radians angle))
+         diffs     (fn [m]
+                     (let [r (rads m)]
+                       [(* len (Math/cos r)) (* len (Math/sin r))]))
+         translate (fn [m]
+                     (let [[dx dy] (diffs m)]
+                       (if (or (not= 0 dx) (not= 0 dy))
+                         (let [{:keys [x y]} m
+                               line          (into [] (concat
+                                                        [x y (+ x dx) (+ y dy)]
+                                                        (:color m)))]
+                           (update-line n (fn [v] (conj v line)))
+                           (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
+     (update-turtle n translate)
+     {n {:length len}})))
 
 (defn backward
   "moves the specified turtle backward by a given length.
    if no name is given, :trinity will go backward."
   ([len]
-     (forward (* -1 len)))
+   (forward (* -1 len)))
   ([n len]
-     (forward n (* -1 len))))
+   (forward n (* -1 len))))
 
 (defn undo
   "undos the specified turtle's last line and moves the turtle back.
    if no name is given, :trinity's move will be undoed."
   ([]
-     (when-onlyone (undo turtle)))
+   (when-onlyone (undo turtle)))
   ([n]
-     (if (< 0 (-> @lines n count))
-       (do
-         (update-line n (fn [v] (-> v butlast vec)))
-         (if-let [[_ _ x y] (-> @lines n last)]
-           (update-turtle n (fn [m] (merge m {:x x :y y})))
-           (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
-     n))
+   (if (< 0 (-> @lines n count))
+     (do
+       (update-line n (fn [v] (-> v butlast vec)))
+       (if-let [[_ _ x y] (-> @lines n last)]
+         (update-turtle n (fn [m] (merge m {:x x :y y})))
+         (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
+   n))
 
 (defn state
   "returns a current state of the specified turtle.
    if no name is given, :trinity's state will be returned."
   ([]
-     (when-onlyone (state turtle)))
+   (when-onlyone (state turtle)))
   ([n]
-     {n (n @turtles)}))
+   {n (n @turtles)}))
 
 (defn turtle-state 
   "returns the current state of a specified turtle as its coordinates, angle, and color.
    If no name is given, :trinity's state will be returned"
   ([]
-    (when-onlyone (:trinity (state turtle))))
+   (when-onlyone (:trinity (state turtle))))
   ([n]
-    (n @turtles)))
+   (n @turtles)))
   
 
 (defn state-all
@@ -165,33 +176,33 @@
   "cleans up all lines of the specified turtle.
    if no name is given, :trinity's lines will be cleaned up."
   ([]
-     (when-onlyone (clean turtle)))
+   (when-onlyone (clean turtle)))
   ([n]
-     (update-line n (constantly []))
-     n))
+   (update-line n (constantly []))
+   n))
 
 (defn clean-all
   "cleans up all lines of all turtles."
   ([]
-     (swap! lines (fn [lm] (reduce-kv (fn [m k v] (assoc m k [])) {} lm)))
-     (turtle-names)))
+   (swap! lines (fn [lm] (reduce-kv (fn [m k v] (assoc m k [])) {} lm)))
+   (turtle-names)))
 
 (defn home
   "moves the specified turtle back to the home position.
    if no name is given, :trinity will be back home."
   ([]
-     (when-onlyone (home turtle)))
+   (when-onlyone (home turtle)))
   ([n]
-     (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90})))
-     n))
+   (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90})))
+   n))
 
 (defn home-all
   "moves all turtles back to the home position."
   ([]
-     (swap! turtles (fn [tm]
-                      (reduce-kv
-                       (fn [m k v] (assoc m k (merge v {:x 0 :y 0 :angle 90}))) {} tm)))
-     (turtle-names)))
+   (swap! turtles (fn [tm]
+                    (reduce-kv
+                     (fn [m k v] (assoc m k (merge v {:x 0 :y 0 :angle 90}))) {} tm)))
+   (turtle-names)))
 
 (defn init
   "returns to the starting state.
@@ -266,8 +277,9 @@
   "draws lines of a single turtle"
   [v]
   (doseq [l v]
-    (let [[x1 y1 x2 y2] l]
-      (apply q/stroke (cursor-color x2 y2))
+    (let [[x1 y1 x2 y2 r g b] l]
+      ;(apply q/stroke (cursor-color x2 y2)) ;; Hard coded color
+      (apply q/stroke [r g b]) ;; Color defined for line
       (q/line x1 y1 x2 y2))))
 
 (defn- draw-all-lines
