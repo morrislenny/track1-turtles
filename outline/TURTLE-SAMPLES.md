@@ -163,7 +163,7 @@ Error messages may be very confusing at first. Don't forget to look at [TURTLE.m
 
 If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
 
-Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse Clojure beyond the point of no return. When this happens, Clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reolod`. Unfortunately, this means that all the movements that you have made with your turtles will be lost :cry: 
+Most errors will just spit out an error message at you and let you try typing in another command. But some errors can confuse Clojure beyond the point of no return. When this happens, Clojure won't give you back the prompt (this thing: `clojurebridge-turtle.walk=> `). If this happens, you will have to click `Run with REPL` and `Reload`. Unfortunately, this means that all the movements that you have made with your turtles will be lost :cry: 
 
 If you are getting an error and can't figure out what's wrong, ask one of the mentors. After a while you will learn common mistakes, and will be able to fix things easily. 
 
@@ -553,13 +553,13 @@ Before we move on to the next Clojure features, let's look back at what we have 
 
 Looking at the function, I notice that it is still quite repetitive: it repeats the forward/right combination four times, and it's exactly the same commands! 
 
-We would like to make it look better by creating a _helper function_ `draw-side-of-square` that will draw a side of a square:
+We would like to make it look better by creating a _helper function_ `draw-line-and-turn` that will draw a side of a square:
 ```clojure
-(defn draw-side-of-square [name length]
+(defn draw-line-and-turn [name length]
   (forward name length)
   (right name 90))
 ```
-Press _Reload_ (or use the shortcut Ctrl-Shift-S on Windows or Ctrl-Cmd-S on a Mac) to reload your file since you have added a function. Use `(init)` to clear the canvas and test your function by typing `(draw-side-of-square :trinity 100)` to have `:trinity` draw a line and turn right (it's important to reload your program code and test your functions every time you have added something to the file).  
+Press _Reload_ (or use the shortcut Ctrl-Shift-S on Windows or Ctrl-Cmd-S on a Mac) to reload your file since you have added a function. Use `(init)` to clear the canvas and test your function by typing `(draw-line-and-turn :trinity 100)` to have `:trinity` draw a line and turn right (it's important to reload your program code and test your functions every time you have added something to the file).  
  
 Now we will use the helper function to rewrite our `draw-square` function: we will use it four times to draw four sides. Here is what `yourcode.clj` file will look like after the change (it's important that the new function is above the `draw-square` since it is used in it):
 ```clojure
@@ -572,15 +572,15 @@ Now we will use the helper function to rewrite our `draw-square` function: we wi
 ;; only :trinity is on the canvas, at the center
 ;(init)
 
-(defn draw-side-of-square [name length]
+(defn draw-line-and-turn [name length]
   (forward name length)
   (right name 90))
 
 (defn draw-square [name length]
-  (draw-side-of-square name length)
-  (draw-side-of-square name length)
-  (draw-side-of-square name length)
-  (draw-side-of-square name length))
+  (draw-line-and-turn name length)
+  (draw-line-and-turn name length)
+  (draw-line-and-turn name length)
+  (draw-line-and-turn name length))
 ```
 
 The process of changing existing program code to make it more readable or more efficient, without changing what it does, is called _refactoring_. 
