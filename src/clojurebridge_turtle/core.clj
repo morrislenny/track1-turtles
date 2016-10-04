@@ -85,8 +85,7 @@
   ([r g b]
    (when-onlyone (set-color turtle r g b)))
   ([n r g b]
-   (update-turtle n (fn [m] (assoc m :color [r g b])))
-   {n {:color [r g b]}}))
+   (update-turtle n (fn [m] (assoc m :color [r g b]))) n))
 
 (defn right
   "turns the specified turtle's head by given degrees in clockwise.
@@ -94,8 +93,7 @@
   ([a]
    (when-onlyone (right turtle a)))
   ([n a]
-   (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
-   {n {:angle a}}))
+   (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a))))) n))
 
 (defn left
   "turns the specified turtle's head by given degrees in counterclockwise.
@@ -125,8 +123,7 @@
                                                         (:color m)))]
                            (update-line n (fn [v] (conj v line)))
                            (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
-     (update-turtle n translate)
-     {n {:length len}})))
+     (update-turtle n translate)) n))
 
 (defn backward
   "moves the specified turtle backward by a given length.
