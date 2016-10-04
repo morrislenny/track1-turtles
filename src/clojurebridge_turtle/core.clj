@@ -159,15 +159,15 @@
   ([]
    (when-onlyone (state turtle)))
   ([n]
-   {n (n @turtles)}))
+   (assoc (n @turtles) :name n)))
 
-(defn turtle-state 
-  "returns the current state of a specified turtle as its coordinates, angle, and color.
-   If no name is given, :trinity's state will be returned"
-  ([]
-   (when-onlyone (:trinity (state turtle))))
-  ([n]
-   (n @turtles)))
+;(defn turtle-state 
+;  "returns the current state of a specified turtle as its coordinates, angle, and color.
+;   If no name is given, :trinity's state will be returned"
+;  ([]
+;   (when-onlyone (:trinity (state turtle)))
+; ([n]
+; (n @turtles)
   
 
 (defn state-all
