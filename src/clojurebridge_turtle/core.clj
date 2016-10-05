@@ -79,6 +79,11 @@
   []
   (vec (keys @turtles)))
 
+(defn- check-name [n] 
+  (if ((into #{} (turtle-names)) n) 
+    n
+    (throw (Exception. (str "There is no turtle named" n)))))
+
 (defmacro when-onlyone [body]
   `(if (= 1 (count @turtles))
      (~@body)
@@ -107,11 +112,11 @@
   ([k]
    (when-onlyone (apply set-color turtle (color-lookup k))))
   ([n k]
-   (apply set-color n (color-lookup k)))
+   (apply set-color (check-name n) (color-lookup k)))
   ([r g b]
    (when-onlyone (set-color turtle r g b)))
   ([n r g b]
-   (update-turtle n (fn [m] (assoc m :color [r g b])))
+   (update-turtle (check-name n) (fn [m] (assoc m :color [r g b])))
    (println n "color set to" (reverse-lookup [r g b]))
    n))
 
@@ -121,7 +126,7 @@
   ([a]
    (when-onlyone (right turtle a)))
   ([n a]
-   (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a))))) 
+   (update-turtle (check-name n) (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a))))) 
    (println n "turned" a) 
    n))
 
@@ -131,7 +136,7 @@
   ([a]
    (right (* -1 a)))
   ([n a]
-   (right n (* -1 a))))
+   (right (check-name n) (* -1 a))))
 
 (defn forward
   "moves the specified turtle forward by a given length.
@@ -151,9 +156,9 @@
                                line          (into [] (concat
                                                         [x y (+ x dx) (+ y dy)]
                                                         (:color m)))]
-                           (update-line n (fn [v] (conj v line)))
+                           (update-line (check-name n) (fn [v] (conj v line)))
                            (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
-     (update-turtle n translate) 
+     (update-turtle (check-name n) translate) 
      (println n "moved" len) 
      n))) 
 
@@ -163,20 +168,20 @@
   ([len]
    (forward (* -1 len)))
   ([n len]
-   (forward n (* -1 len))))
+   (forward (check-name n) (* -1 len))))
 
 (defn undo
   "undos the specified turtle's last line and moves the turtle back.
-   if no name is given, :trinity's move will be undoed."
+   if no name is given, :trinity's move will be undone."
   ([]
    (when-onlyone (undo turtle)))
   ([n]
    (if (< 0 (-> @lines n count))
      (do
-       (update-line n (fn [v] (-> v butlast vec)))
+       (update-line (check-name n) (fn [v] (-> v butlast vec)))
        (if-let [[_ _ x y] (-> @lines n last)]
-         (update-turtle n (fn [m] (merge m {:x x :y y})))
-         (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
+         (update-turtle (check-name n) (fn [m] (merge m {:x x :y y})))
+         (update-turtle (check-name n) (fn [m] (merge m {:x 0 :y 0}))))))
    n))
 
 (defn state
@@ -185,7 +190,7 @@
   ([]
    (when-onlyone (state turtle)))
   ([n]
-   (assoc (update-in (n @turtles) [:color] reverse-lookup) :name n)))
+   (assoc (update-in ((check-name n) @turtles) [:color] reverse-lookup) :name n)))
   
 
 (defn state-all
@@ -199,7 +204,7 @@
   ([]
    (when-onlyone (clean turtle)))
   ([n]
-   (update-line n (constantly []))
+   (update-line (check-name n) (constantly []))
    n))
 
 (defn clean-all
@@ -214,7 +219,7 @@
   ([]
    (when-onlyone (home turtle)))
   ([n]
-   (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90})))
+   (update-turtle (check-name n) (fn [m] (merge m {:x 0 :y 0 :angle 90})))
    n))
 
 (defn home-all
