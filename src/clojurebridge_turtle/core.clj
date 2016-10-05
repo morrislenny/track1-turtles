@@ -10,7 +10,7 @@
 (def trinity {:x 0
               :y 0
               :angle 90
-              :color [106 40 126]})
+              :color [128 0 128]})
 
 ;; turtles map
 ;; {:name {:x x :y y :angle a :color [r g b]}
@@ -70,8 +70,9 @@
         (swap! turtles assoc n {:x 0
                                 :y 0
                                 :angle 90
-                                :color color})))
-     {n (n @turtles)})))
+                                :color (color-lookup color)})))
+     (println (str "added turtle" (assoc (update-in (n @turtles) [:color] reverse-lookup) :name n)))
+     n)))
 
 (defn turtle-names
   "returns turtle names"
@@ -184,7 +185,7 @@
   ([]
    (when-onlyone (state turtle)))
   ([n]
-   (assoc (n @turtles) :name n)))
+   (assoc (update-in (n @turtles) [:color] reverse-lookup) :name n)))
   
 
 (defn state-all
