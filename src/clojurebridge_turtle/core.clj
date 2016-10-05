@@ -25,16 +25,37 @@
 
 (def turtle :trinity)
 
-(def colors [[149 23 0]    [169 43 0]  [189 63 0]  [209 83 3]
-             [52 124 23]   [0 64 0]    [12, 84, 0] [32, 104, 3]
-             [97 75 125]   [81 75 125] [75 86 125] [75 102 125]
-             [43 101 236]  [0 21 156]  [0 41 176]  [3 61 196]
-             [132 129 128] [102 99 98] [72 69 68]  [52 49 48]
-             [174 70 104]  [154 50 84] [134 30 64] [114 10 44]])
+(def named-colors {:red [255 0 0] :blue [0 0 255] :yellow [255 255 0]
+                   :green [0 128 0] :purple [128 0 128] :orange [255 165 0]
+                   :pink [255 192 203] :black [0 0 0] :brown [165 42 42] 
+                   :grey [128 128 128] :silver [192 192 192] 
+                   :gold [255 215 0] :cyan [0 255 255] :magenta [255 0 255] 
+                   :maroon [128 0 0] :navy [0 0 128] :lime [0 255 0] 
+                   :teal [0 128 128] :white [255 255 255]}) ; white is the last color and excluded from random selection
+
+(def color-names (into #{} (keys named-colors)))
+
+(defn- color-lookup [k]
+  (cond 
+    (color-names k) (k named-colors)
+    ((and vector? #(= (count %) 3) #(every? integer? %)) k) k
+    :else (throw (Exception. (str k " is not a valid color"))))) 
+
+(defn- reverse-lookup [rgb]
+  ;; if a matching keyword isn't found, rgb is returned 
+  (get (clojure.set/map-invert named-colors) rgb rgb))
+
+;(def colors [[149 23 0]    [169 43 0]  [189 63 0]  [209 83 3]
+;             [52 124 23]   [0 64 0]    [12, 84, 0] [32, 104, 3]
+;             [97 75 125]   [81 75 125] [75 86 125] [75 102 125]
+;             [43 101 236]  [0 21 156]  [0 41 176]  [3 61 196]
+;             [132 129 128] [102 99 98] [72 69 68]  [52 49 48]
+;             [174 70 104]  [154 50 84] [134 30 64] [114 10 44])
 
 (defn- rand-color
   []
-  (nth colors (rand-int (count colors))))
+  ;; selects among all named colors except the last one: :white
+  (second (nth (seq named-colors) (rand-int (dec (count named-colors))))))
 
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
@@ -82,11 +103,15 @@
 
 (defn set-color
   "Change the color of a turtle"
+  ([k]
+   (when-onlyone (apply set-color turtle (color-lookup k))))
+  ([n k]
+   (apply set-color n (color-lookup k)))
   ([r g b]
    (when-onlyone (set-color turtle r g b)))
   ([n r g b]
    (update-turtle n (fn [m] (assoc m :color [r g b])))
-   (println n "color set to" [r g b])
+   (println n "color set to" (reverse-lookup [r g b]))
    n))
 
 (defn right
@@ -160,14 +185,6 @@
    (when-onlyone (state turtle)))
   ([n]
    (assoc (n @turtles) :name n)))
-
-;(defn turtle-state 
-;  "returns the current state of a specified turtle as its coordinates, angle, and color.
-;   If no name is given, :trinity's state will be returned"
-;  ([]
-;   (when-onlyone (:trinity (state turtle)))
-; ([n]
-; (n @turtles)
   
 
 (defn state-all
