@@ -10,7 +10,7 @@
 (def trinity {:x 0
               :y 0
               :angle 90
-              :color [106 40 126]})
+              :color [128 0 128]})
 
 ;; turtles map
 ;; {:name {:x x :y y :angle a :color [r g b]}
@@ -25,16 +25,37 @@
 
 (def turtle :trinity)
 
-(def colors [[149 23 0]    [169 43 0]  [189 63 0]  [209 83 3]
-             [52 124 23]   [0 64 0]    [12, 84, 0] [32, 104, 3]
-             [97 75 125]   [81 75 125] [75 86 125] [75 102 125]
-             [43 101 236]  [0 21 156]  [0 41 176]  [3 61 196]
-             [132 129 128] [102 99 98] [72 69 68]  [52 49 48]
-             [174 70 104]  [154 50 84] [134 30 64] [114 10 44]])
+(def named-colors {:red [255 0 0] :blue [0 0 255] :yellow [255 255 0]
+                   :green [0 128 0] :purple [128 0 128] :orange [255 165 0]
+                   :pink [255 192 203] :black [0 0 0] :brown [165 42 42] 
+                   :grey [128 128 128] :silver [192 192 192] 
+                   :gold [255 215 0] :cyan [0 255 255] :magenta [255 0 255] 
+                   :maroon [128 0 0] :navy [0 0 128] :lime [0 255 0] 
+                   :teal [0 128 128] :white [255 255 255]}) ; white is the last color and excluded from random selection
+
+(def color-names (into #{} (keys named-colors)))
+
+(defn- color-lookup [k]
+  (cond 
+    (color-names k) (k named-colors)
+    ((and vector? #(= (count %) 3) #(every? integer? %)) k) k
+    :else (throw (Exception. (str k " is not a valid color"))))) 
+
+(defn- reverse-lookup [rgb]
+  ;; if a matching keyword isn't found, rgb is returned 
+  (get (clojure.set/map-invert named-colors) rgb rgb))
+
+;(def colors [[149 23 0]    [169 43 0]  [189 63 0]  [209 83 3]
+;             [52 124 23]   [0 64 0]    [12, 84, 0] [32, 104, 3]
+;             [97 75 125]   [81 75 125] [75 86 125] [75 102 125]
+;             [43 101 236]  [0 21 156]  [0 41 176]  [3 61 196]
+;             [132 129 128] [102 99 98] [72 69 68]  [52 49 48]
+;             [174 70 104]  [154 50 84] [134 30 64] [114 10 44])
 
 (defn- rand-color
   []
-  (nth colors (rand-int (count colors))))
+  ;; selects among all named colors except the last one: :white
+  (second (nth (seq named-colors) (rand-int (dec (count named-colors))))))
 
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
@@ -49,13 +70,19 @@
         (swap! turtles assoc n {:x 0
                                 :y 0
                                 :angle 90
-                                :color color})))
-     {n (n @turtles)})))
+                                :color (color-lookup color)})))
+     (println (str "added turtle" (assoc (update-in (n @turtles) [:color] reverse-lookup) :name n)))
+     n)))
 
 (defn turtle-names
   "returns turtle names"
   []
   (vec (keys @turtles)))
+
+(defn- check-name [n] 
+  (if ((into #{} (turtle-names)) n) 
+    n
+    (throw (Exception. (str "There is no turtle named" n)))))
 
 (defmacro when-onlyone [body]
   `(if (= 1 (count @turtles))
@@ -82,11 +109,16 @@
 
 (defn set-color
   "Change the color of a turtle"
+  ([k]
+   (when-onlyone (apply set-color turtle (color-lookup k))))
+  ([n k]
+   (apply set-color (check-name n) (color-lookup k)))
   ([r g b]
    (when-onlyone (set-color turtle r g b)))
   ([n r g b]
-   (update-turtle n (fn [m] (assoc m :color [r g b])))
-   {n {:color [r g b]}}))
+   (update-turtle (check-name n) (fn [m] (assoc m :color [r g b])))
+   (println n "color set to" (reverse-lookup [r g b]))
+   n))
 
 (defn right
   "turns the specified turtle's head by given degrees in clockwise.
@@ -94,8 +126,9 @@
   ([a]
    (when-onlyone (right turtle a)))
   ([n a]
-   (update-turtle n (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a)))))
-   {n {:angle a}}))
+   (update-turtle (check-name n) (fn [m] (update-in m [:angle] (comp #(mod % 360) #(- % a))))) 
+   (println n "turned" a) 
+   n))
 
 (defn left
   "turns the specified turtle's head by given degrees in counterclockwise.
@@ -103,7 +136,7 @@
   ([a]
    (right (* -1 a)))
   ([n a]
-   (right n (* -1 a))))
+   (right (check-name n) (* -1 a))))
 
 (defn forward
   "moves the specified turtle forward by a given length.
@@ -123,10 +156,11 @@
                                line          (into [] (concat
                                                         [x y (+ x dx) (+ y dy)]
                                                         (:color m)))]
-                           (update-line n (fn [v] (conj v line)))
+                           (update-line (check-name n) (fn [v] (conj v line)))
                            (-> m (update-in [:x] + dx) (update-in [:y] + dy))))))]
-     (update-turtle n translate)
-     {n {:length len}})))
+     (update-turtle (check-name n) translate) 
+     (println n "moved" len) 
+     n))) 
 
 (defn backward
   "moves the specified turtle backward by a given length.
@@ -134,20 +168,20 @@
   ([len]
    (forward (* -1 len)))
   ([n len]
-   (forward n (* -1 len))))
+   (forward (check-name n) (* -1 len))))
 
 (defn undo
   "undos the specified turtle's last line and moves the turtle back.
-   if no name is given, :trinity's move will be undoed."
+   if no name is given, :trinity's move will be undone."
   ([]
    (when-onlyone (undo turtle)))
   ([n]
    (if (< 0 (-> @lines n count))
      (do
-       (update-line n (fn [v] (-> v butlast vec)))
+       (update-line (check-name n) (fn [v] (-> v butlast vec)))
        (if-let [[_ _ x y] (-> @lines n last)]
-         (update-turtle n (fn [m] (merge m {:x x :y y})))
-         (update-turtle n (fn [m] (merge m {:x 0 :y 0}))))))
+         (update-turtle (check-name n) (fn [m] (merge m {:x x :y y})))
+         (update-turtle (check-name n) (fn [m] (merge m {:x 0 :y 0}))))))
    n))
 
 (defn state
@@ -156,15 +190,7 @@
   ([]
    (when-onlyone (state turtle)))
   ([n]
-   {n (n @turtles)}))
-
-(defn turtle-state 
-  "returns the current state of a specified turtle as its coordinates, angle, and color.
-   If no name is given, :trinity's state will be returned"
-  ([]
-   (when-onlyone (:trinity (state turtle))))
-  ([n]
-   (n @turtles)))
+   (assoc (update-in ((check-name n) @turtles) [:color] reverse-lookup) :name n)))
   
 
 (defn state-all
@@ -178,7 +204,7 @@
   ([]
    (when-onlyone (clean turtle)))
   ([n]
-   (update-line n (constantly []))
+   (update-line (check-name n) (constantly []))
    n))
 
 (defn clean-all
@@ -193,7 +219,7 @@
   ([]
    (when-onlyone (home turtle)))
   ([n]
-   (update-turtle n (fn [m] (merge m {:x 0 :y 0 :angle 90})))
+   (update-turtle (check-name n) (fn [m] (merge m {:x 0 :y 0 :angle 90})))
    n))
 
 (defn home-all
