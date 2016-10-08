@@ -70,9 +70,9 @@ are relative to the current position or angle. The command may be given the name
 ## Colors
 
 You can use the following color names:
-``
+```clojure
 :lime :orange :white :yellow :navy :green :cyan :gold :red :blue :maroon :pink :teal :magenta :purple :silver :grey :brown :black
-``
+```
 You can also specify your own colors by providing their RGB (Red, Green, Blue) encoding. For instance, `0	245	255` is a turquoise color. We discuss colors more in the turtles lesson. 
 
 ## Turtle
