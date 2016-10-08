@@ -10,13 +10,15 @@ change head angle clockwise/counterclockwise.
 ![initial state](img/initial-state.png)
 
 
-- Turtles can be added with a name.
+- More turtles can be added, each with its own name.
 
 - Each turtle can move independently giving a command with its name.
 If only `:trinity` is there, you don't need to give the name to commands.
 
 
 ## Movement
+
+A turtle can move in response to commands. When a turtle moves, it leaves a trail. You can move turtles, change their colors, and get neat drawings this way. 
 
 All parameters to `forward`, `backward`, `right`, and `left` commands
 are relative to the current position or angle. The command may be given the name of the turtle. Without the name they would refer to the only turtle on the canvas.
@@ -28,7 +30,8 @@ are relative to the current position or angle. The command may be given the name
 |`(backward length)` <br /> `(backward name length)`| moves the turtle backward by length.| ![go backward](img/go-backward.png) |
 |`(right angle)` <br /> `(right name angle)`| changes the turtle head by degrees clockwise.|![tilt right](img/right.png) |
 |`(left angle)` <br /> `(left name angle)`| changes the turtle head by degrees counterclockwise.|![tilt left](img/left.png) |
-|`(set-color r g b)` <br /> `(set-color name r g b)`| changes the color of the turtle.||
+|`(set-color color)` <br /> `(set-color name color)`| changes the color of the turtle to a color, such as `:red` or `:orange`. This only works for colors that are already defined, see the list below||
+|`(set-color r g b)` <br /> `(set-color name r g b)`| changes the color of the turtle to any combination of red, green, blue color components.||
 |`(undo)` <br /> `(undo name)`| undos the last line and back the turtle.||
 |`(home)` <br /> `(home name)`| moves the turtle back to the home position.||
 |`(home-all)`| moves all turtles back to the home position.||
@@ -49,6 +52,9 @@ are relative to the current position or angle. The command may be given the name
 
 (left 30)            ;; :trinity turns 30 degrees counterclockwise when only  :trinity is there
 (left :neo 135)      ;; :neo turns 135 degrees counterclockwise
+
+(set-color :red)  ;; :trinity is now red when only :trinity is there
+(set-color :neo :green) ;; :neo is now green
 
 (set-color 255 0 0)  ;; :trinity is now red when only :trinity is there
 (set-color :neo 0 255 0) ;; :neo is now green
