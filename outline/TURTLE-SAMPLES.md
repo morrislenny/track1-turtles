@@ -237,17 +237,22 @@ clojurebridge-turtle.walk=> (forward 80)
 clojurebridge-turtle.walk=> (init)
 :trinity
 clojurebridge-turtle.walk=> (forward 50)
-{:trinity {:length 50}}
+:trinity moved 50
+:trinity
 clojurebridge-turtle.walk=> (right 45)
-{:trinity {:angle 45}}
+:trinity turned 45
+:trinity
 clojurebridge-turtle.walk=> (backward 100)
-{:trinity {:length -100}}
+:trinity moved -100
+:trinity
 clojurebridge-turtle.walk=> (left 45)
-{:trinity {:angle -45}}
+:trinity turned -45
+:trinity
 clojurebridge-turtle.walk=> (forward 50)
-{:trinity {:length 50}}
+:trinity moved 50
+:trinity
 clojurebridge-turtle.walk=> (state)
-{:trinity {:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color [106 40 126]}}
+{:x -70.71068094436272, :y 29.289320335914155, :angle 90, :color :purple, :name :trinity}
 ```
 
 ![movement sample](img/various-combination.png)
