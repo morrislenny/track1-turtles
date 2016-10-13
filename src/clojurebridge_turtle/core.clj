@@ -25,13 +25,15 @@
 
 (def turtle :trinity)
 
-(def named-colors {:red [255 0 0] :blue [0 0 255] :yellow [255 255 0]
-                   :green [0 128 0] :purple [128 0 128] :orange [255 165 0]
-                   :pink [255 192 203] :black [0 0 0] :brown [165 42 42] 
-                   :grey [128 128 128] :silver [192 192 192] 
-                   :gold [255 215 0] :cyan [0 255 255] :magenta [255 0 255] 
-                   :maroon [128 0 0] :navy [0 0 128] :lime [0 255 0] 
-                   :teal [0 128 128] :white [255 255 255]}) ; white is the last color and excluded from random selection
+(def turtle-colors {:red [255 0 0] :blue [0 0 255] :yellow [255 255 0]
+                    :green [0 128 0] :purple [128 0 128] :orange [255 165 0]
+                    :pink [255 192 203] :black [0 0 0] :brown [165 42 42] 
+                    :grey [128 128 128] :silver [192 192 192] 
+                    :gold [255 215 0] :cyan [0 255 255] :magenta [255 0 255] 
+                    :maroon [128 0 0] :navy [0 0 128] :lime [0 255 0] 
+                    :teal [0 128 128]})
+
+(def named-colors (assoc turtle-colors :white [255 255 255]))
 
 (def color-names (into #{} (keys named-colors)))
 
@@ -55,7 +57,7 @@
 (defn- rand-color
   []
   ;; selects among all named colors except the last one: :white
-  (second (nth (seq named-colors) (rand-int (dec (count named-colors))))))
+  (second (nth (seq turtle-colors) (rand-int (count turtle-colors)))))
 
 (defn add-turtle
   "creates a new turtle with a name and adds to turtls map.
