@@ -1,7 +1,7 @@
 #  :turtle:  :turtle: :turtle:  How to Walk Turtles :turtle:  :turtle:  :turtle:
 
-Here are some instructions from very basic to a little bit high level
-ones to walk turtles.
+Here are some instructions, from very basic to higher level
+ones, to walk turtles and draw cool pictures.
 
 Walk them and draw lines by your imagination!
 
@@ -9,11 +9,8 @@ Walk them and draw lines by your imagination!
 
 We assume that you have successfully installed all the needed software during [Installfest](https://github.com/clojurebridge-boston/installfest)  and know how to start the programs we are using. Feel free to take a look there to check what these programs are and how to access them. Mentors are also here in case you have a question or something isn't working. 
 
-If you haven't cloned the project repository yesterday at the [Installfest](https://github.com/clojurebridge-boston/installfest), follow the instructions there to install and open a `git` terminal and type (pressing enter after each command): 
-```bash
-git clone https://github.com/clojurebridge-boston/track1-turtles.git
-cd track1-turtles
-```
+If you haven't downloaded the project repository yesterday at the [Installfest](https://github.com/clojurebridge-boston/installfest), follow the instructions there to use 'Git' feature of Nightcode to get your project. 
+
 ##### 1.1 Opening and running the project:
 
 - Start Nightcode and open the project in Nightcode by clicking "Import" in the menu and choosing the folder where the project was downloaded (`track1-turtles`). 
@@ -76,18 +73,16 @@ clojurebridge-turtle.walk=>
 Type `(forward 30)` and press enter:
 ```clojure
 clojurebridge-turtle.walk=> (forward 30)
-{:trinity {:length 30}}
+```
+You notice that `:trinity` (the only turtle on the canvas) moved forward by 30 pixels in the direction it is facing:
+![forward 30](img/forward30.png)
+You also see REPL respond to the command by printing the message about `:trinity`'s move. The next line just has the name `:trinity` in it, you can read it to mean "done moving `:trinity`". 
+```clojure
+:trinity moved 30
+:trinity
 clojurebridge-turtle.walk=> 
 ```
-
-This command moves the turtle on the canvas forward by 30 pixels in the direction it is facing:
-
-![forward 30](img/forward30.png)
-
-
-At some point in your interactions you may have many turtles on the canvas, so turtles are created with names to tell them apart. The very first turtle on the canvas is called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon. 
-
-After you have entered a command, the turtle moves, and REPL displays what move it just made. In this case it said `{:trinity {:length 30}}` indicating the `:trinity` moved forward by 30 pixels. 
+At some point in your interactions you may have many turtles on the canvas, so turtles are created with names to tell them apart. The very first turtle on the canvas is always called `:trinity`. Note the colon `:` in front of the name; all turtle names will start with a colon.  
 
 See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with moving `:trinity` around. 
 
@@ -95,15 +90,15 @@ See [TURTLE.md](TURTLE.md) for commands that turtles understand. Experiment with
 
  - You can use up arrow in REPL to bring up the previous command. You can repeat it as is, or change it, and press enter.   
 
-
+EM: need something about reload/run with REPL in NC
 
 ###### `(undo)`, `(clean)`, and `(home)`
 ---
 When the turtle has gone unexpectedly long or short distance, we can delete the
 line one by one using `(undo)`.
 If the turtle should start from its initial state,
-a combination of `(clean)` and `(home)` commands takes the turtle back to
-the initial state.   
+a combination of `(clean)` and `(home)` commands erases all the lines made by the turtle and takes it back to
+the initial position.   
 
 ###### `(state)` 
 ---
