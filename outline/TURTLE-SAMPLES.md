@@ -100,10 +100,12 @@ If the turtle should start from its initial state,
 a combination of `(clean)` and `(home)` commands erases all the lines made by the turtle and takes it back to
 the initial position.   
 
+EM: mention `(init)` here. 
+
 ###### `(state)` 
 ---
 When the turtle goes far away beyond the boundary, or you lost which turtle
-is which, you can check where a turtle is using this `(state)`. `(state)`
+is which, you can check where a turtle is using `(state)` function. `(state)`
 returns absolute values from the position (0,0) in the middle of the canvas. Note that coordinates are computed with some rounding error, they are not whole numbers.   
 
 For instance, when the following shows the state changes when `:trinity` starts at (0,0), moves forward by 20, then turns right 45 degrees, and moves forward by 20 again. 
@@ -111,17 +113,20 @@ For instance, when the following shows the state changes when `:trinity` starts 
 clojurebridge-turtle.walk=> (init)
 :trinity
 clojurebridge-turtle.walk=> (state)
-{:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}}
+{:x 0, :y 0, :angle 90, :color :purple, :name :trinity}
 clojurebridge-turtle.walk=> (forward 20)
-{:trinity {:length 20}}
+:trinity moved 20
+:trinity
 clojurebridge-turtle.walk=> (state)
-{:trinity {:x -8.742278000372482E-7, :y 19.99999999999998, :angle 90, :color [106 40 126]}}
+{:x -8.742278000372482E-7, :y 19.99999999999998, :angle 90, :color :purple, :name :trinity}
 clojurebridge-turtle.walk=> (right 45)
-{:trinity {:angle 45}}
+:trinity turned 45
+:trinity
 clojurebridge-turtle.walk=> (forward 20)
-{:trinity {:length 20}}
+:trinity moved 20
+:trinity
 clojurebridge-turtle.walk=> (state)
-{:trinity {:x 14.142134440416944, :y 34.142135932817126, :angle 45, :color [106 40 126]}}
+{:x 14.142134440416944, :y 34.142135932817126, :angle 45, :color :purple, :name :trinity}
 ```
 
 [note] The `forward`/`backward` or `right`/`left` commands take a
@@ -154,7 +159,7 @@ clojurebridge-turtle.walk=>
 ```
 This means that Clojure doesn't know what `frward` is. 
 
-Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, will make Clojure not understand a name or a function. You will want to keep [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
+Error messages may be very confusing at first. Don't forget to look at [TURTLE.md](TURTLE.md) to see how the commands should be used: a very small difference, such as using an upper case letter instead of a lower case, will make Clojure not understand a turtle name or a function name. We recommend keeping [TURTLE.md](TURTLE.md) file open in a browser tab so that you can look at it as needed.
 
 If something goes wrong, read what you just typed and the error message. Some things to know: _arity_ refers to how many arguments (i.e. inputs) a function is supposed to take. Sometimes Clojure will say that it cannot convert, or cast, one type of thing to another. That probably means that you are putting in a wrong type of an argument into a function (for instance, a name instead of a number). 
 
@@ -164,13 +169,15 @@ If you are getting an error and can't figure out what's wrong, ask one of the me
 
 #### 2. [easy] Basic movement - forward, backward, right and left
 
+Try some simple turtle movements. 
+
 ###### forward
 
 ---
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
-{:trinity {:length 40}}
+:trinity moved 40
 ```
 
 ![forward 40](img/forward40.png)
@@ -182,7 +189,7 @@ clojurebridge-turtle.walk=> (forward 40)
 
 ```clojure
 clojurebridge-turtle.walk=> (right 90)
-{:trinity {:angle 90}}
+:trinity turned 90
 ```
 
 ![right 90](img/right90.png)
@@ -193,23 +200,32 @@ Try typing in the following movements, or some of your own, to move `:trinity` a
 
 ```clojure
 clojurebridge-turtle.walk=> (forward 40)
-{:trinity {:length 40}}
+:trinity moved 40
+:trinity
 clojurebridge-turtle.walk=> (right 90)
-{:trinity {:angle 90}}
+:trinity turned 90
+:trinity
 clojurebridge-turtle.walk=> (forward 50)
-{:trinity {:length 50}}
+:trinity moved 50
+:trinity
 clojurebridge-turtle.walk=> (right 90)
-{:trinity {:angle 90}}
+:trinity turned 90
+:trinity
 clojurebridge-turtle.walk=> (forward 60)
-{:trinity {:length 60}}
+:trinity moved 60
+:trinity
 clojurebridge-turtle.walk=> (right 90)
-{:trinity {:angle 90}}
+:trinity turned 90
+:trinity
 clojurebridge-turtle.walk=> (forward 70)
-{:trinity {:length 70}}
+:trinity moved 70
+:trinity
 clojurebridge-turtle.walk=> (right 90)
-{:trinity {:angle 90}}
+:trinity turned 90
+:trinity
 clojurebridge-turtle.walk=> (forward 80)
-{:trinity {:length 80}}
+:trinity moved 80
+:trinity
 ```
 
 ![combination](img/forwardsandrights.png)
