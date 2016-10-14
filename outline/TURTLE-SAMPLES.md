@@ -873,44 +873,49 @@ Just like a `map`, `filter` can work with a template function. Here is how you p
 ```
 Let's say there are three turtles on the canvas, and their state is 
 ```clojure
-[{:trinity {:x 0, :y 0, :angle 90, :color [106 40 126]}} 
-{:neo {:x -8.742278000372482E-7, :y 19.99999999999998, :angle 240, :color [3 61 196]}} 
-{:oracle {:x 0, :y 0, :angle 120, :color [134 30 64]}}]
+clojurebridge-turtle.walk=> (state-all)
+[{:x 0, :y 0, :angle 90, :color :purple, :name :trinity} 
+{:x 0, :y 0, :angle 270, :color :cyan, :name :neo} 
+{:x 0, :y 0, :angle 60, :color :orange, :name :oracle}]
 ```
 `filter` will pick the first turtle name, which is `:trinity`, and apply the template, so it will calling the function:
 ```clojure
-(< (:angle (turtle-state :trinity)) 180)
+(< (:angle (state :trinity)) 180)
 ```
 `:trinity`'s angle is 90, which is smaller than 180, so the condition is true. Thus `:trinity` will be added to the resulting vector. 
 
 Next it will check the same template condition for `:neo`:
 template, so it will calling the function:
 ```clojure
-(< (:angle (turtle-state :neo)) 180)
+(< (:angle (state :neo)) 180)
 ```
-`:neo`'s angle is 240, which is not smaller than 180, so he doesn't get added to the result - sorry, `:neo`. 
+`:neo`'s angle is 270, which is not smaller than 180, so he doesn't get added to the result - sorry, `:neo`. 
 
 `:oracle`'s angle is less than 180, so she is added to the result. 
 
 As we just figured out, the result is:
 ```clojure
-clojurebridge-turtle.walk=> (filter #(< (:angle (turtle-state %)) 180) (turtle-names))
+clojurebridge-turtle.walk=> (filter #(< (:angle (state %)) 180) (turtle-names))
 (:trinity :oracle)
 ```
 
 If we want to make only such turtles move forward, we can combine `filter` with `map`: 
 ```clojure
-clojurebridge-turtle.walk=> (map #(forward % 20) (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
-({:trinity {:length 20}} {:oracle {:length 20}})
+clojurebridge-turtle.walk=> (map #(forward % 20) (filter #(< (:angle (state %)) 180) (turtle-names)))
+:trinity moved 20
+:oracle moved 20
+(:trinity :oracle)
 ```
 
 This works (we see the right results), but it is very long. Alternatively we can use Clojure's ability to save results into variables, and then use them later. To define a variable, you use `def` (not `defn`, as you would for a function), and you can define them in the REPL or in the file. We will go with the REPL option:
 
 ```clojure
-clojurebridge-turtle.walk=> (def up-facing-turtles (filter #(< (:angle (turtle-state %)) 180) (turtle-names)))
+clojurebridge-turtle.walk=> (def up-facing-turtles (filter #(< (:angle (state %)) 180) (turtle-names)))
 #'clojurebridge-turtle.walk/up-facing-turtles
 clojurebridge-turtle.walk=> (map #(forward % 20) up-facing-turtles)
-({:trinity {:length 20}} {:oracle {:length 20}})
+:trinity moved 20
+:oracle moved 20
+(:trinity :oracle)
 ```
 
 #### 11. [More challenging, optional] Exercise on filter
