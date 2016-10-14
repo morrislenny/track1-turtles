@@ -451,29 +451,53 @@ as move forward and then turn), read the next section.
 _EM: juxt is needed because you can't use comp: forward and friends do not return turtles> Need to explain briefly what juxt is. Show juxt on a single turtle?_
 -->
 
-What if you want to have all turtles move forward and then turn? You can do this in one `map` by passing a combination (a juxtaposition) of functions. 
-
-Typing this makes `:neo` first turn right by 60 degrees, and move forward by 30 pixels: 
+What if you want to have all turtles move forward and then turn? Let's start by doing these two tings in two map steps:
 ```clojure
-clojurebridge-turtle.walk=> ((juxt #(right % 60) #(forward % 30)) :neo)
-[{:neo {:length 50}} {:neo {:angle 30}}]
-```  
-Try this and other function combinations.    
-
-If we want to make all turtles do a combination of steps, we can use `map` with `juxt`: 
-```clojure
-clojurebridge-turtle.walk=> (map (juxt #(right % 60) #(forward % 30)) (turtle-names))
-([{:trinity {:angle 60}} {:trinity {:length 30}}]
-[{:neo {:angle 60}} {:neo {:length 30}}]
-[{:oracle {:angle 60}} {:oracle {:length 30}}]
-[{:cypher {:angle 60}} {:cypher {:length 30}}]
-[{:morpheus {:angle 60}} {:morpheus {:length 30}}])
+clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
+:trinity moved 40
+:neo moved 40
+:cypher moved 40
+:oracle moved 40
+(:trinity :neo :cypher :oracle)
 ```
+At the end you get a list of all turtles that just moved. Now you can "map" 
+the turn:
+```clojure
+clojurebridge-turtle.walk=> (map #(right % 45) (turtle-names))
+:trinity turned 45
+:neo turned 45
+:cypher turned 45
+:oracle turned 45
+(:trinity :neo :cypher :oracle)
+```
+This is what ot looks like on the canvas:
+![forward and turn](img/forward-and-turn.png) 
+
+If you are wondering whether we can combine these two steps into one - yes, we can!
+
+Since the result of mapping the move is the list of all moved turtles, you can also combine the two commands into one line by taking the result of the first map and immediately mapping the turn function to the turtles that have just moved:   
+```clojure
+clojurebridge-turtle.walk=> (map #(right % 45) (map #(forward % 40) (turtle-names)))
+:trinity moved 40
+:neo moved 40
+:cypher moved 40
+:oracle moved 40
+:trinity turned 45
+:neo turned 45
+:cypher turned 45
+:oracle turned 45
+(:trinity :neo :cypher :oracle)
+```
+The result is the same, but the program code is a bit shorter. 
+If this looks complicated, don't worry about this for now, we will come back to it later.
+
 Reminder: We can use map to make a group of turtles, but not all of them, perform a sequence of steps. To do this, you need to replace `(turtle-names)` with a group of some turtle names: `[:neo :morpheus]`. 
 
 A group of things in square brackets is called a _vector_ in Clojure. You can have vectors of names, numbers, or anything else. For instance, turtle color is given as a vector of RGB values (numbers). 
 
-Experiment with `map` and `juxt`. 
+Sometimes you also see groups of turtle names in parentheses. They are called _lists_ and they are very similar to vectors. When you are giving Clojure groups of turtle names, you should write them as vectors, not lists. 
+
+##### 5.2 Exercises with `map`
 
 #### 6. [intermediate] Define your own functions. 
 
