@@ -560,13 +560,31 @@ We can also have another turtle draw a couple of squares:
 
 ```clojure
 clojurebridge-turtle.walk=> (add-turtle :neo)
-{:neo {:x 0, :y 0, :angle 90, :color [12 84 0]}}
+added turtle{:x 0, :y 0, :angle 90, :color :navy, :name :neo}
+:neo
 clojurebridge-turtle.walk=> (right :neo 180)
-{:neo {:angle 180}}
+:neo turned 180
+:neo
 clojurebridge-turtle.walk=> (draw-square :neo 100)
-{:neo {:angle 90}}
+:neo moved 100
+:neo turned 90
+:neo moved 100
+:neo turned 90
+:neo moved 100
+:neo turned 90
+:neo moved 100
+:neo turned 90
+:neo
 clojurebridge-turtle.walk=> (draw-square :neo 50)
-{:neo {:angle 90}}
+:neo moved 50
+:neo turned 90
+:neo moved 50
+:neo turned 90
+:neo moved 50
+:neo turned 90
+:neo moved 50
+:neo turned 90
+:neo
 ```
 
 ##### 6.2 Using a map with your own function 
@@ -582,16 +600,22 @@ Recall that `map` takes a function and a vector of things to apply this function
 The following adds three turtles named `:taylor :tess`, and `:tracy` to the canvas:
 ```clojure
 clojurebridge-turtle.walk=> (map add-turtle [:taylor :tess :tracy])
+added turtle{:x 0, :y 0, :angle 90, :color :green, :name :taylor}
+added turtle{:x 0, :y 0, :angle 90, :color :black, :name :tess}
+added turtle{:x 0, :y 0, :angle 90, :color :pink, :name :tracy}
 ```
 They are all facing up now. At this point we will move them manually so that they are facing different directions (up, down, left, and right). Later we will see that we could do it with a `map` as well. 
 
 ```clojure
 clojurebridge-turtle.walk=> (right :taylor 90)
-{:taylor {:angle 90}}
+:taylor turned 90
+:taylor
 clojurebridge-turtle.walk=> (right :tess 180)
-{:tess {:angle 180}}
+:tess turned 180
+:tess
 clojurebridge-turtle.walk=> (right :tracy 270)
-{:tracy {:angle 270}}
+:tracy turned 270
+:tracy
 ```
 
 At this point we can use a `map` to draw squares on all four sides. We have a function `draw-square` that we can map over all turtles. Take a look at the functions, notice that it takes two things: a name and a side length. Thus our map will make a template function that passes the turtle name and the length of a square to our `draw-square`. Let's draw squares of length 100: 
