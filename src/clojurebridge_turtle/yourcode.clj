@@ -8,15 +8,3 @@
 ;; only :trinity is on the canvas, at the center
 
 
-(defn draw-square [name length]
-  (forward name length)
-  (right name 90)
-  (forward name length)
-  (right name 90)
-  (forward name length)
-  (right name 90)
-  (forward name length)
-  (right name 90))
-  
-  
-

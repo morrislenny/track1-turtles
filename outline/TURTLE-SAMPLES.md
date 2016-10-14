@@ -805,8 +805,8 @@ We will start writing the function definition in `yourcode.clj` file, under the 
    If the turtle's angle is 0 or 180, it doesn't change"
   [name]
 ```
-Now we need to fill in the function body: we want to get the current turtle's angle by `(:angle (turtle-state name))`, and then check if it's greater than 180. 
-That can be done by applying the function `>`: `(> (:angle (turtle-state name)) 180)`. 
+Now we need to fill in the function body: we want to get the current turtle's angle by `(:angle (state name))`, and then check if it's greater than 180. 
+That can be done by applying the function `>`: `(> (:angle (state name)) 180)`. 
 
 Finally, we need a `when` function so that when the angle is indeed greater than 180, we turn the turtle right by 180 degrees. If the angle is 180 or below, the condition for `when` will be false, and nothing will happen. 
 
@@ -817,7 +817,7 @@ Here is the completed function:
    is changed. Otherwise makes the turtle turn 180 degrees. 
    If the turtle's angle is 0 or 180, it doesn't change"
   [name]
-  (when (> (:angle (turtle-state name)) 180)
+  (when (> (:angle (state name)) 180)
     (right name 180)))
 ```
 Try it in the REPL by applying it to different turtles, such as `(point-up :trinity)`. Check their state after the function call. 
@@ -869,7 +869,7 @@ Now if you type `(spiral :trinity 200)`, you will see the same colorful spiral o
 
 Just like a `map`, `filter` can work with a template function. Here is how you perform this task: 
 ```clojure
-(filter #(< (:angle (turtle-state %)) 180) (turtle-names))
+(filter #(< (:angle (state %)) 180) (turtle-names))
 ```
 Let's say there are three turtles on the canvas, and their state is 
 ```clojure
