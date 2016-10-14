@@ -260,7 +260,8 @@ clojurebridge-turtle.walk=> (state)
 #### 3. [easy] Multiple turtles
 
 You can add multiple turtles. They all start in the middle, facing up, and are 
-all of different colors. You can refer to each turtle by its name.
+all of different colors (randomly chosen, except for `:trinity` who is always purple). 
+You can refer to each turtle by its name.
 
 ###### add turtles
 
@@ -270,13 +271,16 @@ all of different colors. You can refer to each turtle by its name.
 clojurebridge-turtle.walk=> (init)
 :trinity
 clojurebridge-turtle.walk=> (add-turtle :neo)
-{:neo {:x 0, :y 0, :angle 90, :color [12 84 0]}}
-clojurebridge-turtle.walk=> (add-turtle :oracle)
-{:oracle {:x 0, :y 0, :angle 90, :color [189 63 0]}}
+added turtle{:x 0, :y 0, :angle 90, :color :black, :name :neo}
+:neo
 clojurebridge-turtle.walk=> (add-turtle :cypher)
-{:cypher {:x 0, :y 0, :angle 90, :color [75 102 125]}}
+added turtle{:x 0, :y 0, :angle 90, :color :blue, :name :cypher}
+:cypher
+clojurebridge-turtle.walk=> (add-turtle :oracle)
+added turtle{:x 0, :y 0, :angle 90, :color :lime, :name :oracle}
+:oracle
 clojurebridge-turtle.walk=> (turtle-names)
-[:trinity :neo :oracle :cypher]
+[:trinity :neo :cypher :oracle]
 ```
 
 ![four turtles](img/four-turtles.png)
@@ -288,15 +292,18 @@ Note that once you have more turtles than just `:trinity`, you need to specify w
 ---
 Note that `*` denotes multiplication in Clojure, so `(* 2 45)` returns twice 45, which is 90. If we want each turtle to be facing at 45 degrees from the previous one, we can have Clojure do the multiplication for us. 
 
-The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on 2 and 45. 
+The parentheses around this expression mean that we are applying `*` to 2 and 45. Here `*` is a function, 2 and 45 are its parameters (also called "arguments"), and we say that we are calling multiplication function on arguments 2 and 45. 
 
 ```clojure
 clojurebridge-turtle.walk=> (right :neo 45)
-{:neo {:angle 45}}
+:neo turned 45
+:neo
 clojurebridge-turtle.walk=> (right :oracle (* 2 45))
-{:oracle {:angle 90}}
+:oracle turned 90
+:oracle
 clojurebridge-turtle.walk=> (right :cypher (* 3 45))
-{:cypher {:angle 135}}
+:cypher turned 135
+:cypher
 ```
 
 ![four directions](img/four-directions.png)
@@ -308,21 +315,22 @@ Feel free to change the multiplication function or its parameters to something e
 ---
 ```clojure
 clojurebridge-turtle.walk=> (forward :trinity 40)
-{:trinity {:length 40}}
+:trinity moved 40
+:trinity
 clojurebridge-turtle.walk=> (forward :neo 40)
-{:neo {:length 40}}
-clojurebridge-turtle.walk=> (forward :oracle 40)
-{:oracle {:length 40}}
+:neo moved 40
+:neo
 clojurebridge-turtle.walk=> (forward :cypher 40)
-{:cypher {:length 40}}
+:cypher moved 40
+:cypher
+clojurebridge-turtle.walk=> (forward :oracle 40)
+:oracle moved 40
+:oracle
 ```
 
 ![four moves](img/four-forwards.png)
 
-
-#### 4. [easy] Add one more turtle and give them commands 
-
-###### add another turtle named :morpheus with color
+###### Adding turtles with colors and setting their colors
 
 ---
 You can change the color of the turtle (the triangle) but not the line behind it. 
@@ -335,7 +343,10 @@ You input colors with three vales (known as RGB values):
 Each value ranges from 0 to 255. [0, 0, 0] is black, and [255, 255, 255] is white.
 Below is an example in code, showing how it works in Clojure.   
 
-[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a hepful link where you can play with RGB colors!
+[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a helpful link where you can play with RGB colors!
+
+
+#### 4. [easy] Practice moving turtles
 
 
 ```clojure
