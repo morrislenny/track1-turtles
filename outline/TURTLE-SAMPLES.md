@@ -346,6 +346,16 @@ added turtle{:x 0, :y 0, :angle 90, :color :green, :name :morpheus}
 
 ![fifth turtle](img/fifth-turtle.png)
 
+You can also change colors of turtles already on the canvas by using a `set-color` function:
+
+```clojure
+clojurebridge-turtle.walk=>(set-color :neo :cyan)
+:neo color set to :cyan
+:neo
+```
+
+Notice that `:neo`'s color has changed and his new lines will now be cyan. The line behind him is still black (his old color). 
+
 If you want colors that are not in the list, you can define them using RGB (red-green-blue) values, as three numbers, such as [200, 0, 100]: 
 - the first number indicates how much red is in the color
 - the second number indicates how much blue is in the color
@@ -353,15 +363,19 @@ If you want colors that are not in the list, you can define them using RGB (red-
 Each value ranges from 0 to 255. [0, 0, 0] is black, and [255, 255, 255] is white.
 Below is an example in code, showing how it works in Clojure.   
 
-[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a helpful link where you can play with RGB colors!
-
+Here we are changing `:trinity`'s color to a nice shade of purplish red:
 ```clojure
-clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
-{:morpheus {:x 0, :y 0, :angle 90, :color [21 137 255]}}
+clojurebridge-turtle.walk=> (set-color :trinity [200 0 100])
+:trinity color set to [200 0 100]
+:trinity
 ```
+Here both `:neo` and `:trinity` have changed their colors:
+![change color](img/change-color.png)
 
+----------
+.png)
 
-
+[Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a helpful link where you can play with RGB colors!
 
 #### 4. [easy] Practice moving turtles
 
