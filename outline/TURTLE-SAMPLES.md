@@ -372,49 +372,15 @@ clojurebridge-turtle.walk=> (set-color :trinity [200 0 100])
 Here both `:neo` and `:trinity` have changed their colors:
 ![change color](img/change-color.png)
 
-----------
-.png)
-
 [Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a helpful link where you can play with RGB colors!
 
 #### 4. [easy] Practice moving turtles
 
-----------
+Now practice adding and moving turtles and setting their colors. Remember that `(init)` brings the canvas back to the initial state. Show your turtle 
+walks to other students and to mentors, we would love to see them!  
 
-
-###### tilt and move forward :morpheus
-
----
-
-```clojure
-clojurebridge-turtle.walk=> (left :morpheus 45)
-{:morpheus {:angle -45}}
-clojurebridge-turtle.walk=> (forward :morpheus 40)
-{:morpheus {:length 40}}
-clojurebridge-turtle.walk=> (turtle-names)
-[:trinity :neo :oracle :cypher :morpheus]
-```
-
-![fifth's move](img/fifth-turtle-move.png)
-
-###### walk five turtles forward by 20
-
----
-```clojure
-clojurebridge-turtle.walk=> (forward :trinity 20)
-{:trinity {:length 20}}
-clojurebridge-turtle.walk=> (forward :neo 20)
-{:neo {:length 20}}
-clojurebridge-turtle.walk=> (forward :oracle 20)
-{:oracle {:length 20}}
-clojurebridge-turtle.walk=> (forward :cypher 20)
-{:cypher {:length 20}}
-clojurebridge-turtle.walk=> (forward :morpheus 20)
-{:morpheus {:length 20}}
-```
-
-![forward 20 more](img/forward20plus.png)
-
+When you find yourself tired of typing similar commands over and over, 
+continue to the next section. 
 
 #### 5. [intermediate] Move all five turtles - Clojure functions
 
@@ -424,7 +390,7 @@ The simplest way would be to type `(forward :name 40)` five times.
 
 But wait. We are almost exhausted to type quite similar commands many times.
 Is there any handy way of doing this? Yes, there is.
-Clojure has uses functions to accomplish this purpose.
+Clojure uses functions to accomplish this goal.
 
 <!--
 
@@ -438,10 +404,9 @@ _EM: commented out doseq_
 clojurebridge-turtle.walk=> (doseq [n (turtle-names)] (forward n 40))
 nil
 ```
--->
 
 ![five turtles move](img/five-turtles-move.png)
-
+-->
 
 ##### 5.1 using `map` function (a higher order function)
 
@@ -453,10 +418,22 @@ If we want `:trinity` to move forward by 40, we say `(forward :trinity 40)`. If 
 
 We provide a "template" function for the command in which the name will be filled in for each turtle as the function goes through the list of names. The "template" function is `#(forward % 40)`, where the `%` is the turtle name that will be each of the turtles, one by one. 
 
+Assuming that there are five turtles at the center of the canvas, all pointing in different directions, we can move them 40 pixels forward as following: 
+
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) (turtle-names))
-({:trinity {:length 40}} {:neo {:length 40}} {:oracle {:length 40}} {:cypher {:length 40}} {:morpheus {:length 40}})
+:trinity moved 40
+:neo moved 40
+:cypher moved 40
+:oracle moved 40
+:morpheus moved 40
+(:trinity :neo :cypher :oracle :morpheus)
+clojurebridge-turtle.walk=> 
 ```
+
+The result will look like this: 
+![five turtles forward](img/five-forward.png)
+
 What do you think will happen if you type the following? 
 ```clojure
 clojurebridge-turtle.walk=> (map #(forward % 40) [:neo :oracle])
@@ -465,9 +442,10 @@ clojurebridge-turtle.walk=> (map #(forward % 40) [:neo :oracle])
 Can you now make all turtles turn right by 90 degrees using `map`?
 Can you make only `:trinity` and `:morpheus` turn some more? Experiment with map until you are comfortable using it. Ask mentors questions if you have them. 
 
-Note: don't try to make turtles do two things at once, in one `map`. We will get to it later.  
+Note: if you want to use `map` to make turtles do two things at once (such
+as move forward and then turn), read the next section.  
 
-##### 5.2 using `map` (higher order function) and `juxt` functions
+##### 5.2 using `map` (higher order function)
 
 <!--
 _EM: juxt is needed because you can't use comp: forward and friends do not return turtles> Need to explain briefly what juxt is. Show juxt on a single turtle?_
