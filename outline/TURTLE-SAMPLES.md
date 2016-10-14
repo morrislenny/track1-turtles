@@ -332,29 +332,40 @@ clojurebridge-turtle.walk=> (forward :oracle 40)
 
 ###### Adding turtles with colors and setting their colors
 
----
-You can change the color of the turtle (the triangle) but not the line behind it. 
-The way you add color to the turtle might be very different than what you might be used to.
-You input colors with three vales (known as RGB values):
-- the first changes how much red is in the color
-- the second changes how much blue is in the color
-- the third changes how much green is in the color   
+You can change the color of the turtle (the triangle), and that will also 
+change the color of the line that it leaves behind. 
 
+There are two ways of working with colors. Some common colors are defined with names, for instance `:red`, `:blue`, `:lime`, `:black`, `:white` (see [TURTLE.md](TURTLE.md) for a complete list). Just like turtles, color names have a `:` in the front. 
+
+For instance, if you want to add a green turtle named `:morpheus`, you can write
+```clojure
+clojurebridge-turtle.walk=> (add-turtle :morpheus :green)
+added turtle{:x 0, :y 0, :angle 90, :color :green, :name :morpheus}
+:morpheus
+```
+
+![fifth turtle](img/fifth-turtle.png)
+
+If you want colors that are not in the list, you can define them using RGB (red-green-blue) values, as three numbers, such as [200, 0, 100]: 
+- the first number indicates how much red is in the color
+- the second number indicates how much blue is in the color
+- the third number indicates how much green is in the color   
 Each value ranges from 0 to 255. [0, 0, 0] is black, and [255, 255, 255] is white.
 Below is an example in code, showing how it works in Clojure.   
 
 [Here](http://www.rapidtables.com/web/color/RGB_Color.htm) is a helpful link where you can play with RGB colors!
-
-
-#### 4. [easy] Practice moving turtles
-
 
 ```clojure
 clojurebridge-turtle.walk=> (add-turtle :morpheus [21, 137, 255])
 {:morpheus {:x 0, :y 0, :angle 90, :color [21 137 255]}}
 ```
 
-![fifth turtle](img/fifth-turtle.png)
+
+
+
+#### 4. [easy] Practice moving turtles
+
+----------
 
 
 ###### tilt and move forward :morpheus
