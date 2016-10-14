@@ -497,15 +497,25 @@ A group of things in square brackets is called a _vector_ in Clojure. You can ha
 
 Sometimes you also see groups of turtle names in parentheses. They are called _lists_ and they are very similar to vectors. When you are giving Clojure groups of turtle names, you should write them as vectors, not lists. 
 
-##### 5.2 Exercises with `map`
+##### 5.2 Practice with `map`
+Before you do the exercises, position a few turtles at the starting position, make sure they are facing different directions. 
+
+The exercise just gives you ideas for what you can do. Feel free to experiment with different turtle actions. 
+
++ Use `map` to make all turtles move forward 40 pixels.
++ Use `map` to clean the turtle lines.
++ Use `map` to set all turtle colors to `:red` (or any other color of your choice)
++ Use `map` several times to make all turtles draw triangles. 
+
+Enjoy your drawing! 
 
 #### 6. [intermediate] Define your own functions. 
 
-Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, you would need to write your own functions. It is convenient to give names to functions so that you can use them many times. 
+Clojure has a lot of convenient functions, and we will see quite a few of them. However, if you want to do your own turtle drawings, it helps to write  your own functions that will serve as building blocks for your drawings. It is convenient to give names to functions so that you can use them many times. 
 
 ##### 6.1 Writing a function to draw a square
 
-Let's say we want my turtle to draw a square. This movement consists of moving forward, turning right, and repeating this on each side of the square. We can write this movement as a function. We don't know which turtle we will be using, and we also want to make it so that we can draw squares of different sizes. Thus we will make the turtle name and the length of the side parameters to the function. 
+Let's say we want my turtle to draw a square. This movement consists of moving forward, turning right, and repeating this on each side of the square. We can write this movement as a function. We don't know which turtle we will be using, and we also want to make it so that we can draw squares of different sizes. Thus we will make the turtle name and the length of the side of the square be parameters to the function. 
 
 The function is going to be fairly long, so it's inconvenient to write it in REPL. We will write functions in a file and then load them into REPL. 
 
@@ -526,7 +536,7 @@ The function is going to be fairly long, so it's inconvenient to write it in REP
 Here is what's in it:
 
 -  `defn` is a Clojure keyword for "define a function". You always use it when you want to define a function with a name. 
--  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. Notice how all the function names so far have done a good job of describing what they do. It is important to put some thought into your function names so that anyone (including you in two days) can get a good idea of what is going on from your function name. 
+-  `draw-square` is the name of the function. You can pick whatever name you want. You can use dashes to separate words, but you may not use spaces in function names. Notice how all the function names so far have done a good job of describing what they do. It is important to put some thought into your function names so that anyone (including you in two days) can get a good idea of what the function does based on its name.  
 - `[name length]` are the parameters. In order to tell a turtle to draw a square, we will need to provide a turtle name and the length of the side to the function.
 - What follows is the function body, i.e. the commands it's composed of. Note that all our commands use the turtle name, and the `forward` uses the side length.
 - Note that we enclose `defn` and the function body in parentheses. Click on the opening parenthesis before `defn` in Nightcode, it will show you the matching closing one (all the way at the end of the function). Nightcode helps you match parentheses (and there is a lot of parentheses in Clojure!)
