@@ -8,7 +8,3 @@
 ;; only :trinity is on the canvas, at the center
 
 
-
-  
-  
-
