@@ -673,7 +673,7 @@ Now we will use the helper function to rewrite our `draw-square` function: we wi
 
 The process of changing existing program code to make it more readable or more efficient, without changing what it does, is called _refactoring_. 
 
-This is much easier to read, and these functions are very useful, we expect to use them more. Since they are useful, we also want to put s description in them to let those who will be using them know what they do. The comments describing what a function does go after the function name and before its parameters, and are written in double-quotes:
+This is much easier to read, and these functions are very useful, we expect to use them more. Since they are useful, we also want to put a description in them to let those who will be using them know what they do. The comments describing what a function does go after the function name and before its parameters, and are written in double-quotes:
 
 ```clojure
 (ns clojurebridge-turtle.walk
@@ -721,13 +721,13 @@ The template function in `map` will then have two placeholders, named `%1` and `
 (map #(forward %1 %2) [:trinity :neo :morpheus] [50 30 100]) 
 ``` 
 
-The first time `forward` is called it will replace `%1` with `:trinity` (the first element of the first list), and `%2` with 50 (the first element of the second list). The second time it will be `:neo` and 30, and finally `:morpheus` and 100. You can make these lists as long as you'd like. 
+The first time `forward` is called it will replace `%1` with `:trinity` (the first element of the first list), and `%2` with 50 (the first element of the second list). The second time it will be `:neo` and 30, and finally `:morpheus` and 100. You can make these vectors as long as you'd like. 
 
 This approach is also convenient for making multiple turtles turn different angles, try it!  
 
 ##### 6.5 [Intermediate] Exercises on writing your own functions. 
 
-Write a function to draw a triangle with equal sides or another shape of your choice (some are easier, some are harder). Use helper functions. Often you start by writing short functions and then build larger functions out of them, rather than the other way around. Don't forget to write "doc" descriptions of your functions. **Don't forget to save and reload your file when any new function is finished**. Test functions early and often. 
+Write a function to draw a triangle with equal sides or another shape of your choice (some shapes are easier, some are harder). Use helper functions. Often you start by writing short functions and then build larger functions out of them, rather than the other way around. Don't forget to write "doc" descriptions of your functions. **Don't forget to save and reload your file when any new function is finished**. Test functions early and often. 
 
 This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.
 
@@ -749,27 +749,29 @@ If you need to have a lot of repeated code fragments, you might want to look at 
 
 ##### 7.1 What keywords are
 
-Now we are going to look more into the way Clojure stores information. Let's take a look at a turtle's state. **Important:** we will be using a `turtle-state` function, not `state` function that you have used before since it's more convenient for what we are trying to do here. 
+Now we are going to look more into the way Clojure stores information. Let's take a look at a turtle's state.  
 
 In the REPL type: 
 ```clojure
-clojurebridge-turtle.walk=> (turtle-state :trinity)
-{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}
+clojurebridge-turtle.walk=> (state :trinity)
+{:x -4.767975859465423E-6, :y -1.311341712649203E-5, :angle 90, :color :purple, :name :trinity}
 ```
 
 What you get back is `:trinity`'s current coordinates, angle, and her color (the state may be different for you, depending on where `:trinity` is on your canvas). 
 
 You notice that `:trinity`'s state has several different items of data, and they are marked (labeled) by Clojure elements called _keywords_. Keywords start with a colon (so `:trinity` is actually a keyword) and can be any word. They are primarily used for labeling items in a Clojure data storage called a _hashmap_. 
 
-Turtle state `{:x 99.99999403953571, :y 99.99999562886084, :angle 270, :color [106 40 126]}` is an example of a hashmap. Hashmaps are written using curly braces. Hashmaps consist of pairs of a key followed by an element that key is labeling. For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `99.99999403953571`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), and the `:color` keyword to the vector of numbers that make up the turtle's RGB color. 
+Turtle state `{:x -4.767975859465423E-6, :y -1.311341712649203E-5, :angle 90, :color :purple, :name :trinity}` is an example of a hashmap. Hashmaps are written using curly braces. Hashmaps consist of pairs of a key followed by an element that the key is labeling. 
+
+For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The element (the value) that corresponds to it is, in this case, `-4.767975859465423E-6`. Likewise an `:angle` keyword refers to the value 270 (the turtle's angle), `:color` is a keyword for the turtle's color, and `:name` is a keyword for her name. Note that turtle names themselves are keywords (they are used to label the turtle in the hashmap of all turtles) 
 
 ##### 7.2 How to use keywords
 
-If you are given a hashmap, it is very easy to get an element that is associated with a particular keyword. For instance, to get the angle from the turtle state I just need to write
+If you are given a hashmap, it is very easy to get an element that is associated with a particular keyword. For instance, to get the angle from `:trinity`'s state I just need to write
 ```clojure
-(:angle (turtle-state :trinity))
+(:angle (state :trinity))
 ``` 
-If the `:trinity`'s state is as above, you will get back 270. Try it with the other parts of `:trinity`'s state (her x and y coordinates and her color). Add another turtle, move it, and then use keywords to get parts of its turtle state.
+If the `:trinity`'s state is as above, you will get back 90. Try it with the other parts of `:trinity`'s state (her x and y coordinates, her name, and her color). Add another turtle, move it, and then use keywords to get parts of its state.
 
 Keep in mind that if you are looking for a keyword in a hashmap that doesn't have it, you get back a special value called `nil`:
 ```clojure
@@ -782,10 +784,10 @@ We will be using keywords in order to make turtles behavior depend on what their
 #### 8. [Intermediate] Checking a condition
 
 ##### 8.1 Choosing options: when, if 
-A turtle is going up on the canvas when its angle is between 0 and 180. It's going down when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be moving down (its angle more than 180). If the angle is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
+A turtle is moving upward on the canvas when its angle is between 0 and 180. It's going downward when its angle is between 180 and 270. Let's say we want our turtle to be moving up. It may be already moving up (its angle is less than 180), or it may be moving down (its angle more than 180). If the angle is more than 180, we want to switch the turtle's direction to the opposite. Otherwise we keep it the same.
 
 We will be using a Clojure `when` function to do this. It's a function that can be used to perform an action only when a certain condition is true. For instance, 
-in a function where we have a `length` parameter we can say 
+in a function where we have a `length` parameter we may say 
 ```clojure
 (when (< length 150) (forward :neo length)
 ```
