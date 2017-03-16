@@ -98,7 +98,7 @@ When the turtle has gone unexpectedly long or short distance, we can delete the
 line one by one using `(undo)`.
 If the turtle should start from its initial state,
 a combination of `(clean)` and `(home)` commands erases all the lines made by the turtle and takes it back to
-the initial position. `(init)` will return everything to its initial state; there will be only one turtle in its original position. 
+the initial position. `(init)` will return everything to its initial state; there will be only one turtle in its original position.
 
 ###### `(state)`
 ---
@@ -127,7 +127,7 @@ clojurebridge-turtle.walk=> (state)
 {:x 14.142134440416944, :y 34.142135932817126, :angle 45, :color :purple, :name :trinity}
 ```
 
-[note] The `forward`/`backward` or `right`/`left` commands take a
+**[note]** The `forward`/`backward` or `right`/`left` commands take a
 relative value to the current state.
 
 ###### `doc`
@@ -635,7 +635,7 @@ clojurebridge-turtle.walk=> (map #(draw-square % 50) (turtle-names))
 
 ##### 6.3 Using functions in functions; code refactoring
 
-Before we move on to the next Clojure features, let's look back at what we have accomplished. We wrote a function to draw a square that takes a turtle name and the length of the side as parameters, and directs that turtle to move in a square pattern. Then we used this function to map over four turtle to draw four squares.
+Before we move on to the next Clojure features, let's look back at what we have accomplished. We wrote a function to draw a square that takes a turtle name and the length of the side as parameters, and directs that turtle to move in a square pattern. Then we used this function to map over four turtles to draw four squares.
 
 Looking at the function, I notice that it is still quite repetitive: it repeats the forward/right combination four times, and it's exactly the same commands!
 
@@ -708,7 +708,7 @@ What do you see?
 
 You have written your first function documentation. From now on, make sure to write short descriptions of your functions so that you can easily look them up using a `doc` command.
 
-##### 6.4 [Optional, intermediate] map with two vectors
+##### 6.4 [Optional, intermediate] `map` with two vectors
 
 What if you want to move all your turtles forward, but different distances? For instance `:trinity` need to move by 50, `:neo` by 30, and `:morpheus` by 100?
 
@@ -729,7 +729,7 @@ Write a function to draw a triangle with equal sides or another shape of your ch
 
 This is a process that requires keeping track of a lot of small details. **Don't hesitate to ask a mentor if you are confused or unsure what to do or have questions about why things work the way they do**, that's what we are here for.
 
-##### 6.6 [More challenging] Exercises on using map
+##### 6.6 [More challenging] Exercises on using `map`  
 
 Once you are done with writing your own functions, use map to make multiple turtles draw multiple copies of this shape. Once again, ask a mentor if you need help or have a question, we will be happy to help.  
 
@@ -765,7 +765,7 @@ For instance, `:x` is the key (the label) of the x-coordinate of the turtle. The
 
 ##### 7.2 How to use keywords
 
-If you are given a hashmap, it is very easy to get an element that is associated with a particular keyword. For instance, to get the angle from `:trinity`'s state I just need to write
+If you are given a hashmap, it is very easy to get an element that is associated with a particular keyword. For instance, to get the angle from `:trinity`'s state I just need to write:
 ```clojure
 (:angle (state :trinity))
 ```
@@ -775,7 +775,7 @@ Keep in mind that if you are looking for a keyword in a hashmap that doesn't hav
 ```clojure
 (:mood (turtle-state :trinity))
 ```
-returns `nil`  (which stands for _nothing_) since `:mood` isn't a part of a turtle's state. This by itself isn't a problem, but if you get `nil` by mistake, and try to use it later on instead of what you expected to get (a number, a name, etc.), you may get a nasty `NullPointerException` error. Be careful with spelling of keywords: if you misspell it, you may get 'nil` as the result, and it would be difficult to find and fix the error.
+returns `nil`  (which stands for _nothing_, different than _zero_) since `:mood` isn't a part of a turtle's state. This by itself isn't a problem, but if you get `nil` by mistake, and try to use it later on instead of what you expected to get (a number, a name, etc.), you may get a nasty `NullPointerException` error. Be careful with spelling of keywords: if you misspell it, you may get 'nil` as the result, and it would be difficult to find and fix the error.
 
 We will be using keywords in order to make turtles behavior depend on what their state is.
 
@@ -802,7 +802,7 @@ We will start writing the function definition in `yourcode.clj` file, under the 
    is changed. Otherwise makes the turtle turn 180 degrees.
    If the turtle's angle is 0 or 180, it doesn't change"
   [name]
-```
+```  
 Now we need to fill in the function body: we want to get the current turtle's angle by `(:angle (state name))`, and then check if it's greater than 180.
 That can be done by applying the function `>`: `(> (:angle (state name)) 180)`.
 
@@ -839,7 +839,7 @@ Sometimes we want to repeat an action until a certain stopping condition. For in
 
 If you look at it closer, you will notice that the turtle started at the right upper corner facing down, moved forward some length, turned right 90 degrees, moved forward, turned, moved forward a slightly less distance (by 5 pixels, to be exact), turned, moved forward the same length as the last time, etc.
 
-So the pattern seems to be: move some length, turn right 90, move the same length, turn 90, and then repeat the same thing, but with the length 5 pixels less, and keep going until the length becomes too small (say, smaller than 5 pixels).
+So the pattern seems to be: move some length, turn right 90, move the same length, turn 90, move the same length, turn 90, and then repeat the same thing, but with the length 5 pixels less, and keep going until the length becomes too small (say, smaller than 5 pixels).
 
 Let's write this as a function. We know most of its parts: we have a helpful helper function `draw-line-and-turn`, we know that the Clojure `when` function would do perform an action only when a condition is true, and would do nothing otherwise (that would be helpful for stopping the repetition when the length is too small).
 
@@ -876,7 +876,7 @@ clojurebridge-turtle.walk=> (state-all)
 {:x 0, :y 0, :angle 270, :color :cyan, :name :neo}
 {:x 0, :y 0, :angle 60, :color :orange, :name :oracle}]
 ```
-`filter` will pick the first turtle name, which is `:trinity`, and apply the template, so it will calling the function:
+`filter` will pick the first turtle name, which is `:trinity`, and apply the template, so it will call the function:
 ```clojure
 (< (:angle (state :trinity)) 180)
 ```
