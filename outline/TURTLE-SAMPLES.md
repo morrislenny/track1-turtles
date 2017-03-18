@@ -946,7 +946,19 @@ Another idea: can you write a recursive function to draw a tree? It may look som
 
 And yes, that's a turtle on top of the tree! Our turtles are magical.
 
-Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. Hope you have fun with our little turtles and Clojure!
+Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. Hope you have fun with our little turtles and Clojure!  
+
+#### 13: Examples  
+Pyramids of Giza using recursion
+![Pyramids picture](img/Pyramids.png)  
+
+Random Forrest:
+Use a random function to create a randomly arranged forrest. 
+_First Run_   
+![ForrestOne Picture](img/ForrestOne.png)  
+
+_Second Run_  
+![ForrestTwo Picture](img/ForrestTwo.png)  
 
 License
 -------
