@@ -3,19 +3,7 @@
   (:use clojure.repl)
   (:use clojurebridge-turtle.core))
 
-(defn draw-square [name length]
-  (forward name length)
-  (right name 90)
-  (forward name length)
-  (right name 90)
-  (forward name length)
-  (right name 90)
-  (forward name length)
-  (right name 90))
-
-(defn point-up
-  [name]
-  (when (> (:angle (state name)) 180) (right name 180())))
+;;; ------------------ FUN RANDOMS -----------------------
 
 (defn compute-distance
   [name]
@@ -25,18 +13,11 @@
 (defn no-turtle-left-behind
   [name]
   (when (> (compute-distance name) 150) (right name 180)))
+;;; ------------------ FUN RANDOMS -----------------------
 
-(defn draw-and-turn
-  [name length]
-  (forward name length)
-  (right name 90))
 
-(defn box-spiral
-  [name length]
-  (when (> length 5)
-    (draw-and-turn name length)
-    (draw-and-turn name length)
-    (box-spiral name (- length 5))))
+
+;;; ------------------ PYRAMIDS OF GIZA CODE -----------------------
 
 (defn triangle 
   "makes a triangle of length length"
@@ -55,6 +36,10 @@
     (triangle name length)
     (right name -30)
     (pyramid name (- length 5))))
+;;; ------------------ PYRAMIDS OF GIZA CODE -----------------------
+
+
+;;; ------------------ RANDOM FORREST -----------------------
 
 (defn triangle-height
   [length]
@@ -95,6 +80,8 @@
 
 (defn make-forest [length]
   (map #(move-to % (random-coordinate) (random-coordinate) length) (populate-turtles)))
+
+;;; ------------------ RANDOM FORREST -----------------------
 
 
 
