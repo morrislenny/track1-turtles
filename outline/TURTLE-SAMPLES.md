@@ -949,7 +949,7 @@ And yes, that's a turtle on top of the tree! Our turtles are magical.
 Talk to mentors about your ideas, we will be happy to suggest ways of implementing them. Hope you have fun with our little turtles and Clojure!  
 
 #### 13: Examples  
-Pyramids of Giza using recursion
+Pyramids of Giza using recursion  
 ![Pyramids picture](img/Pyramids.png)  
 
 Random Forrest:
